@@ -1,0 +1,205 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { BranchConfig, branches } from "@/config/branch-configs";
+
+interface PopupFormProps {
+  isOpen: boolean;
+  onClose: () => void;
+  branch?: BranchConfig;
+}
+
+// Google Apps Script web app URL — receives form submissions and appends them to the "Website Bookings" tab.
+// ⚠️ TODO (blocks launch): deliberately blank. The previous client's endpoint was removed so I Cube
+// Dental leads cannot land in another clinic's sheet. Paste this clinic's own Apps Script /exec URL
+// here once the CRM sheet exists. Until then the form routes to /thank-you but stores nothing.
+const BOOKING_SCRIPT_URL = '';
+
+export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  // Single-branch deployment: always use the default I Cube Dental branch if none supplied.
+  const activeBranch: BranchConfig | undefined = branch || branches.ludhiana;
+  const primaryPhone = activeBranch ? activeBranch.contact.phones[0] : "";
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    if (!activeBranch) {
+      alert('Please choose which clinic you want to book with.');
+      return;
+    }
+
+    const data = {
+      name: formData.get('fullName') as string,
+      phone: formData.get('phoneNumber') as string,
+      email: formData.get('email') as string,
+      concern: formData.get('dentalConcern') as string,
+      // Explicit, unambiguous clinic identification for the receiving sheet/CRM
+      clinic: activeBranch.name,
+      clinicSlug: activeBranch.slug,
+      clinicAddress: activeBranch.contact.address,
+      clinicPhone: activeBranch.contact.phones[0] || '',
+      // Kept for backwards compatibility with existing Apps Script columns
+      branch: activeBranch.slug,
+      branchName: activeBranch.name,
+      submittedFrom: typeof window !== 'undefined' ? window.location.href : '',
+      submittedAt: new Date().toISOString(),
+    };
+
+    setIsSubmitting(true);
+    try {
+      if (!BOOKING_SCRIPT_URL.trim()) {
+        // Loud warning in dev so you instantly know the env var didn't load
+        console.warn(
+          '[BookingForm] NEXT_PUBLIC_BOOKING_SCRIPT_URL is empty. ' +
+          'Form will not submit to Google Sheet. Check .env.local and restart `npm run dev`.'
+        );
+      } else {
+        // Apps Script /exec returns a 302 to a googleusercontent.com URL with no CORS headers,
+        // so we use no-cors. Body goes as text/plain (browser strips application/json anyway
+        // in no-cors mode); the Apps Script `JSON.parse(e.postData.contents)` reads it fine.
+        console.log('[BookingForm] Submitting to:', BOOKING_SCRIPT_URL);
+        await fetch(BOOKING_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify(data),
+        });
+      }
+      onClose();
+      // Pass branch context to thank-you page so it can personalize
+      const qs = `?branch=${activeBranch.slug}`;
+      router.push(`/thank-you${qs}`);
+    } catch (error) {
+      console.error('[BookingForm] Submit failed:', error);
+      alert(`Something went wrong. Please call us at ${primaryPhone || '7011993633'} to book.`);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60] p-4 animate-in fade-in duration-300"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="popup-title"
+    >
+      <div
+        className="relative bg-white rounded-2xl shadow-2xl p-6 w-full max-w-xl max-h-[92vh] overflow-y-auto animate-in zoom-in-95 duration-300"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Prominent close button */}
+        <button
+          onClick={onClose}
+          type="button"
+          aria-label="Close"
+          className="absolute top-3 right-3 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 flex items-center justify-center text-xl font-bold transition-colors z-10"
+        >
+          ×
+        </button>
+
+        {/* Header */}
+        <div className="mb-4 pr-10">
+          <h2 id="popup-title" className="text-xl md:text-2xl font-bold text-[var(--brand-teal-deep)]">
+            Book Your Appointment
+          </h2>
+        </div>
+
+        {/* Single-branch deployment: just show which clinic the booking is for. */}
+        {activeBranch && (
+          <div className="mb-4 rounded-lg border-2 border-[var(--brand-teal-deep)] bg-[var(--brand-teal)]/10 p-3">
+            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold">📍 Clinic</p>
+            <p className="text-sm font-bold text-gray-900">I Cube Dental — {activeBranch.name}</p>
+            <p className="text-[11px] text-gray-600 mt-0.5">{activeBranch.contact.address}</p>
+          </div>
+        )}
+
+        {/* Offer info */}
+        <div className="bg-emerald-50 p-3 md:p-4 rounded-lg mb-4 border-l-4 border-[var(--brand-teal-deep)]">
+          <p className="text-sm md:text-base text-gray-700 text-center">
+            <strong>Includes:</strong> Specialist Consultation & Digital Scan
+            <span className="text-[var(--brand-teal-deep)] font-bold"> with our MDS specialist</span>
+          </p>
+        </div>
+
+        {/* FORM */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Hidden inputs so the clinic is always part of the form payload, even if the script reads FormData directly */}
+          <input type="hidden" name="clinic" value={activeBranch?.name || ''} />
+          <input type="hidden" name="clinicSlug" value={activeBranch?.slug || ''} />
+          <div>
+            <label htmlFor="fullName" className="block text-sm font-medium mb-1">Full Name</label>
+            <input
+              id="fullName"
+              type="text"
+              name="fullName"
+              required
+              autoComplete="name"
+              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-teal)]/40 focus:border-[var(--brand-teal)]"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="phoneNumber" className="block text-sm font-medium mb-1">Phone Number</label>
+            <input
+              id="phoneNumber"
+              type="tel"
+              name="phoneNumber"
+              required
+              autoComplete="tel"
+              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-teal)]/40 focus:border-[var(--brand-teal)]"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              required
+              autoComplete="email"
+              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-teal)]/40 focus:border-[var(--brand-teal)]"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="dentalConcern" className="block text-sm font-medium mb-1">Describe Your Dental Concern</label>
+            <textarea
+              id="dentalConcern"
+              name="dentalConcern"
+              required
+              rows={2}
+              placeholder="Briefly describe your dental issue"
+              className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-teal)]/40 focus:border-[var(--brand-teal)]"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-[var(--brand-teal-deep)] text-white py-3 md:py-4 rounded-lg font-bold text-lg hover:bg-[var(--brand-dark)] transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? 'Booking…' : 'Book Appointment'}
+          </button>
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full text-sm text-gray-500 hover:text-gray-700 transition-colors py-2"
+          >
+            Maybe later — let me browse first
+          </button>
+        </form>
+
+      </div>
+    </div>
+  );
+}
