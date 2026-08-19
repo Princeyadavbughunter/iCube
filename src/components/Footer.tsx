@@ -12,6 +12,8 @@ export default function Footer({ branch }: FooterProps) {
   const timings = branch ? branch.contact.timings : "";
   const email = branch ? branch.contact.email : "";
   const mapEmbed = branch ? branch.contact.googleMapEmbed : "";
+  const leadDoctor = branch?.copy.leadDoctor ?? "";
+  const daysLine = branch?.contact.daysLine ?? "";
 
   return (
     <footer className="relative border-t border-white/5 pt-8 pb-4 text-gray-300 overflow-hidden"
@@ -32,10 +34,10 @@ export default function Footer({ branch }: FooterProps) {
               height={60}
               className="h-12 w-auto"
             />
-            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--accent-gold)]">Dr. Chandan Jain</div>
+            <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--accent-gold)]">{leadDoctor}</div>
           </div>
           <p className="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed text-xs md:text-sm">
-            A specialist-led, technology-driven dental centre in Ludhiana. In-house CBCT, CAD/CAM and digital scanners, a dedicated implant operatory and a team of MDS specialists — led by Dr. Chandan Jain, Implantologist with 14 years of experience.
+            {branch?.copy.footerBlurb}
           </p>
         </div>
 
@@ -64,7 +66,7 @@ export default function Footer({ branch }: FooterProps) {
               <div className="text-gray-300 space-y-1 text-xs">
                 <p className="font-bold text-white">{timings}</p>
                 <p className="text-gray-400">
-                  Open all 7 days
+                  {daysLine}
                 </p>
               </div>
             </div>

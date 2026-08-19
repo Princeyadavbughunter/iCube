@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BranchConfig } from "@/config/branch-configs";
 
@@ -32,7 +33,8 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const locationName = branch ? branch.name : "Ludhiana";
+  const locationName = branch?.name ?? "";
+  const leadDoctor = branch?.copy.leadDoctor ?? "";
   const primaryPhone = branch ? branch.contact.phones[0] : "";
 
   return (
@@ -50,9 +52,11 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
               className="h-9 md:h-11 w-auto"
               priority
             />
-            <span className="ml-3 pl-3 hidden sm:block border-l border-gray-300 text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--brand-teal-deep)]">
-              Dr. Chandan Jain
-            </span>
+            {leadDoctor && (
+              <span className="ml-3 pl-3 hidden sm:block border-l border-gray-300 text-[9px] md:text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--brand-teal-deep)]">
+                {leadDoctor}
+              </span>
+            )}
           </div>
           <a 
             href={branch?.contact.googleMapsLink} 
@@ -66,6 +70,13 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
               <span className="text-[10px] opacity-0 group-hover/loc:opacity-100 transition-opacity">↗</span>
             </p>
           </a>
+          {/* Escape hatch back to the branch chooser — this clinic has two locations. */}
+          <Link
+            href="/"
+            className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-gray-200 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-gray-500 transition-colors hover:border-[var(--brand-teal)] hover:text-[var(--brand-teal)]"
+          >
+            ⇄ Both branches
+          </Link>
         </div>
 
         <div className="flex items-center gap-4 md:gap-8">

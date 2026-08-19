@@ -15,13 +15,13 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: "I Cube Dental | Implant & MDS Specialist Dental Centre in Ludhiana",
+    default: "I Cube Dental | Implant & Specialist Dental Centres in Ludhiana & Chandigarh",
     template: "%s | I Cube Dental",
   },
   description:
-    "I Cube Dental, Ludhiana — a specialist-led, technology-driven dental centre led by Dr. Chandan Jain (Implantologist, MDS Prosthodontics, MDS Endodontics). In-house CBCT, CAD/CAM, digital scanners and a dedicated implant operatory. Implants from ₹25,000. New Prem Nagar, Ludhiana.",
+    "I Cube Dental — specialist-led, technology-driven implant centres in Ludhiana (Dr. Chandan Jain) and Chandigarh (Dr. Gaurav Varshney). In-house CBCT, CAD/CAM, digital scanners and a dedicated implant operatory at both branches. Implants from ₹25,000.",
   keywords:
-    "dental implants Ludhiana, implant specialist Ludhiana, Dr. Chandan Jain, I Cube Dental, MDS prosthodontist Ludhiana, MDS endodontist Ludhiana, CBCT dental Ludhiana, root canal Ludhiana, full mouth rehabilitation Ludhiana, best dentist Ludhiana, CAD CAM crowns Ludhiana, New Prem Nagar dentist",
+    "dental implants Ludhiana, dental implants Chandigarh, implant specialist Ludhiana, implant specialist Chandigarh, Dr. Chandan Jain, Dr. Gaurav Varshney, I Cube Dental, iCube Dental Sector 35, MDS prosthodontist, MDS endodontist, CBCT dental Ludhiana, CBCT dental Chandigarh, single day crowns Chandigarh, root canal, full mouth rehabilitation, CAD CAM crowns",
   authors: [{ name: "I Cube Dental" }],
   creator: "I Cube Dental",
   publisher: "I Cube Dental",
@@ -35,9 +35,9 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "I Cube Dental | Implant & MDS Specialist Dental Centre in Ludhiana",
+    title: "I Cube Dental | Implant & Specialist Dental Centres in Ludhiana & Chandigarh",
     description:
-      "Specialist-led implant dentistry in Ludhiana. In-house CBCT, CAD/CAM and digital scanners, a dedicated implant operatory and an all-MDS clinical team. Implants from ₹25,000.",
+      "Specialist-led implant dentistry at two centres. In-house CBCT, CAD/CAM and digital scanners, a dedicated implant operatory and an all-MDS clinical team. Implants from ₹25,000.",
     url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
     siteName: "I Cube Dental",
     images: [
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: "I Cube Dental – Ludhiana",
+        alt: "I Cube Dental – Ludhiana & Chandigarh",
       },
     ],
     locale: 'en_IN',
@@ -53,9 +53,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "I Cube Dental | Implant & MDS Specialist Dental Centre in Ludhiana",
+    title: "I Cube Dental | Implant & Specialist Dental Centres in Ludhiana & Chandigarh",
     description:
-      "Specialist-led implant dentistry in Ludhiana. In-house CBCT, CAD/CAM, dedicated implant operatory and an all-MDS team. Implants from ₹25,000.",
+      "Specialist-led implant dentistry at two centres. In-house CBCT, CAD/CAM, dedicated implant operatory and an all-MDS team. Implants from ₹25,000.",
     images: ['/og-image.png'],
   },
   robots: {

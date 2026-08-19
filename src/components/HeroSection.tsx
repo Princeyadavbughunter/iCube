@@ -7,7 +7,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ onBookAppointment, branch }: HeroSectionProps) {
-  const heroTitle = branch ? branch.heroTitle : "Advanced Dental Implants in Ludhiana";
+  const heroTitle = branch ? branch.heroTitle : "Advanced Dental Implants";
   const titleParts = heroTitle.split(' ');
   const firstPart = titleParts.slice(0, 2).join(' ');
   const secondPart = titleParts.slice(2).join(' ');
@@ -40,7 +40,7 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
         {/* Location pill with pink accent */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full badge-pink text-[10px] md:text-xs font-black uppercase tracking-[0.2em] mb-5">
           <span className="w-1.5 h-1.5 rounded-full bg-white/90" />
-          I Cube Dental · {branch?.name || "Ludhiana"}
+          I Cube Dental · {branch?.name}
         </div>
 
         {/* Hours + Directions info strip */}
@@ -77,7 +77,7 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
                 Implants Planned by <span className="text-gradient-logo">MDS Specialists</span>
               </h3>
               <p className="text-gray-500 font-medium text-[10px] sm:text-[11px] md:text-sm mt-1">
-                Dedicated Implant Operatory · From ₹25,000 · Ludhiana
+                {branch?.copy.heroChipLine}
               </p>
             </div>
           </div>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, Sparkles } from 'lucide-react';
+import { BranchConfig } from '@/config/branch-configs';
 
 interface FAQItem {
   question: string;
@@ -10,68 +11,77 @@ interface FAQItem {
   benefit: string;
 }
 
-const faqs: FAQItem[] = [
-  // ── Implant FAQs ──
-  {
-    question: "What are dental implants and are they permanent?",
-    answer:
-      "Dental implants are titanium posts that act as permanent roots for replacement teeth. They fuse with your jawbone, making them the most stable, natural-looking and lifelong solution for missing teeth.",
-    benefit: "Regain your natural smile and bite for a lifetime.",
-  },
-  {
-    question: "Why does in-house CBCT matter for my implant?",
-    answer:
-      "A CBCT is a 3D scan of your jaw that shows exact bone height, width and the position of nerves and sinuses — detail an ordinary X-ray cannot give. Because our CBCT is in-house, your scan, diagnosis and treatment plan happen in the same visit, and Dr. Chandan Jain can plan the precise implant position in 3D before any surgery begins.",
-    benefit: "Your implant is planned in 3D before it is ever placed.",
-  },
-  {
-    question: "What is a dedicated implant operatory, and why should I care?",
-    answer:
-      "Implant placement is a surgical procedure. We have a separate operatory used only for implant surgery — set up for a controlled, sterile surgical environment rather than shared with routine dental work. It is a standard of infection control and surgical precision that a general dental chair is not designed for.",
-    benefit: "Implant surgery in a purpose-built surgical suite, not a shared chair.",
-  },
-  {
-    question: "Is the dental implant procedure painful?",
-    answer:
-      "The procedure is carried out under local anaesthesia, so you will not feel pain during treatment. Because the implant position is planned in advance on CBCT, the surgery itself is more precise and less invasive, and most patients report mild soreness for a day or two — comparable to a routine extraction.",
-    benefit: "Precise, planned placement means a far more comfortable recovery.",
-  },
-  {
-    question: "How much do dental implants cost at I Cube Dental?",
-    answer:
-      "Dental implants start from ₹25,000. The final cost depends on the implant system, the number of teeth being replaced, whether bone grafting is needed and the type of crown chosen. Every case is assessed individually on CBCT and you receive a clear, itemised quote before treatment begins — no surprises at the counter.",
-    benefit: "Transparent, itemised pricing agreed before treatment starts.",
-  },
+/**
+ * FAQ copy is branch-aware: the answers that name a doctor, a phone number or an
+ * address are pulled from the branch config so the Ludhiana and Chandigarh pages
+ * never quote each other's details.
+ */
+function buildFaqs(branch?: BranchConfig): FAQItem[] {
+  const copy = branch?.copy;
 
-  // ── Specialist team & technology FAQs ──
-  {
-    question: "What does 'MDS specialist' actually mean for my treatment?",
-    answer:
-      "MDS is a three-year postgraduate specialisation completed after the general BDS dental degree. Dr. Chandan Jain holds MDS qualifications in both Prosthodontics and Endodontics, and our team are MDS specialists trained at India's leading dental colleges. In practice it means your root canal is done by an endodontist and your crown by a prosthodontist — not by a generalist doing a bit of everything.",
-    benefit: "Every procedure handled by a specialist in that exact field.",
-  },
-  {
-    question: "What is CAD/CAM, and how does it improve my crown?",
-    answer:
-      "CAD/CAM means your crown or bridge is designed on a computer from a digital scan of your teeth and then milled to that exact design. It removes the guesswork and distortion of conventional putty impressions, so the fit at the gum line, the bite and the contact with neighbouring teeth are far more accurate — which is what makes a restoration last and look natural.",
-    benefit: "A digitally precise fit you can feel when you bite.",
-  },
-  {
-    question: "Can I get a root canal done here too?",
-    answer:
-      "Yes. Endodontics is one of our core specialisations — Dr. Chandan Jain is MDS in Endodontics, so root canal treatment, retreatment of failed root canals and complex or curved-canal cases are all handled in-house. If that tooth then needs a crown, the same team completes it with CAD/CAM, so nothing gets referred out or delayed.",
-    benefit: "Root canal and crown completed by specialists in one place.",
-  },
-  {
-    question: "What are your clinic timings and where are you located?",
-    answer:
-      "We are open Monday to Sunday, 10:00 AM to 8:00 PM — all seven days. The clinic is at 1533, New Prem Nagar, Ludhiana, near Las Vegas Club, close to PAU Gate No. 4 and Akaash Institute. Call 7011993633 or 9077700021 to book a consultation.",
-    benefit: "Open all seven days, in a central and easy-to-reach location.",
-  },
-];
+  return [
+    // ── Implant FAQs ──
+    {
+      question: "What are dental implants and are they permanent?",
+      answer:
+        "Dental implants are titanium posts that act as permanent roots for replacement teeth. They fuse with your jawbone, making them the most stable, natural-looking and lifelong solution for missing teeth.",
+      benefit: "Regain your natural smile and bite for a lifetime.",
+    },
+    {
+      question: "Why does in-house CBCT matter for my implant?",
+      answer: copy?.faqCbct ?? "",
+      benefit: "Your implant is planned in 3D before it is ever placed.",
+    },
+    {
+      question: "What is a dedicated implant operatory, and why should I care?",
+      answer:
+        "Implant placement is a surgical procedure. We have a separate operatory used only for implant surgery — set up for a controlled, sterile surgical environment rather than shared with routine dental work. It is a standard of infection control and surgical precision that a general dental chair is not designed for.",
+      benefit: "Implant surgery in a purpose-built surgical suite, not a shared chair.",
+    },
+    {
+      question: "Is the dental implant procedure painful?",
+      answer:
+        "The procedure is carried out under local anaesthesia, so you will not feel pain during treatment. Because the implant position is planned in advance on CBCT, the surgery itself is more precise and less invasive, and most patients report mild soreness for a day or two — comparable to a routine extraction.",
+      benefit: "Precise, planned placement means a far more comfortable recovery.",
+    },
+    {
+      question: "How much do dental implants cost at I Cube Dental?",
+      answer: copy?.faqPricing ?? "",
+      benefit: "Transparent, itemised pricing agreed before treatment starts.",
+    },
 
-export default function FAQSection() {
+    // ── Specialist team & technology FAQs ──
+    {
+      question: "What does 'MDS specialist' actually mean for my treatment?",
+      answer: copy?.faqSpecialist ?? "",
+      benefit: "Every procedure handled by a specialist in that exact field.",
+    },
+    {
+      question: "What is CAD/CAM, and how does it improve my crown?",
+      answer:
+        "CAD/CAM means your crown or bridge is designed on a computer from a digital scan of your teeth and then milled to that exact design. It removes the guesswork and distortion of conventional putty impressions, so the fit at the gum line, the bite and the contact with neighbouring teeth are far more accurate — which is what makes a restoration last and look natural.",
+      benefit: "A digitally precise fit you can feel when you bite.",
+    },
+    {
+      question: "Can I get a root canal done here too?",
+      answer: copy?.faqRootCanal ?? "",
+      benefit: "Root canal and crown completed by specialists in one place.",
+    },
+    {
+      question: "What are your clinic timings and where are you located?",
+      answer: copy?.faqTimingsLocation ?? "",
+      benefit: `${branch?.contact.daysLine ?? "Open through the week"}, in a central and easy-to-reach location.`,
+    },
+  ];
+}
+
+interface FAQSectionProps {
+  branch?: BranchConfig;
+}
+
+export default function FAQSection({ branch }: FAQSectionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const faqs = buildFaqs(branch);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -162,7 +172,7 @@ export default function FAQSection() {
 
         <div className="mt-12 text-center">
           <p className="text-gray-400 text-xs">
-            Still have questions? <a href="tel:7011993633" className="text-[var(--accent-pink)] font-bold underline hover:text-[var(--accent-pink-dark)] transition-colors">Contact our specialists</a>.
+            Still have questions? <a href={`tel:${(branch?.contact.phones[0] ?? '').replace(/\s/g, '')}`} className="text-[var(--accent-pink)] font-bold underline hover:text-[var(--accent-pink-dark)] transition-colors">Contact our specialists</a>.
           </p>
         </div>
       </div>

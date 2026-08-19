@@ -34,16 +34,32 @@ export default function DoctorProfile({ onBookAppointment, branch }: DoctorProfi
               <div className="flex flex-col md:flex-row gap-8 lg:gap-16 items-center md:items-start">
                 <div className="w-full md:w-1/2 lg:w-2/5 flex justify-center">
                   <div className="relative w-full max-w-sm aspect-[3/4] rounded-[28px] overflow-hidden shadow-2xl border-8 border-white ring-1 ring-gray-100 shimmer-effect card-3d-tilt">
-                    <Image
-                      src={doctor.image}
-                      alt={doctor.name}
-                      fill
-                      className="object-cover object-top transition-transform duration-700 hover:scale-110"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-                      priority
-                    />
+                    {doctor.image ? (
+                      <Image
+                        src={doctor.image}
+                        alt={doctor.name}
+                        fill
+                        className="object-cover object-top transition-transform duration-700 hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+                        priority
+                      />
+                    ) : (
+                      /* No photograph on file for this branch yet — a monogram is
+                         shown rather than a stock portrait of someone else. */
+                      <div
+                        className="absolute inset-0 flex flex-col items-center justify-center gap-3"
+                        style={{ background: 'linear-gradient(150deg, var(--brand-teal) 0%, var(--brand-teal-ink) 100%)' }}
+                      >
+                        <span className="font-poppins text-6xl font-bold tracking-tight text-[var(--accent-gold)]">
+                          {doctor.initials}
+                        </span>
+                        <span className="px-6 text-center text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">
+                          Photograph coming soon
+                        </span>
+                      </div>
+                    )}
                     <span className="absolute bottom-3 left-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-xl text-center text-[11px] font-black uppercase tracking-wider text-[var(--brand-teal-deep)] shadow-md">
-                      Dr. Chandan Jain
+                      {doctor.name}
                     </span>
                   </div>
                 </div>

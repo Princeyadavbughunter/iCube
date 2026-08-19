@@ -4,7 +4,7 @@ import ThankYouPage from '@/components/ThankYouPage';
 
 export const metadata: Metadata = {
   title: 'Thank You',
-  description: "Your appointment request has been received at I Cube Dental, Ludhiana. Our team will contact you shortly.",
+  description: "Your appointment request has been received at I Cube Dental. Our team will contact you shortly.",
   robots: { index: false, follow: false },
 };
 

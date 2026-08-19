@@ -136,11 +136,11 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
         <HeroSection onBookAppointment={openPopup} branch={branch} />
         <Reveal><WhyChooseUs branch={branch} /></Reveal>
         <Reveal><DoctorProfile onBookAppointment={openPopup} branch={branch} /></Reveal>
-        <Reveal><OneRoofCare /></Reveal>
+        <Reveal><OneRoofCare branch={branch} /></Reveal>
         <Reveal><ServiceHighlights /></Reveal>
         <Reveal><BeforeAfterSlider /></Reveal>
         <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent max-w-4xl mx-auto opacity-50" />
-        <Reveal><FAQSection /></Reveal>
+        <Reveal><FAQSection branch={branch} /></Reveal>
         <Reveal><GoogleReviews branch={branch} /></Reveal>
         <Reveal><CTABox onBookAppointment={openPopup} branch={branch} /></Reveal>
         <Reveal y={16}><Footer branch={branch} /></Reveal>

@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
-import { branches } from "@/config/branch-configs";
-import BranchPageClient from "@/components/BranchPageClient";
+import { branchList } from "@/config/branch-configs";
+import BranchSelect from "@/components/BranchSelect";
 
-const branch = branches.ludhiana;
+const cities = branchList.map((b) => b.name).join(" & ");
+
+const title = `I Cube Dental | Implant & Specialist Dental Centres in ${cities}`;
+const description = `I Cube Dental runs specialist-led implant centres in ${cities}. In-house CBCT, digital scanners, CAD/CAM crowns and a dedicated implant operatory at both branches. Implants from ₹25,000. Choose your city to book.`;
 
 export const metadata: Metadata = {
-  title: `${branch.heroTitle} | I Cube Dental`,
-  description: `${branch.doctors.map((d) => d.name).join(" & ")} at I Cube Dental, ${branch.name}. Implantologist with MDS Prosthodontics & MDS Endodontics — in-house CBCT, CAD/CAM, digital scanners and a dedicated implant operatory. Implants from ₹25,000. ${branch.contact.timings}.`,
+  title,
+  description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: `${branch.heroTitle} | I Cube Dental`,
-    description: `Specialist-led implant dentistry by ${branch.doctors[0].name} in ${branch.name}. In-house CBCT, CAD/CAM and a dedicated implant operatory. Implants from ₹25,000.`,
+    title,
+    description,
     url: "/",
     siteName: "I Cube Dental",
     images: [
@@ -18,7 +21,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: `I Cube Dental – ${branch.name}`,
+        alt: `I Cube Dental – ${cities}`,
       },
     ],
     locale: "en_IN",
@@ -26,39 +29,42 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${branch.heroTitle} | I Cube Dental`,
-    description: `Specialist-led implant dentistry by ${branch.doctors[0].name} in ${branch.name}. In-house CBCT, CAD/CAM and a dedicated implant operatory. Implants from ₹25,000.`,
+    title,
+    description,
     images: ["/og-image.png"],
   },
 };
 
 export default function Home() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+  // One Organization node that owns both branches, so search engines connect
+  // the two Dentist listings to a single brand rather than treating them as
+  // unrelated practices.
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Dentist",
+    "@type": "Organization",
     name: "I Cube Dental",
-    image: "/og-image.png",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-    telephone: branch.contact.phones[0],
-    email: branch.contact.email,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "1533, New Prem Nagar, Near Las Vegas Club (PAU Gate No. 4)",
-      addressLocality: "Ludhiana",
-      addressRegion: "PB",
-      postalCode: "141001",
-      addressCountry: "IN",
-    },
-    priceRange: "₹₹",
-    openingHours: "Mo-Su 10:00-20:00",
-    sameAs: [branch.contact.googleMapsLink],
-    medicalSpecialty: [
-      "Dentistry",
-      "DentalImplants",
-      "Prosthodontics",
-      "Endodontics",
-      "CosmeticDentistry",
-    ],
+    url: siteUrl,
+    logo: `${siteUrl}/icube-logo.avif`,
+    department: branchList.map((branch) => ({
+      "@type": "Dentist",
+      name: `I Cube Dental — ${branch.name}`,
+      url: `${siteUrl}/${branch.slug}`,
+      telephone: branch.contact.phones[0],
+      email: branch.contact.email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: branch.schema.streetAddress,
+        addressLocality: branch.schema.addressLocality,
+        addressRegion: branch.schema.addressRegion,
+        postalCode: branch.schema.postalCode,
+        addressCountry: "IN",
+      },
+      priceRange: "₹₹",
+      openingHours: branch.schema.openingHours,
+      sameAs: [branch.contact.googleMapsLink],
+    })),
   };
 
   return (
@@ -67,7 +73,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BranchPageClient branch={branch} />
+      <BranchSelect branches={branchList} />
     </>
   );
 }

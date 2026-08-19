@@ -1,6 +1,11 @@
+import { BranchConfig } from "@/config/branch-configs";
 import Image from "next/image";
 
-export default function OneRoofCare() {
+interface OneRoofCareProps {
+  branch?: BranchConfig;
+}
+
+export default function OneRoofCare({ branch }: OneRoofCareProps) {
   return (
     <section className="relative py-20 md:py-32 overflow-hidden">
       {/* Decorative gradient mesh */}
@@ -52,7 +57,7 @@ export default function OneRoofCare() {
               All Treatments Under <span className="text-gradient-logo">One Roof</span>
             </h2>
             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              No more being referred from clinic to clinic across Ludhiana. From routine checkups to CBCT-guided implants, full-mouth rehabilitation and root canal therapy, our implantologist, prosthodontist and endodontist work together within one advanced facility — sharing the same scans, the same records and the same treatment plan.
+              {branch?.copy.oneRoofLine}
             </p>
 
             <div className="grid sm:grid-cols-2 gap-6 mb-10">
