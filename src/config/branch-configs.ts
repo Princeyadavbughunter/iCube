@@ -283,11 +283,12 @@ export const branches: Record<string, BranchConfig> = {
       implant: "₹25,000 onwards*"
     },
     heroTitle: "Advanced Implant & Multi-Speciality Dental Care in Chandigarh",
-    // ⚠️ No Chandigarh clinic video supplied yet, so the hero falls back to the
-    // implant renders. /ludhiana-case-full-mouth.mp4 is NOT a candidate: the
-    // surgeon on screen is Dr. Chandan Jain (Ludhiana), not Dr. Gaurav Varshney.
-    heroVideo: "",
-    heroPoster: "",
+    // Brand-level case film, shown here at the client's direction until
+    // Chandigarh supplies its own. Note the surgeon on screen is Dr. Chandan
+    // Jain (Ludhiana), not Dr. Gaurav Varshney — the film's own end card names
+    // both cities, so it runs as iCube brand content rather than branch footage.
+    heroVideo: "/icube-full-mouth-case.mp4",
+    heroPoster: "/icube-full-mouth-case-poster.webp",
     copy: {
       leadDoctor: "Dr. Gaurav Varshney",
       leadDoctorCreds: "Implantologist · MDS Prosthodontics · Crown Specialist",
