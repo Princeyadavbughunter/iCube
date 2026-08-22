@@ -1,5 +1,6 @@
 import { BranchConfig } from "@/config/branch-configs";
 import ImplantShowcase from "@/components/ImplantShowcase";
+import HeroVideo from "@/components/HeroVideo";
 
 interface HeroSectionProps {
   onBookAppointment: () => void;
@@ -15,6 +16,8 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
   const primaryPhone = branch ? branch.contact.phones[0] : "";
   const timings = branch ? branch.contact.timings : "";
   const mapsLink = branch ? branch.contact.googleMapsLink : "";
+  const heroVideo = branch?.heroVideo ?? "";
+  const heroPoster = branch?.heroPoster ?? "";
 
   return (
     <section className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 md:pt-32 md:pb-36 px-4 sm:px-6 md:px-12 lg:px-16 max-w-7xl mx-auto overflow-hidden">
@@ -97,7 +100,13 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
             Aspect is 3/4 on mobile rather than 9/16 — the renders are square,
             so a taller frame would just add dead space around them. */}
         <div className="relative rounded-3xl aspect-[3/4] max-w-[320px] md:aspect-auto md:max-w-none md:h-[500px] md:w-[300px] mx-auto md:mx-0 mb-8 md:mb-0 md:flex-initial overflow-hidden shadow-2xl ring-4 ring-white ring-offset-2 ring-offset-[var(--accent-pink-soft)] card-3d-tilt">
-          <ImplantShowcase />
+          {/* A branch with its own clinic video shows it here; the rest fall back
+              to the rotating implant renders. */}
+          {heroVideo ? (
+            <HeroVideo src={heroVideo} poster={heroPoster} label={branch?.name ?? "I Cube Dental"} />
+          ) : (
+            <ImplantShowcase />
+          )}
           {/* Corner glow accent */}
           <div aria-hidden className="absolute -top-6 -right-6 w-24 h-24 rounded-full blur-2xl opacity-50 pointer-events-none"
                style={{ background: 'radial-gradient(circle, var(--accent-pink) 0%, transparent 70%)' }} />
