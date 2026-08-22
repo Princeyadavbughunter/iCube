@@ -11,7 +11,7 @@ import {
   useTransform,
   type MotionValue,
 } from 'framer-motion';
-import { ArrowRight, Clock, MapPin, Phone, Mail } from 'lucide-react';
+import { ArrowRight, Clock, MapPin, Phone, Mail, Sparkles } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 
 interface BranchSelectProps {
@@ -74,172 +74,163 @@ function BranchPanel({
   reduceMotion: boolean | null;
 }) {
   const isHovered = hovered === index;
-  const isDimmed = hovered !== null && !isHovered;
-  const hasPhoto = Boolean(branch.cardImage);
-
-  // On desktop the hovered panel claims space from its sibling. flexGrow is
-  // animated rather than width so the two panels always fill the row exactly.
-  // This must sit on the direct flex child of the row, or the grow goes nowhere.
-  const flexGrow = reduceMotion ? 1 : isHovered ? 1.45 : isDimmed ? 0.75 : 1;
+  const { card } = branch;
+  const hasPhoto = Boolean(card.image);
+  const lead = branch.doctors[0];
 
   return (
     <motion.div
-      className="relative flex flex-1 lg:min-h-0"
-      initial={{ opacity: 0, y: 26 }}
-      animate={{ opacity: 1, y: 0, flexGrow }}
-      // The entrance is staggered per panel; the hover grow must not inherit
-      // that delay, so each property gets its own transition.
-      transition={{
-        opacity: { duration: 0.7, ease: EASE, delay: 0.15 + index * 0.1 },
-        y: { duration: 0.7, ease: EASE, delay: 0.15 + index * 0.1 },
-        flexGrow: { duration: 0.6, ease: EASE },
-      }}
+      className="relative flex flex-1"
+      initial={{ opacity: 0, y: 28 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7, ease: EASE, delay: 0.15 + index * 0.12 }}
       onHoverStart={() => setHovered(index)}
       onHoverEnd={() => setHovered(null)}
       onFocus={() => setHovered(index)}
       onBlur={() => setHovered(null)}
     >
-      {/* Not absolutely positioned: on mobile the panel is sized by its own
-          content, so nothing gets clipped off the top. */}
       <Link
         href={`/${branch.slug}`}
-        className="group relative flex w-full flex-col justify-end overflow-hidden rounded-[28px] focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2"
+        className="group relative flex w-full flex-col justify-end overflow-hidden rounded-[26px] shadow-[0_24px_60px_-24px_rgba(16,17,36,0.55)] focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 min-h-[560px] sm:min-h-[620px] lg:min-h-[660px]"
         aria-label={`Open the I Cube Dental ${branch.name} clinic page`}
       >
-        {/* Backdrop — a real photo once one exists, otherwise a designed panel.
-            Never a stock interior or another practice's premises. */}
+        {/* Backdrop — the lead doctor's portrait, or the designed panel when
+            no photograph has been supplied. Never a stock interior. */}
         <motion.div
           className="absolute inset-0"
-          animate={{ scale: isHovered && !reduceMotion ? 1.06 : 1 }}
+          animate={{ scale: isHovered && !reduceMotion ? 1.05 : 1 }}
           transition={{ duration: 0.9, ease: EASE }}
         >
           {hasPhoto ? (
             <Image
-              src={branch.cardImage}
-              alt={`I Cube Dental ${branch.name} clinic`}
+              src={card.image}
+              alt={`${lead.name} — I Cube Dental ${branch.name}`}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              // object-top keeps the face in frame as the card gets taller.
+              className="object-cover object-top"
               priority={index === 0}
             />
           ) : (
             <div
               className="absolute inset-0"
-              style={{
-                background: `linear-gradient(155deg, ${branch.accent} 0%, var(--brand-teal-ink) 100%)`,
-              }}
+              style={{ background: `linear-gradient(155deg, ${branch.accent} 0%, var(--brand-teal-ink) 100%)` }}
             >
-              {/* Blueprint grid — reads as "planned, measured, technical" */}
               <span
                 aria-hidden
-                className="absolute inset-0 opacity-[0.16]"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(rgba(255,255,255,0.55) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.55) 1px, transparent 1px)',
-                  backgroundSize: '46px 46px',
-                }}
-              />
-              {/* Ghosted city initial */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute right-4 top-4 select-none font-poppins text-[11rem] font-bold leading-none text-white/[0.07] lg:text-[14rem]"
+                className="pointer-events-none absolute right-4 top-4 select-none font-poppins text-[12rem] font-bold leading-none text-white/[0.07]"
               >
                 {branch.name.charAt(0)}
               </span>
-              <motion.span
-                aria-hidden
-                className="pointer-events-none absolute -bottom-24 -right-24 h-80 w-80 rounded-full blur-3xl"
-                style={{ background: 'radial-gradient(circle, var(--accent-gold) 0%, transparent 70%)' }}
-                animate={{ opacity: isHovered ? 0.5 : 0.28 }}
-                transition={{ duration: 0.6, ease: EASE }}
-              />
             </div>
           )}
         </motion.div>
 
-        {/* Legibility scrim — heavier over a photo than over the designed panel */}
-        <div
-          className={`absolute inset-0 ${
-            hasPhoto
-              ? 'bg-gradient-to-t from-[#101124] via-[#101124]/70 to-[#101124]/25'
-              : 'bg-gradient-to-t from-[#101124]/75 via-[#101124]/25 to-transparent'
-          }`}
-        />
-        {hasPhoto && (
-          <motion.div
-            className="absolute inset-0 mix-blend-multiply"
-            style={{ background: `linear-gradient(160deg, ${branch.accent} 0%, transparent 70%)` }}
-            animate={{ opacity: isHovered ? 0.75 : 0.5 }}
-            transition={{ duration: 0.5, ease: EASE }}
-          />
-        )}
-
-        {/* Hairline that lights up on hover */}
-        <motion.span
+        {/* Legibility scrim. Two stops rather than three: the copy sits low, so
+            the upper half stays bright and the portrait keeps its detail. */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d0e1c] via-[#0d0e1c]/55 to-transparent" />
+        <motion.div
           aria-hidden
-          className="absolute left-6 right-6 bottom-0 h-[2px] origin-left rounded-full"
-          style={{ background: 'linear-gradient(90deg, var(--accent-gold) 0%, transparent 100%)' }}
-          animate={{ scaleX: isHovered ? 1 : 0.18, opacity: isHovered ? 1 : 0.5 }}
-          transition={{ duration: 0.6, ease: EASE }}
+          className="absolute inset-0 mix-blend-soft-light"
+          style={{ background: `linear-gradient(160deg, ${branch.accent} 0%, transparent 65%)` }}
+          animate={{ opacity: isHovered ? 0.9 : 0.55 }}
+          transition={{ duration: 0.5, ease: EASE }}
         />
 
-        <div className="relative p-6 pt-20 sm:p-8 sm:pt-28 lg:p-10 lg:pt-12 text-white">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] text-white/85 backdrop-blur-md ring-1 ring-white/20">
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-gold)]" />
-            Branch {String(index + 1).padStart(2, '0')}
+        {/* ---- Top rail: branch number + speciality badge ---- */}
+        <div className="absolute inset-x-4 top-4 z-10 flex items-start justify-between gap-3 sm:inset-x-5 sm:top-5">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--brand-teal-deep)] shadow-sm backdrop-blur">
+            <MapPin size={11} className="text-[var(--accent-pink)]" />
+            Branch {index + 1}
           </span>
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-white shadow-sm"
+            style={{ background: index === 0 ? 'var(--brand-teal)' : 'var(--accent-pink)' }}
+          >
+            <Sparkles size={11} />
+            {card.badge}
+          </span>
+        </div>
 
-          <h2 className="mt-4 font-poppins text-4xl font-bold leading-none tracking-tight sm:text-5xl lg:text-6xl">
+        {/* ---- Stat pills, stacked down the right ---- */}
+        <div className="absolute right-4 top-16 z-10 flex flex-col gap-2 sm:right-5 sm:top-20">
+          {card.stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="min-w-[68px] rounded-xl bg-white/95 px-3 py-2 text-center shadow-sm backdrop-blur"
+            >
+              <div className="font-poppins text-sm font-black leading-none text-[var(--brand-teal-deep)]">
+                {stat.value}
+              </div>
+              <div className="mt-1 text-[8px] font-bold uppercase tracking-[0.14em] text-gray-500">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ---- Bottom content ---- */}
+        <div className="relative z-10 p-5 text-white sm:p-7">
+          {/* Treatment chips */}
+          <div className="mb-4 flex flex-wrap gap-1.5">
+            {card.chips.map((chip) => (
+              <span
+                key={chip}
+                className="rounded-full bg-white/15 px-3 py-1 text-[11px] font-medium text-white/90 ring-1 ring-white/25 backdrop-blur-sm"
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
+
+          <h2 className="font-poppins text-[2.6rem] font-bold leading-[0.95] tracking-tight sm:text-5xl lg:text-[3.4rem]">
             {branch.name}
           </h2>
 
-          <p className="mt-2 text-sm font-semibold text-[var(--accent-gold)]">
-            {branch.doctors[0].name} · {branch.copy.experience}
+          <p className="mt-2.5 text-[15px] text-white/80">
+            Led by <strong className="font-bold text-white">{lead.name}</strong>
+          </p>
+          <p className="mt-1 text-[12.5px] italic leading-snug text-white/60">
+            {branch.copy.leadDoctorCreds}
           </p>
 
-          {/* Detail block — always readable, but expands on hover/focus */}
-          <motion.div
-            initial={false}
-            animate={{
-              opacity: isHovered || reduceMotion ? 1 : 0.75,
-              height: 'auto',
-            }}
-            transition={{ duration: 0.4, ease: EASE }}
-            className="mt-4 max-w-md space-y-2.5"
-          >
-            <p className="text-sm leading-relaxed text-white/80">{branch.tagline}</p>
-            <p className="flex items-start gap-2 text-xs text-white/65">
-              <MapPin size={13} className="mt-0.5 shrink-0 text-[var(--accent-gold)]" />
-              {branch.shortAddress}
-            </p>
-            <p className="flex items-center gap-2 text-xs text-white/65">
-              <Clock size={13} className="shrink-0 text-[var(--accent-gold)]" />
-              {branch.contact.timings}
-            </p>
-          </motion.div>
+          <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div className="text-[10.5px] font-black uppercase tracking-[0.16em] text-white/85">
+                {card.daysUpper}
+              </div>
+              <div className="mt-0.5 text-[12.5px] text-white/60">{branch.contact.timings}</div>
+            </div>
 
-          <span className="mt-6 inline-flex items-center gap-2.5 rounded-full bg-white px-6 py-3 text-[11px] font-black uppercase tracking-[0.18em] text-[var(--brand-teal-deep)] shadow-lg transition-colors group-hover:bg-[var(--accent-gold)]">
-            Visit {branch.name} Clinic
-            <motion.span
-              animate={{ x: isHovered && !reduceMotion ? 5 : 0 }}
-              transition={{ duration: 0.35, ease: EASE }}
-              className="inline-flex"
+            <span
+              className="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-[11px] font-black uppercase tracking-[0.16em] text-white shadow-lg transition-transform group-hover:scale-[1.03]"
+              style={{ background: index === 0 ? 'var(--brand-teal)' : 'var(--accent-pink)' }}
             >
-              <ArrowRight size={15} strokeWidth={2.6} />
-            </motion.span>
-          </span>
+              Visit Clinic
+              <motion.span
+                animate={{ x: isHovered && !reduceMotion ? 4 : 0 }}
+                transition={{ duration: 0.35, ease: EASE }}
+                className="inline-flex"
+              >
+                <ArrowRight size={14} strokeWidth={2.8} />
+              </motion.span>
+            </span>
+          </div>
         </div>
       </Link>
     </motion.div>
   );
 }
 
+/* ------------------------------------------------------------------ *
+ * Hero — the two-card branch chooser
+ * ------------------------------------------------------------------ */
+
 function Hero({ branches, reduceMotion }: { branches: BranchConfig[]; reduceMotion: boolean | null }) {
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
     <section className="relative overflow-hidden px-4 pb-16 pt-24 sm:px-6 md:pb-24 md:pt-28 lg:px-10">
-      {/* Ambient blobs */}
       <span
         aria-hidden
         className="pointer-events-none absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full opacity-40 blur-3xl"
@@ -262,7 +253,7 @@ function Hero({ branches, reduceMotion }: { branches: BranchConfig[]; reduceMoti
           className="badge-pink inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.22em] md:text-[11px]"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-white/90" />
-          Now at two locations
+          Ludhiana &middot; Chandigarh
         </motion.span>
 
         <motion.h1
@@ -273,6 +264,16 @@ function Hero({ branches, reduceMotion }: { branches: BranchConfig[]; reduceMoti
           <br className="hidden sm:block" />{' '}
           <span className="text-gradient-teal">One standard of care.</span>
         </motion.h1>
+
+        {/* Punjabi runs directly under the English headline — same promise,
+            not a decorative flourish. */}
+        <motion.p
+          variants={riseIn}
+          className="mx-auto mt-3 max-w-2xl text-lg font-medium text-[var(--brand-teal)] md:text-xl"
+          lang="pa"
+        >
+          ਦੋ ਕਲੀਨਿਕ। ਇੱਕੋ ਪੱਧਰ ਦਾ ਇਲਾਜ।
+        </motion.p>
 
         <motion.p
           variants={riseIn}
@@ -289,13 +290,11 @@ function Hero({ branches, reduceMotion }: { branches: BranchConfig[]; reduceMoti
           variants={riseIn}
           className="mt-5 text-[11px] font-bold uppercase tracking-[0.25em] text-gray-400"
         >
-          Choose your city ↓
+          Choose your city ↓ <span lang="pa" className="normal-case tracking-normal">ਆਪਣਾ ਸ਼ਹਿਰ ਚੁਣੋ</span>
         </motion.p>
       </motion.div>
 
-      {/* The chooser. Panels are direct flex children of this row so their
-          animated flexGrow actually redistributes the width between them. */}
-      <div className="relative mx-auto mt-10 flex max-w-7xl flex-col gap-4 md:mt-14 lg:h-[580px] lg:flex-row">
+      <div className="relative mx-auto mt-10 grid max-w-6xl gap-5 md:mt-14 lg:grid-cols-2 lg:gap-6">
         {branches.map((branch, i) => (
           <BranchPanel
             key={branch.slug}

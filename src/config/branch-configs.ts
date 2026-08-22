@@ -79,6 +79,42 @@ export type BranchConfig = {
   heroVideo: string;
   /** Still frame for `heroVideo`, shown before playback starts. */
   heroPoster: string;
+  /**
+   * Sales video (VSL) that opens the branch page. Unlike `heroVideo` this one
+   * has sound and does not autoplay — the visitor presses play. Empty hides
+   * the whole block, so the page stays correct until the film is supplied.
+   */
+  vsl: {
+    src: string;
+    poster: string;
+    /** Overline above the player, e.g. "Watch: how we plan an implant". */
+    kicker: string;
+  };
+  /** Card presentation on the branch chooser. */
+  card: {
+    /** Corner badge, e.g. "IMPLANT LEAD". */
+    badge: string;
+    /** Photo behind the card. Falls back to the accent gradient when empty. */
+    image: string;
+    /** Up to three stat pills, shown top-right. */
+    stats: { value: string; label: string }[];
+    /** Treatment chips above the branch name. */
+    chips: string[];
+    /** Days line under the name, e.g. "MONDAY–SATURDAY". */
+    daysUpper: string;
+  };
+  /**
+   * Punjabi copy for the sections that carry the offer. English stays the
+   * primary voice (it is what the branch ranks on); Punjabi runs alongside it
+   * so a local reader gets the substance in their own language.
+   */
+  pa: {
+    heroTitle: string;
+    heroSub: string;
+    usps: string[];
+    offer: string;
+    trust: string;
+  };
   /** Branch-specific copy interpolated into shared sections (header, footer, FAQs). */
   copy: {
     leadDoctor: string;
@@ -111,13 +147,13 @@ export const branches: Record<string, BranchConfig> = {
     doctors: [
       {
         name: "Dr. Chandan Jain",
-        title: "Implantologist | MDS Prosthodontics | MDS Endodontics — I Cube Dental",
+        title: "Implantologist | BDS, MDS Prosthodontics — I Cube Dental",
         image: "/Dr.-Chandan-Jain.webp",
         initials: "CJ",
-        description: "Dr. Chandan Jain is a specialist Implantologist with dual MDS qualifications in Prosthodontics and Endodontics and 14 years of clinical experience in advanced implant and restorative dentistry. He leads I Cube Dental in New Prem Nagar, Ludhiana — a technology-driven, specialist-led dental centre equipped with in-house CBCT, CAD/CAM and digital intraoral scanners, plus a dedicated implant operatory built specifically for surgical precision and sterility.",
+        description: "Dr. Chandan Jain is a specialist Implantologist and Prosthodontist — MDS from MAMC New Delhi and a Diplomate of WCOI Japan in implantology — with over 10 years of clinical experience in advanced implant and restorative dentistry. He leads I Cube Dental in New Prem Nagar, Ludhiana — a technology-driven, specialist-led dental centre equipped with in-house CBCT, CAD/CAM and digital intraoral scanners, plus a dedicated implant operatory built specifically for surgical precision and sterility.",
         highlights: [
-          "14 years of specialist clinical experience",
-          "MDS Prosthodontics & MDS Endodontics",
+          "10+ years of specialist clinical experience",
+          "MDS Prosthodontics — MAMC New Delhi",
           "In-house CBCT + digital intraoral scanning",
           "Dedicated, purpose-built implant operatory",
         ],
@@ -171,12 +207,41 @@ export const branches: Record<string, BranchConfig> = {
     heroTitle: "Advanced Implant & Specialist Dental Care in Ludhiana",
     heroVideo: "/hero-ludhiana.mp4",
     heroPoster: "/hero-ludhiana-poster.webp",
+    // ⚠️ Awaiting the VSL film. Empty keeps the block off the page entirely.
+    vsl: {
+      src: "",
+      poster: "",
+      kicker: "Watch: how we plan an implant on CBCT",
+    },
+    card: {
+      badge: "IMPLANT LEAD",
+      image: "/Dr.-Chandan-Jain.webp",
+      stats: [
+        { value: "10+", label: "YEARS" },
+        { value: "MAMC", label: "NEW DELHI" },
+        { value: "7 Days", label: "OPEN" },
+      ],
+      chips: ["Implants", "Painless RCT", "Crowns", "Veneers"],
+      daysUpper: "MONDAY–SUNDAY",
+    },
+    pa: {
+      heroTitle: "ਲੁਧਿਆਣਾ ਵਿੱਚ ਮਾਹਰ ਡਾਕਟਰਾਂ ਤੋਂ ਦੰਦਾਂ ਦਾ ਇੰਪਲਾਂਟ ਇਲਾਜ",
+      heroSub: "ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ CBCT ਸਕੈਨ, ਡਿਜੀਟਲ ਸਕੈਨਰ ਅਤੇ ਵੱਖਰਾ ਇੰਪਲਾਂਟ ਓਪਰੇਟਰੀ — ਸਭ ਕੁਝ ਇੱਕੋ ਛੱਤ ਹੇਠਂ।",
+      usps: [
+        "ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ CBCT 3D ਸਕੈਨ",
+        "ਇੰਪਲਾਂਟ ਲਈ ਵੱਖਰਾ ਓਪਰੇਟਰੀ",
+        "MDS ਸਪੈਸ਼ਲਿਸਟ ਡਾਕਟਰਾਂ ਦੀ ਟੀਮ",
+        "ਇੱਕੋ ਦਿਨ ਵਿੱਚ ਬਿਨਾਂ ਦਰਦ ਰੂਟ ਕੈਨਾਲ",
+      ],
+      offer: "ਡੈਂਟਲ ਇੰਪਲਾਂਟ ₹25,000 ਤੋਂ ਸ਼ੁਰੂ",
+      trust: "ਹਫ਼ਤੇ ਦੇ ਸੱਤੇ ਦਿਨ ਖੁੱਲ੍ਹਾ · ਸਵੇਰੇ 10 ਤੋਂ ਰਾਤ 8 ਵਜੇ ਤੱਕ",
+    },
     copy: {
       leadDoctor: "Dr. Chandan Jain",
-      leadDoctorCreds: "Implantologist · MDS Prosthodontics · MDS Endodontics",
-      experience: "14 years",
+      leadDoctorCreds: "Implantologist · BDS, MDS Prosthodontics · MAMC New Delhi",
+      experience: "10+ years",
       teamSize: 7,
-      footerBlurb: "A specialist-led, technology-driven dental centre in Ludhiana. In-house CBCT, CAD/CAM and digital scanners, a dedicated implant operatory and a team of MDS specialists — led by Dr. Chandan Jain, Implantologist with 14 years of experience.",
+      footerBlurb: "A specialist-led, technology-driven dental centre in Ludhiana. In-house CBCT, CAD/CAM and digital scanners, a dedicated implant operatory and a team of MDS specialists — led by Dr. Chandan Jain, Implantologist with over 10 years of experience.",
       heroChipLine: "Dedicated Implant Operatory · From ₹25,000 · Ludhiana",
       oneRoofLine: "No more being referred from clinic to clinic across Ludhiana. From routine checkups to CBCT-guided implants, full-mouth rehabilitation and root canal therapy, our implantologist, prosthodontist and endodontist work together within one advanced facility — sharing the same scans, the same records and the same treatment plan.",
       faqCbct: "A CBCT is a 3D scan of your jaw that shows exact bone height, width and the position of nerves and sinuses — detail an ordinary X-ray cannot give. Because our CBCT is in-house, your scan, diagnosis and treatment plan happen in the same visit, and Dr. Chandan Jain can plan the precise implant position in 3D before any surgery begins.",
@@ -258,12 +323,12 @@ export const branches: Record<string, BranchConfig> = {
       googleMapEmbed: "https://www.google.com/maps?q=iCube+Dental+SCO+103+Sector+35C+Chandigarh&output=embed",
       googleMapsLink: "https://www.google.com/maps/search/?api=1&query=iCube+Dental+SCO+103+Sector+35C+Chandigarh"
     },
-    // ⚠️ No Chandigarh social handles supplied yet. @icube_dental is the
-    // Ludhiana account (its bio reads "iCube Dental | Ludhiana"), so it must not
-    // be reused here — both icons stay hidden until real URLs arrive.
+    // Handles taken from the practice's own site footer (icubedental.com).
+    // Kept separate from Ludhiana's @icube_dental, whose bio reads
+    // "iCube Dental | Ludhiana" — the two branches run different accounts.
     social: {
-      instagram: "",
-      facebook: "",
+      instagram: "https://www.instagram.com/icubedentalchd/",
+      facebook: "https://www.facebook.com/icubedentalchd",
     },
     schema: {
       streetAddress: "SCO 103, First Floor, Sector 35-C",
@@ -289,6 +354,35 @@ export const branches: Record<string, BranchConfig> = {
     // both cities, so it runs as iCube brand content rather than branch footage.
     heroVideo: "/icube-full-mouth-case.mp4",
     heroPoster: "/icube-full-mouth-case-poster.webp",
+    // ⚠️ Awaiting the VSL film. Empty keeps the block off the page entirely.
+    vsl: {
+      src: "",
+      poster: "",
+      kicker: "Watch: inside our Sector 35 implant suite",
+    },
+    card: {
+      badge: "COSMETIC LEAD",
+      image: "/Dr.-Gaurav-Varshney.webp",
+      stats: [
+        { value: "13+", label: "YEARS" },
+        { value: "6", label: "SPECIALITIES" },
+        { value: "4 Ops", label: "OPERATORIES" },
+      ],
+      chips: ["Implants", "Veneers", "Aligners", "Full-mouth"],
+      daysUpper: "MONDAY–SATURDAY",
+    },
+    pa: {
+      heroTitle: "ਚੰਡੀਗੜ੍ਹ ਵਿੱਚ ਲਜ਼ਰੀ ਡੈਂਟਲ ਕੇਅਰ ਅਤੇ ਇੰਪਲਾਂਟ ਸੈਂਟਰ",
+      heroSub: "ਸੈਕਟਰ 35-C ਵਿੱਚ ਛੇ ਸਪੈਸ਼ਲਿਟੀਆਂ, ਚਾਰ ਓਪਰੇਟਰੀਆਂ ਅਤੇ ਇੰਪਲਾਂਟ ਲਈ ਵੱਖਰਾ ਸਰਜੀਕਲ ਸੂਟ।",
+      usps: [
+        "ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ CBCT 3D ਸਕੈਨ",
+        "ਇੰਪਲਾਂਟ ਲਈ ਵੱਖਰੀ ਸਰਜੀਕਲ ਓਪਰੇਟਰੀ",
+        "6 ਸਪੈਸ਼ਲਟੀਆਂ ਇੱਕੋ ਛੱਤ ਹੇਠ",
+        "CBCT ਇੰਪਲਾਂਟ ਕਰਾਉਣ ਤੇ ਮੁਫ਼ਤ",
+      ],
+      offer: "ਡੈਂਟਲ ਇੰਪਲਾਂਟ ₹25,000 ਤੋਂ ਸ਼ੁਰੂ · 80/20 ਕਿਸ਼ਤਾਂ ਸਹੂਲਤ",
+      trust: "ਸੋਮਵਾਰ ਤੋਂ ਸ਼ਨੀਵਾਰ · ਸਵੇਰੇ 9:45 ਤੋਂ ਰਾਤ 8 ਵਜੇ ਤੱਕ",
+    },
     copy: {
       leadDoctor: "Dr. Gaurav Varshney",
       leadDoctorCreds: "Implantologist · MDS Prosthodontics · Crown Specialist",

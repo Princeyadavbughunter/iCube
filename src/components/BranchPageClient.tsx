@@ -11,6 +11,8 @@ import OneRoofCare from "@/components/OneRoofCare";
 import ServiceHighlights from "@/components/ServiceHighlights";
 import FAQSection from "@/components/FAQSection";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import VslSection from "@/components/VslSection";
+import TeamSection from "@/components/TeamSection";
 import GoogleReviews from "@/components/GoogleReviews";
 import CTABox from "@/components/CTABox";
 import Footer from "@/components/Footer";
@@ -134,8 +136,10 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
         {/* Hero is deliberately not wrapped — it is above the fold, so an
             entrance animation would only delay the first meaningful paint. */}
         <HeroSection onBookAppointment={openPopup} branch={branch} />
+        <Reveal><VslSection branch={branch} onBookAppointment={openPopup} /></Reveal>
         <Reveal><WhyChooseUs branch={branch} /></Reveal>
         <Reveal><DoctorProfile onBookAppointment={openPopup} branch={branch} /></Reveal>
+        <Reveal><TeamSection branch={branch} /></Reveal>
         <Reveal><OneRoofCare branch={branch} /></Reveal>
         <Reveal><ServiceHighlights /></Reveal>
         <Reveal><BeforeAfterSlider branch={branch} /></Reveal>
