@@ -82,7 +82,8 @@ export default async function BranchPage({ params }: { params: Promise<Params> }
     },
     priceRange: "₹₹",
     openingHours: branch.schema.openingHours,
-    sameAs: [branch.contact.googleMapsLink],
+    // Only real, branch-owned profiles belong in sameAs — empty handles are dropped.
+    sameAs: [branch.contact.googleMapsLink, branch.social.instagram, branch.social.facebook].filter(Boolean),
     medicalSpecialty: [
       "Dentistry",
       "DentalImplants",

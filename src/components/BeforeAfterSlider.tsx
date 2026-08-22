@@ -1,21 +1,20 @@
 import Image from 'next/image';
+import { BranchConfig } from '@/config/branch-configs';
 
-/* Clinic-supplied result photos. Each file is already a composed
-   before/after pair with its own BEFORE / AFTER labels burnt in, so this
-   component renders them whole — no split, divider or overlay labels. */
-type Case = {
-  src: string;
-  alt: string;
-};
+/* Clinic-supplied result photos, per branch (see `beforeAfter` in
+   branch-configs). Each file is already a composed before/after pair with its
+   own labels burnt in, so this component renders them whole — no split,
+   divider or overlay labels. The aspect ratio comes from the config because
+   each branch supplies a different frame size. */
+interface BeforeAfterSliderProps {
+  branch: BranchConfig;
+}
 
-const CASES: Case[] = [
-  { src: '/before-after/01-1.webp', alt: 'Before and after dental treatment result — patient 1' },
-  { src: '/before-after/03-1-1.webp', alt: 'Before and after dental treatment result — patient 2' },
-  { src: '/before-after/06-1-1.webp', alt: 'Before and after dental treatment result — patient 3' },
-  { src: '/before-after/07-1-1.webp', alt: 'Before and after dental treatment result — patient 4' },
-];
+export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
+  const { aspect, images } = branch.beforeAfter;
 
-export default function BeforeAfterSlider() {
+  if (images.length === 0) return null;
+
   return (
     <section className="relative py-20 md:py-32 overflow-hidden" id="transformations">
       <div aria-hidden className="pointer-events-none absolute top-0 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-20"
@@ -33,17 +32,20 @@ export default function BeforeAfterSlider() {
             Real Smiles, <span className="text-gradient-logo">Real Transformations</span>
           </h2>
           <p className="text-gray-500 max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed">
-            Actual before &amp; after results from specialist-led implant dentistry.
+            Actual before &amp; after results from specialist-led implant dentistry in {branch.city}.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-7">
-          {CASES.map((c, i) => (
+          {images.map((c, i) => (
             <div
               key={c.src}
               className={`bg-white/90 backdrop-blur-sm p-3 rounded-[22px] depth-stack card-3d-tilt border border-white/80 fade-up stagger-${i + 1}`}
             >
-              <div className="relative w-full aspect-[558/382] rounded-2xl overflow-hidden bg-gray-100">
+              <div
+                className="relative w-full rounded-2xl overflow-hidden bg-gray-100"
+                style={{ aspectRatio: aspect }}
+              >
                 <Image
                   src={c.src}
                   alt={c.alt}

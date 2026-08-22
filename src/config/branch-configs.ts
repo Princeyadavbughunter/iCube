@@ -30,6 +30,16 @@ export type BranchConfig = {
   accent: string;
   doctors: DoctorConfig[];
   clinicImages: { src: string; alt: string }[];
+  /**
+   * Clinic-supplied result photos for this branch. Each file is already a
+   * composed before/after case, so the section renders them whole — no split,
+   * divider or overlay labels. `aspect` is a CSS aspect-ratio matching the
+   * supplied files (they differ per branch), so nothing gets cropped.
+   */
+  beforeAfter: {
+    aspect: string;
+    images: { src: string; alt: string }[];
+  };
   contact: {
     phones: string[];
     timings: string;
@@ -39,6 +49,14 @@ export type BranchConfig = {
     email: string;
     googleMapEmbed: string;
     googleMapsLink: string;
+  };
+  /**
+   * Social profiles for this branch. Each branch runs its own handles — leave a
+   * field empty and the footer hides that icon rather than rendering a dead link.
+   */
+  social: {
+    instagram: string;
+    facebook: string;
   };
   /** Structured address + hours, used to emit schema.org LocalBusiness JSON-LD. */
   schema: {
@@ -54,7 +72,13 @@ export type BranchConfig = {
     implant: string;
   };
   heroTitle: string;
+  /**
+   * Clinic walkthrough shown in the hero media frame. Empty falls back to the
+   * rotating implant renders. Keep the file web-sized — it autoplays.
+   */
   heroVideo: string;
+  /** Still frame for `heroVideo`, shown before playback starts. */
+  heroPoster: string;
   /** Branch-specific copy interpolated into shared sections (header, footer, FAQs). */
   copy: {
     leadDoctor: string;
@@ -103,6 +127,15 @@ export const branches: Record<string, BranchConfig> = {
     // ⚠️ Awaiting real clinic photography — the /images/clinic-*.jpeg files in this
     // repo are a previous client's premises and must not be used here.
     clinicImages: [],
+    beforeAfter: {
+      aspect: '558 / 382',
+      images: [
+        { src: '/before-after/01-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 1' },
+        { src: '/before-after/03-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 2' },
+        { src: '/before-after/06-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 3' },
+        { src: '/before-after/07-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 4' },
+      ],
+    },
     contact: {
       phones: ["7011993633", "9077700021"],
       timings: "Mon–Sun: 10 AM – 8 PM",
@@ -111,6 +144,12 @@ export const branches: Record<string, BranchConfig> = {
       email: "drcjain1@gmail.com",
       googleMapEmbed: "https://www.google.com/maps?q=I+Cube+Dental+New+Prem+Nagar+Ludhiana&output=embed",
       googleMapsLink: "https://www.google.com/maps/search/?api=1&query=I+Cube+Dental+New+Prem+Nagar+Ludhiana"
+    },
+    social: {
+      instagram: "https://www.instagram.com/icube_dental/",
+      // ⚠️ No Facebook page supplied for Ludhiana yet — the icon stays hidden
+      // until a real URL is added. Do not point this at the Chandigarh page.
+      facebook: "",
     },
     schema: {
       streetAddress: "1533, New Prem Nagar, Near Las Vegas Club (PAU Gate No. 4)",
@@ -130,7 +169,8 @@ export const branches: Record<string, BranchConfig> = {
       implant: "₹25,000 onwards*"
     },
     heroTitle: "Advanced Implant & Specialist Dental Care in Ludhiana",
-    heroVideo: "/clinic4.mp4",
+    heroVideo: "/hero-ludhiana.mp4",
+    heroPoster: "/hero-ludhiana-poster.webp",
     copy: {
       leadDoctor: "Dr. Chandan Jain",
       leadDoctorCreds: "Implantologist · MDS Prosthodontics · MDS Endodontics",
@@ -145,28 +185,29 @@ export const branches: Record<string, BranchConfig> = {
       faqRootCanal: "Yes. Endodontics is one of our core specialisations — Dr. Chandan Jain is MDS in Endodontics, so root canal treatment, retreatment of failed root canals and complex or curved-canal cases are all handled in-house. If that tooth then needs a crown, the same team completes it with CAD/CAM, so nothing gets referred out or delayed.",
       faqTimingsLocation: "We are open Monday to Sunday, 10:00 AM to 8:00 PM — all seven days. The clinic is at 1533, New Prem Nagar, Ludhiana, near Las Vegas Club, close to PAU Gate No. 4 and Akaash Institute. Call 7011993633 or 9077700021 to book a consultation.",
     },
-    // ⚠️ PLACEHOLDER REVIEWS — replace with the clinic's real Google reviews before launch.
+    // Real Google reviews from the Ludhiana GMB profile, quoted verbatim
+    // (including the reviewers' own typos) — do not tidy the wording.
     reviews: [
       {
-        name: "Harpreet Singh",
-        initials: "H",
-        title: "Implant Planned on CBCT — Flawless Result",
-        meta: "Local Guide · 14 reviews · 2 months ago",
-        review: "I had a dental implant done by Dr. Chandan Jain at I Cube Dental. What stood out was how thorough the planning was — the CBCT scan was done in-house and he showed me exactly where the implant would sit before starting. The implant operatory is separate and spotless. The procedure was painless and the crown fitted perfectly on the first try. Genuinely a specialist-level setup in Ludhiana."
+        name: "Talim ansari",
+        initials: "T",
+        title: "Second Opinion That Changed the Outcome",
+        meta: "3 reviews · 9 months ago",
+        review: "After a bad experience at another clinic, I came to iCube Dental for an implant consultation with Dr. Chandan Jain. The difference was huge - he listened carefully, explained all options, and used advanced technology during treatment. The entire process was smooth and painless. I would recommend him to everyone who wants a reliable and long-lasting implant."
       },
       {
-        name: "Simran Kaur",
-        initials: "S",
-        title: "Root Canal Done by an MDS Endodontist",
-        meta: "Local Guide · 7 reviews · 1 month ago",
-        review: "I had been putting off a root canal for months out of fear. Dr. Chandan Jain is an MDS in Endodontics and it showed — the treatment was completed comfortably and he explained every step as he went. The digital scanner meant no messy impressions for the crown either. The staff are professional and the clinic is very hygienic. Highly recommend I Cube Dental."
+        name: "Ishu",
+        initials: "I",
+        title: "Implants for My Mother — Natural-Looking Results",
+        meta: "4 reviews · 9 months ago",
+        review: "My mother got her dental implants done from Dr. Chandan Jain, and the experience was simply amazing. He was kind, patient, and explained all the do's and don'ts after surgery. The entire team at iCube Dental was supportive and caring. The results look natural we couldn't be happier!"
       },
       {
-        name: "Rohit Mehta",
-        initials: "R",
-        title: "Full Mouth Rehab — Specialist Team Under One Roof",
-        meta: "9 reviews · 3 months ago",
-        review: "After consulting a few clinics in Ludhiana, I chose I Cube Dental for my full mouth rehabilitation. The deciding factor was that every specialist — implantology, prosthodontics, endodontics — is in the same practice, so nothing got handed off or delayed. The CAD/CAM crowns look completely natural. Dr. Chandan Jain gave me a clear plan and timeline upfront and stuck to it. Excellent experience."
+        name: "Tarun Bhattia",
+        initials: "T",
+        title: "Every Procedure Painless and Hassle-Free",
+        meta: "4 reviews · 8 months ago",
+        review: "The best dental treatment experience with Dr.Chandan & Dr.Deepika was amazing ..... i got my total procedures painless and hustle free ... kudos to the team of doctors and staff . On my personal experience i highly recommend I-Cube Dental Ludhiana."
       }
     ]
   },
@@ -184,9 +225,7 @@ export const branches: Record<string, BranchConfig> = {
       {
         name: "Dr. Gaurav Varshney",
         title: "Implantologist | MDS Prosthodontics | Crown & Cosmetic Specialist — iCube Dental",
-        // ⚠️ No photograph supplied for the Chandigarh branch yet — a monogram is
-        // rendered until one is added to /public. Do not substitute a stock image.
-        image: "",
+        image: "/Dr.-Gaurav-Varshney.webp",
         initials: "GV",
         description: "Dr. Gaurav Varshney is an MDS Prosthodontist, Implantologist and Cosmetic Dentist with over 13 years of clinical experience in implant, crown and full-mouth rehabilitation. He leads iCube Dental in Sector 35-C, Chandigarh — a premium, technology-driven multi-speciality centre built around in-house CBCT, digital intraoral scanners, four designated operatories and a separate surgical operatory used only for implant placement.",
         highlights: [
@@ -200,6 +239,16 @@ export const branches: Record<string, BranchConfig> = {
     ],
     // ⚠️ Awaiting real clinic photography from the Chandigarh Google Drive folder.
     clinicImages: [],
+    // Cases supplied by the Chandigarh clinic — square, already branded.
+    beforeAfter: {
+      aspect: '1 / 1',
+      images: [
+        { src: '/before-afterchd/chd-01-veneers.jpg', alt: 'Veneers case at iCube Dental Chandigarh — smile before and after treatment' },
+        { src: '/before-afterchd/chd-02-veneers-full-mouth.jpg', alt: 'Full upper veneers case at iCube Dental Chandigarh — worn, discoloured teeth restored' },
+        { src: '/before-afterchd/chd-03-crowns.jpg', alt: 'Crown and cosmetic rehabilitation at iCube Dental Chandigarh — before and after' },
+        { src: '/before-afterchd/chd-04-implants.jpg', alt: 'Full mouth dental implant rehabilitation at iCube Dental Chandigarh — before and after with OPG scan' },
+      ],
+    },
     contact: {
       phones: ["9077700020"],
       timings: "Mon–Sat: 9:45 AM – 8 PM",
@@ -208,6 +257,13 @@ export const branches: Record<string, BranchConfig> = {
       email: "icubedentalchd@gmail.com",
       googleMapEmbed: "https://www.google.com/maps?q=iCube+Dental+SCO+103+Sector+35C+Chandigarh&output=embed",
       googleMapsLink: "https://www.google.com/maps/search/?api=1&query=iCube+Dental+SCO+103+Sector+35C+Chandigarh"
+    },
+    // ⚠️ No Chandigarh social handles supplied yet. @icube_dental is the
+    // Ludhiana account (its bio reads "iCube Dental | Ludhiana"), so it must not
+    // be reused here — both icons stay hidden until real URLs arrive.
+    social: {
+      instagram: "",
+      facebook: "",
     },
     schema: {
       streetAddress: "SCO 103, First Floor, Sector 35-C",
@@ -227,7 +283,11 @@ export const branches: Record<string, BranchConfig> = {
       implant: "₹25,000 onwards*"
     },
     heroTitle: "Advanced Implant & Multi-Speciality Dental Care in Chandigarh",
+    // ⚠️ No Chandigarh clinic video supplied yet, so the hero falls back to the
+    // implant renders. /ludhiana-case-full-mouth.mp4 is NOT a candidate: the
+    // surgeon on screen is Dr. Chandan Jain (Ludhiana), not Dr. Gaurav Varshney.
     heroVideo: "",
+    heroPoster: "",
     copy: {
       leadDoctor: "Dr. Gaurav Varshney",
       leadDoctorCreds: "Implantologist · MDS Prosthodontics · Crown Specialist",
@@ -242,29 +302,29 @@ export const branches: Record<string, BranchConfig> = {
       faqRootCanal: "Yes. We have an MDS endodontist in-house, so root canal treatment, retreatment of failed root canals and complex or curved-canal cases are all handled here. If that tooth then needs a crown, our digital scanners and CAD/CAM workflow can deliver it as a single-day crown, so nothing gets referred out or delayed.",
       faqTimingsLocation: "We are open Monday to Saturday, 9:45 AM to 8:00 PM. The clinic is at SCO 103, First Floor, Sector 35-C, Chandigarh – 160022, above the Swarn Ganga / Sunder Jewellers block. Call 9077700020 to book a consultation.",
     },
-    // ⚠️ PLACEHOLDER REVIEWS — the Chandigarh GMB profile exists but its real reviews
-    // have not been supplied. Replace these with genuine Google reviews before launch.
+    // Real Google reviews from the Chandigarh GMB profile, quoted verbatim
+    // (including the reviewers' own typos) — do not tidy the wording.
     reviews: [
       {
-        name: "Ankit Sharma",
-        initials: "A",
-        title: "Implant Planned on In-House CBCT",
-        meta: "Local Guide · 11 reviews · 1 month ago",
-        review: "Consulted a few places in Sector 35 before choosing iCube Dental. Dr. Gaurav Varshney did the CBCT right there in the clinic and showed me the bone and nerve position on screen before planning the implant. The implant surgery happens in a separate operatory, which reassured me a lot. Painless procedure and a crown that fits perfectly."
+        name: "Gurpreet Grewal",
+        initials: "G",
+        title: "Smile Makeover with Implants & Crowns",
+        meta: "3 reviews · 3 photos · 3 months ago",
+        review: "Smile designing was a dream for me until i met Dr gaurav … I am more confident with my smile makeover using dental implants and beautiful crowns. I have undergone root canal treatment also which was totally painless and so smooth that i didnt feel a thing!! Highly recommended for perfect dental care in tricity. The staff is so overwhelming that overall experience was awesome"
       },
       {
-        name: "Neha Bansal",
-        initials: "N",
-        title: "Single-Day Crown — Done in One Sitting",
-        meta: "Local Guide · 6 reviews · 2 months ago",
-        review: "I needed a crown and was expecting two or three visits. The digital scanner meant no messy impressions, and the crown was ready and fitted the same day. Dr. Gaurav Varshney explained every step and the pricing was clear upfront. The clinic is genuinely well-equipped — easily among the best setups in Chandigarh."
+        name: "Tajinder kaur",
+        initials: "T",
+        title: "Same-Visit Extraction & Implant — Painless",
+        meta: "1 review · 1 photo · 3 months ago",
+        review: "Immediate tooth removal followed by a dental implant and that too totally painless…RCT and zirconia crowns all went smooth wonderful experi nce best dental clinic for all dental related treatments plus they have latest machines and cbct must visit to experience the difference in latest modern dentistry"
       },
       {
-        name: "Rajeev Khanna",
-        initials: "R",
-        title: "Full Mouth Rehab — Every Specialist In One Place",
-        meta: "8 reviews · 3 months ago",
-        review: "My case needed a periodontist, an endodontist and a prosthodontist. At iCube Dental all three were in the same practice, so nothing got handed off or delayed and everyone worked off the same scans. Four operatories means appointments actually run on time. Very happy with the result and the follow-up care."
+        name: "Saroj Sharma",
+        initials: "S",
+        title: "Root Canal — Calm, Clearly Explained Care",
+        meta: "1 review · 1 photo · 7 months ago",
+        review: "My mother recently underwent RCT at this dental clinic, and we are very satisfied with the treatment. Dr. Priyanka was highly skilled, patient, and explained every step clearly, which really helped ease her anxiety. The staff were also caring and supportive throughout the process. The clinic was clean and well-maintained, and we truly appreciate the excellent care provided. I highly recommend it to anyone looking for quality dental treatment. All thanks to Dr. Priyanka and her staff as well 😜🥰"
       }
     ]
   }

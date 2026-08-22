@@ -14,6 +14,10 @@ export default function Footer({ branch }: FooterProps) {
   const mapEmbed = branch ? branch.contact.googleMapEmbed : "";
   const leadDoctor = branch?.copy.leadDoctor ?? "";
   const daysLine = branch?.contact.daysLine ?? "";
+  // Empty handles render nothing rather than a dead "#" link.
+  const instagram = branch?.social.instagram ?? "";
+  const facebook = branch?.social.facebook ?? "";
+  const branchName = branch ? `I Cube Dental ${branch.name}` : "I Cube Dental";
 
   return (
     <footer className="relative border-t border-white/5 pt-8 pb-4 text-gray-300 overflow-hidden"
@@ -103,26 +107,32 @@ export default function Footer({ branch }: FooterProps) {
               Follow Us
             </h3>
             <div className="flex flex-col gap-4 mt-4">
-              <div className="flex items-center justify-center md:justify-start gap-3">
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white/5 hover:bg-gradient-to-br from-pink-500 to-purple-600 p-2.5 rounded-xl transition-all text-white border border-white/10 hover:border-transparent group"
-                  aria-label="Instagram"
-                >
-                  <Instagram size={18} className="group-hover:scale-110 transition-transform" />
-                </a>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer" 
-                  className="bg-white/5 hover:bg-[#1877F2] p-2.5 rounded-xl transition-all text-white border border-white/10 hover:border-transparent group"
-                  aria-label="Facebook"
-                >
-                  <Facebook size={18} className="group-hover:scale-110 transition-transform" />
-                </a>
-              </div>
+              {(instagram || facebook) && (
+                <div className="flex items-center justify-center md:justify-start gap-3">
+                  {instagram && (
+                    <a
+                      href={instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/5 hover:bg-gradient-to-br from-pink-500 to-purple-600 p-2.5 rounded-xl transition-all text-white border border-white/10 hover:border-transparent group"
+                      aria-label={`${branchName} on Instagram`}
+                    >
+                      <Instagram size={18} className="group-hover:scale-110 transition-transform" />
+                    </a>
+                  )}
+                  {facebook && (
+                    <a
+                      href={facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/5 hover:bg-[#1877F2] p-2.5 rounded-xl transition-all text-white border border-white/10 hover:border-transparent group"
+                      aria-label={`${branchName} on Facebook`}
+                    >
+                      <Facebook size={18} className="group-hover:scale-110 transition-transform" />
+                    </a>
+                  )}
+                </div>
+              )}
               
               <div className="pt-2">
                 <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500 mb-2">Find us on Google</p>
