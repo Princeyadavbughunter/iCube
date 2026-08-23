@@ -4,20 +4,19 @@ import { useEffect, useState } from "react";
 import { BranchConfig } from "@/config/branch-configs";
 
 import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import WhyChooseUs from "@/components/WhyChooseUs";
-import DoctorProfile from "@/components/DoctorProfile";
-import OneRoofCare from "@/components/OneRoofCare";
-import ServiceHighlights from "@/components/ServiceHighlights";
-import FAQSection from "@/components/FAQSection";
+import EditorialHero from "@/components/editorial/EditorialHero";
+import AboutSection from "@/components/editorial/AboutSection";
+import ServicesList from "@/components/editorial/ServicesList";
+import WhyTrust from "@/components/editorial/WhyTrust";
+import TeamGrid from "@/components/editorial/TeamGrid";
+import ProcessSteps from "@/components/editorial/ProcessSteps";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
-import TeamSection from "@/components/TeamSection";
-import GoogleReviews from "@/components/GoogleReviews";
-import CTABox from "@/components/CTABox";
+import Testimonials from "@/components/editorial/Testimonials";
+import FaqEditorial from "@/components/editorial/FaqEditorial";
+import CtaBand from "@/components/editorial/CtaBand";
 import Footer from "@/components/Footer";
 import StickyCTA from "@/components/StickyCTA";
 import PopupForm from "@/components/PopupForm";
-import BackgroundGraphics from "@/components/BackgroundGraphics";
 import Reveal from "@/components/Reveal";
 
 interface BranchPageClientProps {
@@ -126,25 +125,22 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
   };
 
   return (
-    <div className="bg-medical-light min-h-screen">
-      <BackgroundGraphics />
-
+    <div className="min-h-screen bg-[var(--bg-page)]">
       {/* Main Content */}
       <div className="relative z-10">
         <Header onBookAppointment={openPopup} branch={branch} />
-        {/* Hero is deliberately not wrapped — it is above the fold, so an
-            entrance animation would only delay the first meaningful paint. */}
-        <HeroSection onBookAppointment={openPopup} branch={branch} />
-        <Reveal><WhyChooseUs branch={branch} /></Reveal>
-        <Reveal><DoctorProfile onBookAppointment={openPopup} branch={branch} /></Reveal>
-        <Reveal><TeamSection branch={branch} /></Reveal>
-        <Reveal><OneRoofCare branch={branch} /></Reveal>
-        <Reveal><ServiceHighlights /></Reveal>
+        {/* The hero is above the fold, so it is deliberately not wrapped in a
+            Reveal — an entrance animation would only delay first paint. */}
+        <EditorialHero branch={branch} onBookAppointment={openPopup} />
+        <Reveal><AboutSection branch={branch} /></Reveal>
+        <Reveal><ServicesList branch={branch} /></Reveal>
+        <Reveal><WhyTrust branch={branch} /></Reveal>
+        <Reveal><TeamGrid branch={branch} /></Reveal>
+        <Reveal><ProcessSteps branch={branch} /></Reveal>
         <Reveal><BeforeAfterSlider branch={branch} /></Reveal>
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent max-w-4xl mx-auto opacity-50" />
-        <Reveal><FAQSection branch={branch} /></Reveal>
-        <Reveal><GoogleReviews branch={branch} /></Reveal>
-        <Reveal><CTABox onBookAppointment={openPopup} branch={branch} /></Reveal>
+        <Reveal><Testimonials branch={branch} /></Reveal>
+        <Reveal><FaqEditorial branch={branch} onBookAppointment={openPopup} /></Reveal>
+        <Reveal><CtaBand branch={branch} onBookAppointment={openPopup} /></Reveal>
         <Reveal y={16}><Footer branch={branch} /></Reveal>
       </div>
 
