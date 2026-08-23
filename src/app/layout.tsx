@@ -84,7 +84,7 @@ export default function RootLayout({
             framer-motion. Without JS they would never appear, so force them
             visible in that case. */}
         <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+          <style>{`[data-reveal],[data-reveal] *{opacity:1!important;transform:none!important;filter:none!important}`}</style>
         </noscript>
         <meta name="theme-color" content="#303151" />
         <link rel="manifest" href="/manifest.json" />

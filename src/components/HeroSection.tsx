@@ -1,6 +1,7 @@
 import { BranchConfig } from "@/config/branch-configs";
 import ImplantShowcase from "@/components/ImplantShowcase";
 import HeroVideo from "@/components/HeroVideo";
+import VslPlayer from "@/components/VslPlayer";
 
 interface HeroSectionProps {
   onBookAppointment: () => void;
@@ -18,6 +19,7 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
   const mapsLink = branch ? branch.contact.googleMapsLink : "";
   const heroVideo = branch?.heroVideo ?? "";
   const heroPoster = branch?.heroPoster ?? "";
+  const hasVsl = Boolean(branch?.vsl.src);
 
   return (
     <section className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 md:pt-32 md:pb-36 px-4 sm:px-6 md:px-12 lg:px-16 max-w-7xl mx-auto overflow-hidden">
@@ -90,18 +92,37 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
           {firstPart}<br className="hidden md:block" />
           <span className="text-gradient-teal">{secondPart}</span>
         </h1>
+        {/* Punjabi carries the same promise as the H1, not a decoration — it
+            sits directly under it so a local reader gets the offer first. */}
+        {branch && (
+          <p lang="pa" className="text-lg sm:text-xl md:text-2xl font-medium text-[var(--brand-teal)] max-w-3xl mx-auto mb-5 leading-snug">
+            {branch.pa.heroTitle}
+          </p>
+        )}
         <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-light">
           A specialist-driven dental centre where in-house CBCT, CAD/CAM and digital scanning meet an all-MDS clinical team — so every implant is diagnosed, planned and placed with precision. Everything under one roof.
         </p>
+        {branch && (
+          <p lang="pa" className="mt-3 text-[15px] sm:text-base text-gray-500 max-w-2xl mx-auto leading-relaxed">
+            {branch.pa.heroSub}
+          </p>
+        )}
       </div>
 
-      <div className="md:flex md:items-center md:justify-center md:gap-16 md:mb-12 max-w-5xl mx-auto fade-up stagger-1">
+      <div className="md:flex md:items-center md:justify-center md:gap-10 md:mb-12 max-w-5xl mx-auto fade-up stagger-1">
         {/* Hero implant showcase with 3D tilt + gradient ring.
             Aspect is 3/4 on mobile rather than 9/16 — the renders are square,
             so a taller frame would just add dead space around them. */}
+        {/* The sales film owns this slot. It is 16:9, so the frame is no longer
+            the portrait one the ambient clinic clip used — a portrait crop
+            would cut the speaker and the burnt-in captions out of shot.
+            Branches with no film fall back to the clip, then to the renders. */}
+        {hasVsl ? (
+          <div className="w-full md:w-[520px] mx-auto md:mx-0 mb-8 md:mb-0 md:flex-initial">
+            <VslPlayer branch={branch!} />
+          </div>
+        ) : (
         <div className="relative rounded-3xl aspect-[3/4] max-w-[320px] md:aspect-auto md:max-w-none md:h-[500px] md:w-[300px] mx-auto md:mx-0 mb-8 md:mb-0 md:flex-initial overflow-hidden shadow-2xl ring-4 ring-white ring-offset-2 ring-offset-[var(--accent-pink-soft)] card-3d-tilt">
-          {/* A branch with its own clinic video shows it here; the rest fall back
-              to the rotating implant renders. */}
           {heroVideo ? (
             <HeroVideo src={heroVideo} poster={heroPoster} label={branch?.name ?? "I Cube Dental"} />
           ) : (
@@ -111,9 +132,10 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
           <div aria-hidden className="absolute -top-6 -right-6 w-24 h-24 rounded-full blur-2xl opacity-50 pointer-events-none"
                style={{ background: 'radial-gradient(circle, var(--accent-pink) 0%, transparent 70%)' }} />
         </div>
+        )}
 
         {/* Specializations card with layered depth */}
-        <div className="relative md:w-[450px] fade-up stagger-2">
+        <div className="relative md:w-[420px] fade-up stagger-2">
           <div className="glass-premium p-8 md:p-12 rounded-[32px] border border-white/60 relative overflow-hidden card-3d-tilt depth-stack">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-teal)] opacity-10 blur-3xl -mr-16 -mt-16" />
             <div className="absolute bottom-0 left-0 w-28 h-28 bg-[var(--accent-pink)] opacity-[0.08] blur-3xl -ml-14 -mb-14" />
@@ -133,11 +155,22 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
                 </li>
               ))}
             </ul>
+            {branch && (
+              <ul lang="pa" className="-mt-7 mb-9 space-y-2 text-[13.5px] text-gray-500">
+                {branch.pa.usps.slice(0, 3).map((item) => (
+                  <li key={item} className="flex items-center gap-3">
+                    <span className="w-1 h-1 rounded-full bg-[var(--accent-gold-deep)]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            )}
             <button
               onClick={onBookAppointment}
               className="w-full bg-[var(--brand-dark)] text-white px-6 py-5 rounded-2xl text-base font-bold hover:bg-[var(--brand-darker)] transition-all hover:-translate-y-1 active:scale-95 btn-3d gradient-sheen"
             >
               Book Free Consultation
+              <span lang="pa" className="ml-2 font-normal opacity-70">· ਬੁੱਕ ਕਰੋ</span>
             </button>
           </div>
         </div>
@@ -150,6 +183,7 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
           className="bg-[var(--brand-teal)] text-white py-4 px-8 sm:px-12 rounded-2xl font-bold text-base sm:text-lg hover:bg-[var(--brand-teal-dark)] transition-all hover:scale-105 active:scale-95 md:min-w-[240px] btn-3d gradient-sheen min-h-[52px]"
         >
           Book Appointment
+          <span lang="pa" className="ml-2 font-normal opacity-75">· ਬੁੱਕ ਕਰੋ</span>
         </button>
         <a
           href={`tel:${primaryPhone.replace(/\s/g, '')}`}
