@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { team } from '@/config/team';
+import { team, teamPhotos } from '@/config/team';
 import type { BranchConfig } from '@/config/branch-configs';
 import { SectionLabel, SectionHeading, PaLine } from './Primitives';
 
@@ -82,6 +82,48 @@ export default function TeamGrid({ branch }: { branch: BranchConfig }) {
               </article>
             );
           })}
+        </div>
+
+        {/* The wider practice. The specialists above do the clinical work, but
+            this is who a patient actually meets on the day. */}
+        <div className="mt-14">
+          <div className="mb-6 flex flex-col items-center text-center">
+            <h3 className="font-poppins text-xl font-bold tracking-tight text-[var(--brand-teal-deep)] sm:text-2xl">
+              A team of {branch.copy.teamSize}, under one roof
+            </h3>
+            <p lang="pa" className="mt-1.5 text-[15px] font-medium text-[var(--brand-teal)]">
+              ਪੂਰੀ ਟੀਮ ਇੱਕੋ ਛੱਤ ਹੇਠ
+            </p>
+          </div>
+
+          <div className="grid gap-4 lg:grid-cols-3">
+            <figure className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-100 lg:col-span-2">
+              <Image
+                src={teamPhotos.doctors.src}
+                alt={teamPhotos.doctors.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 66vw"
+                className="object-cover"
+              />
+            </figure>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              {[teamPhotos.full, teamPhotos.support].map((photo) => (
+                <figure
+                  key={photo.src}
+                  className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-100 lg:aspect-auto lg:h-full lg:min-h-[120px]"
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(max-width: 1024px) 50vw, 33vw"
+                    className="object-cover"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

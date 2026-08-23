@@ -54,3 +54,25 @@ export const team: TeamMember[] = [
     initials: "PS",
   },
 ];
+
+/**
+ * Group photographs of the whole practice, shot at the clinic.
+ *
+ * All four doctors appear together in `team-doctors`, so these are brand-level
+ * images rather than one branch's premises — which is why they run on both
+ * branch pages.
+ */
+export const teamPhotos = {
+  doctors: {
+    src: '/team/team-doctors.webp',
+    alt: 'The iCube Dental specialists and clinical staff at the practice reception',
+  },
+  full: {
+    src: '/team/team-full.webp',
+    alt: 'The full iCube Dental team — doctors, nurses and front-desk staff',
+  },
+  support: {
+    src: '/team/team-support.webp',
+    alt: 'The iCube Dental nursing and support staff',
+  },
+} as const;
