@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { branchList } from "@/config/branch-configs";
 import BranchSelect from "@/components/BranchSelect";
+import SmoothScroll from "@/components/motion/SmoothScroll";
 
 const cities = branchList.map((b) => b.name).join(" & ");
 
@@ -73,6 +74,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <SmoothScroll />
       <BranchSelect branches={branchList} />
     </>
   );

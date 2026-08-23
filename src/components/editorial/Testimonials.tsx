@@ -1,6 +1,7 @@
 import { Star, Quote } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 import { SectionLabel, SectionHeading, PaLine } from './Primitives';
+import { Stagger, StaggerItem } from '@/components/motion/Motion';
 
 /** Real Google reviews for this branch, quoted verbatim (typos included). */
 export default function Testimonials({ branch }: { branch: BranchConfig }) {
@@ -15,9 +16,9 @@ export default function Testimonials({ branch }: { branch: BranchConfig }) {
           <PaLine>ਸਾਡੇ ਮਰੀਜ਼ ਕੀ ਕਹਿੰਦੇ ਹਨ</PaLine>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-3">
+        <Stagger className="grid gap-5 md:grid-cols-3" gap={0.1}>
           {branch.reviews.map((review) => (
-            <figure
+            <StaggerItem
               key={review.name}
               className="flex flex-col rounded-2xl border border-gray-200 bg-white p-6 transition-shadow hover:shadow-[0_18px_50px_-28px_rgba(16,17,36,0.35)]"
             >
@@ -49,9 +50,9 @@ export default function Testimonials({ branch }: { branch: BranchConfig }) {
                   </div>
                 </div>
               </figcaption>
-            </figure>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
 
         <a
           href={branch.contact.googleMapsLink}

@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import type { BranchConfig } from '@/config/branch-configs';
 import { SectionLabel, SectionHeading, PaLine, MediaFrame, PhotoPending } from './Primitives';
+import { Stagger, StaggerItem } from '@/components/motion/Motion';
 
 /** What actually happens across a course of treatment, in order. */
 const STEPS = [
@@ -37,9 +38,9 @@ export default function ProcessSteps({ branch }: { branch: BranchConfig }) {
           <SectionHeading>Simple, safe and comfortable</SectionHeading>
           <PaLine>ਸੌਖਾ, ਸੁਰੱਖਿਅਤ ਤੇ ਆਰਾਮਦਾਇਕ ਇਲਾਜ</PaLine>
 
-          <ol className="mt-8 space-y-3">
+          <Stagger className="mt-8 space-y-3">
             {STEPS.map((step, i) => (
-              <li
+              <StaggerItem
                 key={step.title}
                 className="rounded-xl border border-gray-200 bg-[var(--bg-surface-soft)] p-4 transition-colors hover:border-[var(--accent-gold)]"
               >
@@ -57,9 +58,9 @@ export default function ProcessSteps({ branch }: { branch: BranchConfig }) {
                     <p className="mt-1.5 text-[14px] leading-relaxed text-gray-500">{step.body}</p>
                   </div>
                 </div>
-              </li>
+              </StaggerItem>
             ))}
-          </ol>
+          </Stagger>
         </div>
 
         <MediaFrame offset="br">

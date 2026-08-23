@@ -17,7 +17,8 @@ import CtaBand from "@/components/editorial/CtaBand";
 import Footer from "@/components/Footer";
 import StickyCTA from "@/components/StickyCTA";
 import PopupForm from "@/components/PopupForm";
-import Reveal from "@/components/Reveal";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+import { Rise, ScrollProgress } from "@/components/motion/Motion";
 
 interface BranchPageClientProps {
   branch: BranchConfig;
@@ -126,22 +127,25 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
 
   return (
     <div className="min-h-screen bg-[var(--bg-page)]">
+      <SmoothScroll />
+      <ScrollProgress />
+
       {/* Main Content */}
       <div className="relative z-10">
         <Header onBookAppointment={openPopup} branch={branch} />
         {/* The hero is above the fold, so it is deliberately not wrapped in a
             Reveal — an entrance animation would only delay first paint. */}
         <EditorialHero branch={branch} onBookAppointment={openPopup} />
-        <Reveal><AboutSection branch={branch} /></Reveal>
-        <Reveal><ServicesList branch={branch} /></Reveal>
-        <Reveal><WhyTrust branch={branch} /></Reveal>
-        <Reveal><TeamGrid branch={branch} /></Reveal>
-        <Reveal><ProcessSteps branch={branch} /></Reveal>
-        <Reveal><BeforeAfterSlider branch={branch} /></Reveal>
-        <Reveal><Testimonials branch={branch} /></Reveal>
-        <Reveal><FaqEditorial branch={branch} onBookAppointment={openPopup} /></Reveal>
-        <Reveal><CtaBand branch={branch} onBookAppointment={openPopup} /></Reveal>
-        <Reveal y={16}><Footer branch={branch} /></Reveal>
+        <Rise><AboutSection branch={branch} /></Rise>
+        <Rise><ServicesList branch={branch} /></Rise>
+        <Rise><WhyTrust branch={branch} /></Rise>
+        <Rise><TeamGrid branch={branch} /></Rise>
+        <Rise><ProcessSteps branch={branch} /></Rise>
+        <Rise><BeforeAfterSlider branch={branch} /></Rise>
+        <Rise><Testimonials branch={branch} /></Rise>
+        <Rise><FaqEditorial branch={branch} onBookAppointment={openPopup} /></Rise>
+        <Rise><CtaBand branch={branch} onBookAppointment={openPopup} /></Rise>
+        <Rise y={16}><Footer branch={branch} /></Rise>
       </div>
 
       {/* Interactive Components */}

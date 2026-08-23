@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import type { BranchConfig } from '@/config/branch-configs';
 import { SectionLabel, SectionHeading, PaLine, MediaFrame, PhotoPending } from './Primitives';
+import { Stagger, StaggerItem } from '@/components/motion/Motion';
 
 /** The treatments the practice actually runs, numbered as in the reference. */
 const SERVICES = [
@@ -37,9 +38,9 @@ export default function ServicesList({ branch }: { branch: BranchConfig }) {
           <SectionHeading>Complete dental care under one roof</SectionHeading>
           <PaLine>{branch.copy.oneRoofLine}</PaLine>
 
-          <ol className="mt-8">
+          <Stagger className="mt-8">
             {SERVICES.map((s, i) => (
-              <li key={s.title} className="border-t border-gray-200 py-5 first:border-t-0 first:pt-0">
+              <StaggerItem key={s.title} className="border-t border-gray-200 py-5 first:border-t-0 first:pt-0">
                 <div className="flex gap-4">
                   <span className="mt-0.5 shrink-0 font-poppins text-[13px] font-bold tabular-nums text-[var(--accent-gold-deep)]">
                     {String(i + 1).padStart(2, '0')}
@@ -54,9 +55,9 @@ export default function ServicesList({ branch }: { branch: BranchConfig }) {
                     <p className="mt-2 text-[14.5px] leading-relaxed text-gray-500">{s.body}</p>
                   </div>
                 </div>
-              </li>
+              </StaggerItem>
             ))}
-          </ol>
+          </Stagger>
         </div>
 
         <MediaFrame offset="br">

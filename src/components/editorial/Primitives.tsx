@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Parallax } from '@/components/motion/Motion';
 
 /**
  * Shared furniture for the editorial layout.
@@ -75,9 +76,11 @@ export function MediaFrame({
         aria-hidden
         className={`absolute ${pos} -z-10 h-28 w-28 rounded-2xl bg-[var(--accent-gold)] opacity-90 sm:h-36 sm:w-36`}
       />
-      <div className="relative overflow-hidden rounded-[20px] bg-gray-100 shadow-[0_18px_50px_-24px_rgba(16,17,36,0.35)]">
+      {/* The image drifts against the scroll inside a fixed frame, which is
+          what gives the section depth without moving the layout. */}
+      <Parallax amount={26} className="relative rounded-[20px] bg-gray-100 shadow-[0_18px_50px_-24px_rgba(16,17,36,0.35)]">
         {children}
-      </div>
+      </Parallax>
     </div>
   );
 }

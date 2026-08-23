@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Check } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 import { SectionLabel, SectionHeading, PaLine, MediaFrame, PhotoPending } from './Primitives';
+import { Stagger, StaggerItem } from '@/components/motion/Motion';
 
 /** Image left, reasons right — the mirror of the services block above it. */
 export default function WhyTrust({ branch }: { branch: BranchConfig }) {
@@ -35,16 +36,16 @@ export default function WhyTrust({ branch }: { branch: BranchConfig }) {
             is different about this practice.
           </p>
 
-          <ul className="mt-7 space-y-3.5">
+          <Stagger className="mt-7 space-y-3.5" gap={0.06}>
             {branch.usps.map((usp) => (
-              <li key={usp} className="flex items-start gap-3">
+              <StaggerItem key={usp} className="flex items-start gap-3">
                 <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded bg-[var(--brand-teal)]">
                   <Check size={12} strokeWidth={3.2} className="text-white" />
                 </span>
                 <span className="text-[15px] leading-snug text-gray-700">{usp}</span>
-              </li>
+              </StaggerItem>
             ))}
-          </ul>
+          </Stagger>
 
           {/* Punjabi restates the same reasons rather than translating the list
               item by item — a local reader gets the argument in one pass. */}
