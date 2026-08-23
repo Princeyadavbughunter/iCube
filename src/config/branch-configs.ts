@@ -207,10 +207,11 @@ export const branches: Record<string, BranchConfig> = {
     heroTitle: "Advanced Implant & Specialist Dental Care in Ludhiana",
     heroVideo: "/hero-ludhiana.mp4",
     heroPoster: "/hero-ludhiana-poster.webp",
-    // ⚠️ Awaiting the VSL film. Empty keeps the block off the page entirely.
+    // Brand VSL — Dr. Chandan Jain to camera, with CAD/CAM and implant b-roll.
+    // The end card names both cities, so the same film runs on both branches.
     vsl: {
-      src: "",
-      poster: "",
+      src: "/vsl-icube.mp4",
+      poster: "/vsl-icube-poster.webp",
       kicker: "Watch: how we plan an implant on CBCT",
     },
     card: {
@@ -354,11 +355,12 @@ export const branches: Record<string, BranchConfig> = {
     // both cities, so it runs as iCube brand content rather than branch footage.
     heroVideo: "/icube-full-mouth-case.mp4",
     heroPoster: "/icube-full-mouth-case-poster.webp",
-    // ⚠️ Awaiting the VSL film. Empty keeps the block off the page entirely.
+    // Same brand VSL as Ludhiana — its end card carries both cities and both
+    // phone numbers, so it is shot as group content rather than branch footage.
     vsl: {
-      src: "",
-      poster: "",
-      kicker: "Watch: inside our Sector 35 implant suite",
+      src: "/vsl-icube.mp4",
+      poster: "/vsl-icube-poster.webp",
+      kicker: "Watch: how we plan your treatment",
     },
     card: {
       badge: "COSMETIC LEAD",

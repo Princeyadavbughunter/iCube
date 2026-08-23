@@ -38,7 +38,7 @@ export default function VslSection({ branch, onBookAppointment }: VslSectionProp
         style={{ background: 'radial-gradient(circle, var(--brand-teal) 0%, transparent 70%)' }}
       />
 
-      <div className="relative mx-auto max-w-4xl">
+      <div className="relative mx-auto max-w-3xl">
         <div className="mb-7 text-center">
           <span className="badge-pink inline-flex items-center gap-2 rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em]">
             <span className="h-1.5 w-1.5 rounded-full bg-white/90" />
