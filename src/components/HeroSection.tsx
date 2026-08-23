@@ -1,6 +1,7 @@
 import { BranchConfig } from "@/config/branch-configs";
 import ImplantShowcase from "@/components/ImplantShowcase";
 import HeroVideo from "@/components/HeroVideo";
+import VslPlayer from "@/components/VslPlayer";
 
 interface HeroSectionProps {
   onBookAppointment: () => void;
@@ -18,6 +19,7 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
   const mapsLink = branch ? branch.contact.googleMapsLink : "";
   const heroVideo = branch?.heroVideo ?? "";
   const heroPoster = branch?.heroPoster ?? "";
+  const hasVsl = Boolean(branch?.vsl.src);
 
   return (
     <section className="relative pt-20 sm:pt-24 pb-16 sm:pb-20 md:pt-32 md:pb-36 px-4 sm:px-6 md:px-12 lg:px-16 max-w-7xl mx-auto overflow-hidden">
@@ -107,13 +109,20 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
         )}
       </div>
 
-      <div className="md:flex md:items-center md:justify-center md:gap-16 md:mb-12 max-w-5xl mx-auto fade-up stagger-1">
+      <div className="md:flex md:items-center md:justify-center md:gap-10 md:mb-12 max-w-5xl mx-auto fade-up stagger-1">
         {/* Hero implant showcase with 3D tilt + gradient ring.
             Aspect is 3/4 on mobile rather than 9/16 — the renders are square,
             so a taller frame would just add dead space around them. */}
+        {/* The sales film owns this slot. It is 16:9, so the frame is no longer
+            the portrait one the ambient clinic clip used — a portrait crop
+            would cut the speaker and the burnt-in captions out of shot.
+            Branches with no film fall back to the clip, then to the renders. */}
+        {hasVsl ? (
+          <div className="w-full md:w-[520px] mx-auto md:mx-0 mb-8 md:mb-0 md:flex-initial">
+            <VslPlayer branch={branch!} />
+          </div>
+        ) : (
         <div className="relative rounded-3xl aspect-[3/4] max-w-[320px] md:aspect-auto md:max-w-none md:h-[500px] md:w-[300px] mx-auto md:mx-0 mb-8 md:mb-0 md:flex-initial overflow-hidden shadow-2xl ring-4 ring-white ring-offset-2 ring-offset-[var(--accent-pink-soft)] card-3d-tilt">
-          {/* A branch with its own clinic video shows it here; the rest fall back
-              to the rotating implant renders. */}
           {heroVideo ? (
             <HeroVideo src={heroVideo} poster={heroPoster} label={branch?.name ?? "I Cube Dental"} />
           ) : (
@@ -123,9 +132,10 @@ export default function HeroSection({ onBookAppointment, branch }: HeroSectionPr
           <div aria-hidden className="absolute -top-6 -right-6 w-24 h-24 rounded-full blur-2xl opacity-50 pointer-events-none"
                style={{ background: 'radial-gradient(circle, var(--accent-pink) 0%, transparent 70%)' }} />
         </div>
+        )}
 
         {/* Specializations card with layered depth */}
-        <div className="relative md:w-[450px] fade-up stagger-2">
+        <div className="relative md:w-[420px] fade-up stagger-2">
           <div className="glass-premium p-8 md:p-12 rounded-[32px] border border-white/60 relative overflow-hidden card-3d-tilt depth-stack">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-teal)] opacity-10 blur-3xl -mr-16 -mt-16" />
             <div className="absolute bottom-0 left-0 w-28 h-28 bg-[var(--accent-pink)] opacity-[0.08] blur-3xl -ml-14 -mb-14" />
