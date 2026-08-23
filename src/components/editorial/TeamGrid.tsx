@@ -1,28 +1,27 @@
 import Image from 'next/image';
-import { team, teamPhotos } from '@/config/team';
+import { teamPhotos } from '@/config/team';
 import type { BranchConfig } from '@/config/branch-configs';
 import { SectionLabel, SectionHeading, PaLine } from './Primitives';
 
 /**
- * The full specialist team, this branch's lead first.
+ * The practice, shown through its own group photographs.
  *
- * The Google reviews further down name Dr. Deepika Jain and Dr. Priyanka
- * Sharma, so leaving them off would make those reviews read as being about
- * some other practice.
+ * The per-doctor cards this used to carry were dropped: only two of the four
+ * specialists have a portrait on file, so half the grid was a "photograph
+ * coming soon" placeholder. The group shots are real and complete, so they
+ * carry the section on their own.
+ *
+ * All four doctors appear together in the first photograph, which is why these
+ * run on both branch pages rather than being scoped to one.
  */
 export default function TeamGrid({ branch }: { branch: BranchConfig }) {
-  const leadName = branch.doctors[0]?.name;
-  const ordered = [...team].sort(
-    (a, b) => Number(b.name === leadName) - Number(a.name === leadName),
-  );
-
   return (
     <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="team">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-11 flex flex-col items-center text-center">
-          <SectionLabel>Meet Our Doctors</SectionLabel>
+        <div className="mb-10 flex flex-col items-center text-center">
+          <SectionLabel>Our Team</SectionLabel>
           <SectionHeading className="max-w-2xl">
-            Meet our professional dental team
+            A team of {branch.copy.teamSize}, under one roof
           </SectionHeading>
           <PaLine>ਹਰ ਇਲਾਜ MDS ਸਪੈਸ਼ਲਿਸਟ ਡਾਕਟਰ ਵੱਲੋਂ</PaLine>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-gray-500">
@@ -31,98 +30,32 @@ export default function TeamGrid({ branch }: { branch: BranchConfig }) {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {ordered.map((member) => {
-            const isLead = member.name === leadName;
-            return (
-              <article key={member.name} className="group">
-                <div className="relative mb-4 aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-100">
-                  {member.image ? (
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-                    />
-                  ) : (
-                    /* No photograph on file — a monogram, never a stock portrait
-                       of an unrelated person. */
-                    <div
-                      className="absolute inset-0 flex flex-col items-center justify-center gap-2"
-                      style={{
-                        background:
-                          'linear-gradient(150deg, var(--brand-teal) 0%, var(--brand-teal-ink) 100%)',
-                      }}
-                    >
-                      <span className="font-poppins text-5xl font-bold tracking-tight text-[var(--accent-gold)]">
-                        {member.initials}
-                      </span>
-                      <span className="px-6 text-center text-[9px] font-bold uppercase tracking-[0.18em] text-white/40">
-                        Photograph coming soon
-                      </span>
-                    </div>
-                  )}
+        <div className="grid gap-4 lg:grid-cols-3">
+          <figure className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-100 lg:col-span-2">
+            <Image
+              src={teamPhotos.doctors.src}
+              alt={teamPhotos.doctors.alt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 66vw"
+              className="object-cover"
+            />
+          </figure>
 
-                  {isLead && (
-                    <span className="absolute left-3 top-3 rounded-full bg-[var(--accent-gold)] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--brand-teal-ink)]">
-                      {branch.name} Lead
-                    </span>
-                  )}
-                </div>
-
-                <h3 className="font-poppins text-[16.5px] font-bold leading-tight text-[var(--brand-teal-deep)]">
-                  {member.name}
-                </h3>
-                <p className="mt-1 text-[12.5px] font-bold uppercase tracking-[0.08em] text-[var(--accent-gold-deep)]">
-                  {member.credentials}
-                </p>
-                <p className="mt-2 text-[13.5px] leading-snug text-gray-500">{member.role}</p>
-                <p className="mt-2 text-[12px] leading-snug text-gray-400">{member.pedigree}</p>
-              </article>
-            );
-          })}
-        </div>
-
-        {/* The wider practice. The specialists above do the clinical work, but
-            this is who a patient actually meets on the day. */}
-        <div className="mt-14">
-          <div className="mb-6 flex flex-col items-center text-center">
-            <h3 className="font-poppins text-xl font-bold tracking-tight text-[var(--brand-teal-deep)] sm:text-2xl">
-              A team of {branch.copy.teamSize}, under one roof
-            </h3>
-            <p lang="pa" className="mt-1.5 text-[15px] font-medium text-[var(--brand-teal)]">
-              ਪੂਰੀ ਟੀਮ ਇੱਕੋ ਛੱਤ ਹੇਠ
-            </p>
-          </div>
-
-          <div className="grid gap-4 lg:grid-cols-3">
-            <figure className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-100 lg:col-span-2">
-              <Image
-                src={teamPhotos.doctors.src}
-                alt={teamPhotos.doctors.alt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 66vw"
-                className="object-cover"
-              />
-            </figure>
-
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-              {[teamPhotos.full, teamPhotos.support].map((photo) => (
-                <figure
-                  key={photo.src}
-                  className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-100 lg:aspect-auto lg:h-full lg:min-h-[120px]"
-                >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(max-width: 1024px) 50vw, 33vw"
-                    className="object-cover"
-                  />
-                </figure>
-              ))}
-            </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            {[teamPhotos.full, teamPhotos.support].map((photo) => (
+              <figure
+                key={photo.src}
+                className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-gray-100 lg:aspect-auto lg:h-full lg:min-h-[120px]"
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  sizes="(max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
+                />
+              </figure>
+            ))}
           </div>
         </div>
       </div>
