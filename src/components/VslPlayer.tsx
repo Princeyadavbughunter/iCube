@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { Play } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Play, Volume2, VolumeX } from 'lucide-react';
+import { useReducedMotion } from 'framer-motion';
 import type { BranchConfig } from '@/config/branch-configs';
 
 interface VslPlayerProps {
@@ -9,19 +10,64 @@ interface VslPlayerProps {
 }
 
 /**
- * The sales film, sitting inside the hero.
+ * The sales film in the hero.
  *
- * Unlike the ambient clinic clip beside it, this one carries the argument, so
- * it has sound and waits for a deliberate press of play — autoplaying a voice
- * on a phone is hostile. Renders nothing until a film is supplied, so a branch
- * without one simply shows a hero with no gap in it.
+ * It starts on its own, muted and looping, so a visitor sees the clinic and
+ * the doctor moving the moment the page opens. Muted is not a compromise
+ * here — it is the only way a browser will autoplay at all, and an
+ * unannounced voice on a phone would be hostile.
+ *
+ * Sound is one tap away. Taking it restarts the film from the beginning: a
+ * sales film's argument depends on its opening, and by the time someone
+ * reaches for the sound they have usually missed it.
+ *
+ * Two cases fall back to a play button instead of autoplaying: a visitor who
+ * has asked for reduced motion, and a browser that refuses the autoplay
+ * outright (some still do, even muted). Either way the poster is showing, so
+ * the frame is never empty.
  */
 export default function VslPlayer({ branch }: VslPlayerProps) {
   const { vsl } = branch;
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  const [muted, setMuted] = useState(true);
+  const [needsTap, setNeedsTap] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !vsl.src) return;
+
+    if (reduceMotion) {
+      setNeedsTap(true);
+      return;
+    }
+
+    // play() rejects when the browser declines the autoplay; surface the play
+    // button rather than leaving a frame that looks broken.
+    const attempt = video.play();
+    if (attempt) {
+      attempt.catch(() => setNeedsTap(true));
+    }
+  }, [reduceMotion, vsl.src]);
 
   if (!vsl.src) return null;
+
+  const startWithSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = false;
+    video.currentTime = 0;
+    video.loop = false;
+    void video.play();
+    setMuted(false);
+    setNeedsTap(false);
+  };
+
+  const startMuted = () => {
+    void videoRef.current?.play();
+    setNeedsTap(false);
+  };
 
   return (
     <div className="w-full">
@@ -40,30 +86,49 @@ export default function VslPlayer({ branch }: VslPlayerProps) {
             className="h-full w-full object-cover"
             src={vsl.src}
             poster={vsl.poster || undefined}
-            controls={playing}
+            // Muted + inline is what makes autoplay permitted at all.
+            autoPlay={!reduceMotion}
+            muted={muted}
+            loop
             playsInline
             preload="metadata"
-            onPlay={() => setPlaying(true)}
-            onPause={() => setPlaying(false)}
+            controls={!muted}
+            aria-label={`I Cube Dental ${branch.name} film`}
           />
 
-          {!playing && (
+          {/* Autoplay refused, or motion turned down — offer the film directly. */}
+          {needsTap && (
             <button
               type="button"
-              onClick={() => videoRef.current?.play()}
-              className="group absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#0d0e1c]/30 transition-colors hover:bg-[#0d0e1c]/20"
+              onClick={startMuted}
+              className="group absolute inset-0 flex items-center justify-center bg-[#0d0e1c]/30 transition-colors hover:bg-[#0d0e1c]/20"
               aria-label={`Play the I Cube Dental ${branch.name} film`}
             >
               <span className="flex h-[68px] w-[68px] items-center justify-center rounded-full bg-white/95 shadow-2xl transition-transform group-hover:scale-110">
                 <Play size={26} className="ml-1 fill-[var(--brand-teal)] text-[var(--brand-teal)]" />
               </span>
-              <span
-                lang="pa"
-                className="rounded-full bg-black/35 px-3 py-1 text-[11px] font-semibold text-white/90 backdrop-blur-sm"
-              >
-                ਵੀਡੀਓ ਵੇਖੋ
-              </span>
             </button>
+          )}
+
+          {/* Sound. Sits over the corner while muted, so it never covers the
+              speaker, and disappears once the native controls take over. */}
+          {muted && !needsTap && (
+            <button
+              type="button"
+              onClick={startWithSound}
+              className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-black/55 px-3.5 py-2 text-[12px] font-semibold text-white backdrop-blur-sm transition-colors hover:bg-black/70"
+            >
+              <VolumeX size={14} />
+              Tap for sound
+              <span lang="pa" className="font-normal opacity-75">· ਆਵਾਜ਼</span>
+            </button>
+          )}
+
+          {!muted && (
+            <span className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm">
+              <Volume2 size={11} />
+              Sound on
+            </span>
           )}
         </div>
       </div>
