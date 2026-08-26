@@ -14,8 +14,12 @@ export type TeamMember = {
   role: string;
   /** Training pedigree — the strongest trust signal on the card. */
   pedigree: string;
-  /** Two or three sentences for the about-page card. */
-  bio: string;
+  /**
+   * Credential bullets, worded as the practice publishes them on
+   * icubedental.com. These are claims about a real clinician's
+   * qualifications — do not paraphrase or embellish them.
+   */
+  credits: string[];
   /** Which branch this specialist practises at. */
   branch: 'ludhiana' | 'chandigarh';
   image: string;
@@ -28,7 +32,14 @@ export const team: TeamMember[] = [
     credentials: 'BDS, MDS (Prosthodontics)',
     role: 'Digital smile makeovers & full-mouth implants',
     pedigree: 'MDS from MAMC New Delhi · Diplomate, WCOI Japan',
-    bio: 'Dr. Chandan Jain plans every implant case in 3D on the clinic’s own CBCT before any surgery begins, and places it in a dedicated operatory built for the purpose. Over 10 years of practice in implant and restorative dentistry, with a Diplomate in implantology from WCOI Japan.',
+    credits: [
+      'BDS, MDS (Prosthodontics)',
+      'MDS from India’s No. 1 college — MAMC New Delhi',
+      'Diplomate from the prestigious WCOI Japan (Implants)',
+      '10 years’ experience in full-mouth implants',
+      'Digital smile makeover specialist (CAD/CAM)',
+      'Ex: Medical Officer, PCMS-1',
+    ],
     branch: 'ludhiana',
     image: '/doctors/dr-chandan-jain.webp',
     initials: 'CJ',
@@ -38,7 +49,12 @@ export const team: TeamMember[] = [
     credentials: 'BDS, MDS (Endodontics)',
     role: 'Single-sitting painless RCT & microendodontics',
     pedigree: 'Laser specialist · 10+ years in practice',
-    bio: 'Dr. Deepika Jain handles root canals, retreatment of failed canals and the curved, calcified cases other clinics refer out — most of them finished in a single sitting, under magnification and with laser disinfection.',
+    credits: [
+      'BDS, MDS (Endodontics)',
+      'Ex: SGRD Amritsar',
+      'Laser specialist',
+      '10+ years’ experience in single-sitting RCT & microendodontics',
+    ],
     branch: 'ludhiana',
     image: '/doctors/dr-deepika-jain.webp',
     initials: 'DJ',
@@ -48,7 +64,13 @@ export const team: TeamMember[] = [
     credentials: 'MDS (Prosthodontics)',
     role: 'Implantology, crowns & cosmetic dentistry',
     pedigree: 'Ex PU Chandigarh · PGI Rohtak',
-    bio: 'Dr. Gaurav Varshney leads the Sector 35 practice, working across implants, crowns and full-mouth rehabilitation. Cases are scanned digitally and milled on in-house CAD/CAM, so a crown can be fitted and checked in the same visit.',
+    credits: [
+      'MDS (Prosthodontics) — Implantologist & Cosmetic Dentist',
+      'Ex: PU Chandigarh',
+      'Ex: PGI Rohtak',
+      'Implants, crowns & full-mouth rehabilitation',
+      'In-house CAD/CAM same-visit crowns',
+    ],
     branch: 'chandigarh',
     image: '/Dr.-Gaurav-Varshney.webp',
     initials: 'GV',
@@ -58,7 +80,13 @@ export const team: TeamMember[] = [
     credentials: 'MDS (Periodontics)',
     role: 'Periodontics & implant placement',
     pedigree: 'Ex PGI Chandigarh · PU Chandigarh · GDC Amritsar',
-    bio: 'Dr. Priyanka Sharma treats gum disease and places implants, including the grafting and soft-tissue work a compromised site needs before an implant can be loaded safely.',
+    credits: [
+      'MDS (Periodontics) — Periodontist & Implantologist',
+      'Ex: PGI Chandigarh',
+      'Ex: PU Chandigarh',
+      'Ex: GDC Amritsar',
+      'Gum treatment, grafting & implant placement',
+    ],
     branch: 'chandigarh',
     // ⚠️ No photograph supplied yet — renders a monogram.
     image: '',

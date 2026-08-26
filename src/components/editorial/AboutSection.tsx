@@ -1,19 +1,21 @@
 import Image from 'next/image';
-import { GraduationCap, Stethoscope } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 import { doctorsFor } from '@/config/team';
 import { SectionLabel, SectionHeading, PaLine } from './Primitives';
 
 /**
- * The specialists who actually practise at this branch, side by side.
+ * The specialists who actually practise at this branch.
  *
  * Ludhiana gets Dr. Chandan Jain and Dr. Deepika Jain, Chandigarh gets
  * Dr. Gaurav Varshney and Dr. Priyanka Sharma — the pairing patients name in
  * the reviews further down the page.
  *
- * Each card carries the name over the portrait rather than under it: the scrim
- * that makes the name legible also stops the photograph competing with the
- * body copy below, so two cards side by side stay calm rather than busy.
+ * Deep navy cards against the page's white sections, with the credentials set
+ * in gold. Two things make the treatment work rather than just look dark: the
+ * portrait bleeds to the card's edge on the outside, so the pair frames the
+ * section rather than facing the same way, and the credential list is the
+ * clinic's own wording — these are claims about a real clinician's
+ * qualifications, so they are quoted, never paraphrased.
  */
 export default function AboutSection({ branch }: { branch: BranchConfig }) {
   const doctors = doctorsFor(branch.slug);
@@ -34,75 +36,102 @@ export default function AboutSection({ branch }: { branch: BranchConfig }) {
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 md:gap-7">
+        <div className="grid gap-6 lg:grid-cols-2 lg:gap-7">
           {doctors.map((doc, i) => {
             const isLead = i === 0;
+            // The second card mirrors the first, so the two portraits sit on
+            // the outside edges and frame the pair.
+            const photoRight = i % 2 === 0;
+
             return (
               <article
                 key={doc.name}
-                className="group overflow-hidden rounded-[24px] border border-gray-200 bg-white shadow-[0_18px_50px_-30px_rgba(16,17,36,0.4)] transition-shadow hover:shadow-[0_28px_64px_-30px_rgba(16,17,36,0.45)]"
+                className="group relative overflow-hidden rounded-[24px] shadow-[0_26px_60px_-30px_rgba(16,17,36,0.65)]"
+                style={{
+                  background:
+                    'linear-gradient(140deg, #2a2b47 0%, #1c1d33 55%, #121324 100%)',
+                }}
               >
-                {/* ---- Portrait with the name laid over it ---- */}
-                <div className="relative aspect-[4/5] w-full overflow-hidden bg-gray-100">
-                  {doc.image ? (
-                    <Image
-                      src={doc.image}
-                      alt={`${doc.name} — I Cube Dental ${branch.name}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover object-top transition-transform duration-[900ms] group-hover:scale-[1.04]"
-                      priority={isLead}
-                    />
-                  ) : (
-                    /* No photograph on file — a monogram, never a stock portrait
-                       of an unrelated person. */
-                    <div
-                      className="absolute inset-0 flex flex-col items-center justify-center gap-2"
-                      style={{
-                        background:
-                          'linear-gradient(150deg, var(--brand-teal) 0%, var(--brand-teal-ink) 100%)',
-                      }}
-                    >
-                      <span className="font-poppins text-6xl font-bold tracking-tight text-[var(--accent-gold)]">
-                        {doc.initials}
+                {/* Gold hairline along the top edge. */}
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-px"
+                  style={{
+                    background:
+                      'linear-gradient(90deg, transparent, var(--accent-gold), transparent)',
+                  }}
+                />
+
+                <div
+                  className={`flex flex-col-reverse sm:flex-row sm:items-stretch ${
+                    photoRight ? '' : 'sm:flex-row-reverse'
+                  }`}
+                >
+                  {/* ---- Credentials ---- */}
+                  <div className="flex-1 p-6 sm:p-7">
+                    {isLead && (
+                      <span className="mb-3 inline-block rounded-full bg-[var(--accent-gold)] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--brand-teal-ink)]">
+                        {branch.name} Lead
                       </span>
-                      <span className="px-6 text-center text-[9px] font-bold uppercase tracking-[0.18em] text-white/40">
-                        Photograph coming soon
-                      </span>
-                    </div>
-                  )}
+                    )}
 
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d0e1c] via-[#0d0e1c]/25 to-transparent" />
-
-                  {isLead && (
-                    <span className="absolute left-4 top-4 rounded-full bg-[var(--accent-gold)] px-3 py-1 text-[9.5px] font-bold uppercase tracking-[0.14em] text-[var(--brand-teal-ink)]">
-                      {branch.name} Lead
-                    </span>
-                  )}
-
-                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                    <h3 className="font-poppins text-2xl font-bold leading-tight tracking-tight text-white sm:text-[1.7rem]">
+                    <h3 className="font-poppins text-[1.65rem] font-bold leading-tight tracking-tight text-white sm:text-[1.8rem]">
                       {doc.name}
                     </h3>
-                    <p className="mt-1.5 text-[12px] font-bold uppercase tracking-[0.1em] text-[var(--accent-gold)]">
-                      {doc.credentials}
-                    </p>
+
+                    <span
+                      aria-hidden
+                      className="mt-3 block h-[2px] w-12 rounded-full"
+                      style={{ background: 'linear-gradient(90deg, var(--accent-gold), transparent)' }}
+                    />
+
+                    <ul className="mt-5 space-y-2.5">
+                      {doc.credits.map((credit) => (
+                        <li key={credit} className="flex items-start gap-2.5">
+                          <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-gold)]" />
+                          <span className="text-[13.5px] leading-snug text-white/75">{credit}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
 
-                {/* ---- Detail ---- */}
-                <div className="p-5 sm:p-6">
-                  <p className="flex items-start gap-2.5 text-[14.5px] font-semibold leading-snug text-[var(--brand-teal-deep)]">
-                    <Stethoscope size={15} className="mt-0.5 shrink-0 text-[var(--accent-gold-deep)]" />
-                    {doc.role}
-                  </p>
+                  {/* ---- Portrait, bled to the card edge ---- */}
+                  <div className="relative w-full shrink-0 sm:w-[43%]">
+                    <div className="relative aspect-[4/5] w-full sm:absolute sm:inset-0 sm:aspect-auto sm:h-full">
+                      {doc.image ? (
+                        <Image
+                          src={doc.image}
+                          alt={`${doc.name} — I Cube Dental ${branch.name}`}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 25vw"
+                          className="object-cover object-top transition-transform duration-[900ms] group-hover:scale-[1.04]"
+                          priority={isLead}
+                        />
+                      ) : (
+                        /* No photograph on file — a monogram, never a stock
+                           portrait of an unrelated person. */
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-white/[0.04]">
+                          <span className="font-poppins text-5xl font-bold tracking-tight text-[var(--accent-gold)]/70">
+                            {doc.initials}
+                          </span>
+                          <span className="px-6 text-center text-[9px] font-bold uppercase tracking-[0.18em] text-white/30">
+                            Photograph coming soon
+                          </span>
+                        </div>
+                      )}
 
-                  <p className="mt-3.5 text-[14.5px] leading-relaxed text-gray-500">{doc.bio}</p>
-
-                  <p className="mt-4 flex items-start gap-2 border-t border-gray-100 pt-4 text-[12.5px] leading-snug text-gray-500">
-                    <GraduationCap size={14} className="mt-0.5 shrink-0 text-[var(--accent-gold-deep)]" />
-                    {doc.pedigree}
-                  </p>
+                      {/* Feathers the photo into the card so it reads as inset
+                          rather than pasted on. */}
+                      <div
+                        aria-hidden
+                        className={`pointer-events-none absolute inset-0 ${
+                          photoRight
+                            ? 'bg-gradient-to-r from-[#1c1d33] via-transparent to-transparent'
+                            : 'bg-gradient-to-l from-[#1c1d33] via-transparent to-transparent'
+                        }`}
+                      />
+                    </div>
+                  </div>
                 </div>
               </article>
             );
