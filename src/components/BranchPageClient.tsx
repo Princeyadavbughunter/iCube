@@ -7,7 +7,6 @@ import Header from "@/components/Header";
 import EditorialHero from "@/components/editorial/EditorialHero";
 import AboutSection from "@/components/editorial/AboutSection";
 import ServicesList from "@/components/editorial/ServicesList";
-import WhyTrust from "@/components/editorial/WhyTrust";
 import TeamGrid from "@/components/editorial/TeamGrid";
 import ProcessSteps from "@/components/editorial/ProcessSteps";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
@@ -138,7 +137,6 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
         <EditorialHero branch={branch} onBookAppointment={openPopup} />
         <Rise><AboutSection branch={branch} /></Rise>
         <Rise><ServicesList branch={branch} /></Rise>
-        <Rise><WhyTrust branch={branch} /></Rise>
         <Rise><TeamGrid branch={branch} /></Rise>
         <Rise><ProcessSteps branch={branch} /></Rise>
         <Rise><BeforeAfterSlider branch={branch} /></Rise>

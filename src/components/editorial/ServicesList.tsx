@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import type { BranchConfig } from '@/config/branch-configs';
-import { SectionLabel, SectionHeading, PaLine, MediaFrame, PhotoPending } from './Primitives';
+import ImplantShowcase from '@/components/ImplantShowcase';
+import { SectionLabel, SectionHeading, PaLine, MediaFrame } from './Primitives';
 import { Stagger, StaggerItem } from '@/components/motion/Motion';
 
 /** The treatments the practice actually runs, numbered as in the reference. */
@@ -28,8 +28,6 @@ const SERVICES = [
 ];
 
 export default function ServicesList({ branch }: { branch: BranchConfig }) {
-  const photo = branch.beforeAfter.images[0]?.src;
-
   return (
     <section className="bg-white px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="services">
       <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2 lg:gap-16">
@@ -60,20 +58,14 @@ export default function ServicesList({ branch }: { branch: BranchConfig }) {
           </Stagger>
         </div>
 
+        {/* The clinic's own implant renders, cycling through the four
+            treatments. A before/after case used to sit here, but the same
+            cases run in the marquee further down — showing them twice made
+            the page feel thinner, not fuller. */}
         <MediaFrame offset="br">
-          {photo ? (
-            <div className="relative aspect-[4/3] w-full">
-              <Image
-                src={photo}
-                alt={`Treatment result at I Cube Dental ${branch.name}`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-            </div>
-          ) : (
-            <PhotoPending label="Treatment photo" />
-          )}
+          <div className="relative aspect-[4/3] w-full">
+            <ImplantShowcase />
+          </div>
         </MediaFrame>
       </div>
     </section>
