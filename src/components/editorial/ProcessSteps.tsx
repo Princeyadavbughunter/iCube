@@ -28,7 +28,7 @@ const STEPS = [
 ];
 
 export default function ProcessSteps({ branch }: { branch: BranchConfig }) {
-  const photo = branch.clinicImages[2]?.src || branch.beforeAfter.images[2]?.src;
+  const photo = branch.clinicImages[0];
 
   return (
     <section className="bg-white px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="process">
@@ -67,8 +67,8 @@ export default function ProcessSteps({ branch }: { branch: BranchConfig }) {
           {photo ? (
             <div className="relative aspect-[4/3] w-full">
               <Image
-                src={photo}
-                alt={`Treatment at I Cube Dental ${branch.name}`}
+                src={photo.src}
+                alt={photo.alt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"

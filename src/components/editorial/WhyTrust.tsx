@@ -6,7 +6,7 @@ import { Stagger, StaggerItem } from '@/components/motion/Motion';
 
 /** Image left, reasons right — the mirror of the services block above it. */
 export default function WhyTrust({ branch }: { branch: BranchConfig }) {
-  const photo = branch.clinicImages[1]?.src || branch.beforeAfter.images[1]?.src;
+  const photo = branch.clinicImages[1];
 
   return (
     <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="why-us">
@@ -15,8 +15,8 @@ export default function WhyTrust({ branch }: { branch: BranchConfig }) {
           {photo ? (
             <div className="relative aspect-[4/3] w-full">
               <Image
-                src={photo}
-                alt={`Inside I Cube Dental ${branch.name}`}
+                src={photo.src}
+                alt={photo.alt}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"

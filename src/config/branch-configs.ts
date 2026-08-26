@@ -160,9 +160,17 @@ export const branches: Record<string, BranchConfig> = {
         footer: "Every case at I Cube Dental is diagnosed, planned and delivered by MDS specialists trained at India's top dental colleges — a team of 7 working within one advanced facility, so your treatment stays under specialist supervision from the first scan to the final restoration."
       }
     ],
-    // ⚠️ Awaiting real clinic photography — the /images/clinic-*.jpeg files in this
-    // repo are a previous client's premises and must not be used here.
-    clinicImages: [],
+    // Real premises photography. Sections consume this in order, so the first
+    // photo supplied lands in the treatment-process block and later ones fill
+    // why-us and the closing CTA.
+    // ⚠️ The /images/clinic-*.jpeg files in this repo are a previous client's
+    // premises (OM Sai Dental) and must never be used here.
+    clinicImages: [
+      {
+        src: '/clinic/consultation-room.webp',
+        alt: 'Consultation room at I Cube Dental Ludhiana, beside the treatments wall — implants, Invisalign, in-house CBCT, CAD/CAM and single-sitting RCT',
+      },
+    ],
     beforeAfter: {
       aspect: '558 / 382',
       images: [
@@ -170,6 +178,9 @@ export const branches: Record<string, BranchConfig> = {
         { src: '/before-after/03-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 2' },
         { src: '/before-after/06-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 3' },
         { src: '/before-after/07-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 4' },
+        { src: '/before-after/04-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 5' },
+        { src: '/before-after/05-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 6' },
+        { src: '/before-after/08-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 7' },
       ],
     },
     contact: {
