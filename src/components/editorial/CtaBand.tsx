@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { Phone } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
-import { PrimaryButton, PhotoPending } from './Primitives';
+import { teamPhotos } from '@/config/team';
+import { PrimaryButton } from './Primitives';
 
 interface CtaBandProps {
   branch: BranchConfig;
@@ -13,7 +14,12 @@ interface CtaBandProps {
 /** Closing ask: copy left, image right, on a soft tinted band. */
 export default function CtaBand({ branch, onBookAppointment }: CtaBandProps) {
   const phone = branch.contact.phones[0];
-  const photo = branch.clinicImages[1];
+  // A second premises photo belongs here once one exists. Until then the team
+  // shot stands in — everyone at the practice, which is the right note for the
+  // closing ask, and a real photograph rather than a placeholder panel. It
+  // appears as a thumbnail up in the team section, so seeing it large here
+  // reads as a return rather than a repeat.
+  const photo = branch.clinicImages[1] ?? teamPhotos.full;
 
   return (
     <section className="px-4 pb-16 sm:px-6 md:pb-24 lg:px-10">
@@ -51,17 +57,13 @@ export default function CtaBand({ branch, onBookAppointment }: CtaBandProps) {
           </div>
 
           <div className="relative h-full min-h-[240px] md:min-h-[320px]">
-            {photo ? (
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
-              />
-            ) : (
-              <PhotoPending label="Clinic photo" ratio="h-full" />
-            )}
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+            />
           </div>
         </div>
       </div>

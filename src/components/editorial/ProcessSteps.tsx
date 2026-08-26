@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import type { BranchConfig } from '@/config/branch-configs';
-import { SectionLabel, SectionHeading, PaLine, MediaFrame, PhotoPending } from './Primitives';
+import { teamPhotos } from '@/config/team';
+import { SectionLabel, SectionHeading, PaLine, MediaFrame } from './Primitives';
 import { Stagger, StaggerItem } from '@/components/motion/Motion';
 
 /** What actually happens across a course of treatment, in order. */
@@ -28,7 +29,10 @@ const STEPS = [
 ];
 
 export default function ProcessSteps({ branch }: { branch: BranchConfig }) {
-  const photo = branch.clinicImages[0];
+  // Chandigarh has supplied no premises photography yet, so the clinical staff
+  // stand in — the people who actually walk a patient through these four steps.
+  // A branch photo replaces it automatically once one exists.
+  const photo = branch.clinicImages[0] ?? teamPhotos.support;
 
   return (
     <section className="bg-white px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="process">
@@ -64,19 +68,15 @@ export default function ProcessSteps({ branch }: { branch: BranchConfig }) {
         </div>
 
         <MediaFrame offset="br">
-          {photo ? (
-            <div className="relative aspect-[4/3] w-full">
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-              />
-            </div>
-          ) : (
-            <PhotoPending label="CBCT / consultation photo" />
-          )}
+          <div className="relative aspect-[4/3] w-full">
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </div>
         </MediaFrame>
       </div>
     </section>
