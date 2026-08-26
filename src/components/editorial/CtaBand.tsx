@@ -13,7 +13,7 @@ interface CtaBandProps {
 /** Closing ask: copy left, image right, on a soft tinted band. */
 export default function CtaBand({ branch, onBookAppointment }: CtaBandProps) {
   const phone = branch.contact.phones[0];
-  const photo = branch.clinicImages[3]?.src || branch.beforeAfter.images[3]?.src;
+  const photo = branch.clinicImages[1];
 
   return (
     <section className="px-4 pb-16 sm:px-6 md:pb-24 lg:px-10">
@@ -53,8 +53,8 @@ export default function CtaBand({ branch, onBookAppointment }: CtaBandProps) {
           <div className="relative h-full min-h-[240px] md:min-h-[320px]">
             {photo ? (
               <Image
-                src={photo}
-                alt={`I Cube Dental ${branch.name}`}
+                src={photo.src}
+                alt={photo.alt}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
