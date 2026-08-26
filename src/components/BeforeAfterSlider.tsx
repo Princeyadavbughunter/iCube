@@ -13,6 +13,13 @@ import { SectionLabel, SectionHeading, PaLine } from '@/components/editorial/Pri
  * first began, so the loop has no seam. Hovering pauses it so a case can
  * actually be read, and `prefers-reduced-motion` stops it outright.
  */
+/**
+ * Edge ramp for the marquee. Wide on purpose: a narrow fade reads as a crop,
+ * a wide one reads as the row continuing past the page.
+ */
+const FADE =
+  'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 7%, #000 20%, #000 80%, rgba(0,0,0,0.35) 93%, transparent 100%)';
+
 interface BeforeAfterSliderProps {
   branch: BranchConfig;
 }
@@ -23,8 +30,9 @@ export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
   if (images.length === 0) return null;
 
   // Pace the loop by how much film there is, so four cases do not race past
-  // while eight crawl. Roughly 11s of travel per case.
-  const duration = `${images.length * 11}s`;
+  // while eight crawl. The cards are large, so the track is long — ~15s per
+  // case keeps the pixel speed unhurried rather than letting the row race.
+  const duration = `${images.length * 15}s`;
 
   return (
     <section className="bg-white py-16 md:py-24" id="transformations">
@@ -45,15 +53,14 @@ export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
       <div
         className="results-marquee relative overflow-hidden"
         style={{
-          // Fade the ends so cases enter and leave instead of being clipped.
-          maskImage:
-            'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
-          WebkitMaskImage:
-            'linear-gradient(to right, transparent, black 6%, black 94%, transparent)',
+          // A wide ramp on each side, so a case dissolves as it reaches the
+          // edge instead of being cut off at a hard line.
+          maskImage: FADE,
+          WebkitMaskImage: FADE,
         }}
       >
         <div
-          className="results-marquee-track flex w-max gap-4 md:gap-5"
+          className="results-marquee-track flex w-max gap-5 md:gap-7"
           style={{ ['--marquee-duration' as string]: duration }}
         >
           {/* The set twice. The copy is aria-hidden so a screen reader is not
@@ -63,10 +70,10 @@ export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
               <figure
                 key={`${copy}-${c.src}`}
                 aria-hidden={copy === 1}
-                className="shrink-0 rounded-2xl border border-gray-200 bg-white p-2.5"
+                className="shrink-0 rounded-[20px] border border-gray-200 bg-white p-3 shadow-[0_14px_40px_-28px_rgba(16,17,36,0.4)]"
               >
                 <div
-                  className="relative h-[220px] overflow-hidden rounded-xl bg-gray-100 sm:h-[260px] md:h-[300px]"
+                  className="relative h-[280px] overflow-hidden rounded-xl bg-gray-100 sm:h-[360px] md:h-[440px]"
                   style={{ aspectRatio: aspect }}
                 >
                   <Image
@@ -75,7 +82,7 @@ export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
                     fill
                     draggable={false}
                     className="object-cover"
-                    sizes="(max-width: 640px) 80vw, 40vw"
+                    sizes="(max-width: 640px) 90vw, 46vw"
                   />
                 </div>
               </figure>
