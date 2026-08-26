@@ -148,7 +148,7 @@ export const branches: Record<string, BranchConfig> = {
       {
         name: "Dr. Chandan Jain",
         title: "Implantologist | BDS, MDS Prosthodontics — I Cube Dental",
-        image: "/Dr.-Chandan-Jain.webp",
+        image: "/doctors/dr-chandan-jain.webp",
         initials: "CJ",
         description: "Dr. Chandan Jain is a specialist Implantologist and Prosthodontist — MDS from MAMC New Delhi and a Diplomate of WCOI Japan in implantology — with over 10 years of clinical experience in advanced implant and restorative dentistry. He leads I Cube Dental in New Prem Nagar, Ludhiana — a technology-driven, specialist-led dental centre equipped with in-house CBCT, CAD/CAM and digital intraoral scanners, plus a dedicated implant operatory built specifically for surgical precision and sterility.",
         highlights: [
@@ -216,7 +216,7 @@ export const branches: Record<string, BranchConfig> = {
     },
     card: {
       badge: "IMPLANT LEAD",
-      image: "/Dr.-Chandan-Jain.webp",
+      image: "/doctors/dr-chandan-jain.webp",
       stats: [
         { value: "10+", label: "YEARS" },
         { value: "MAMC", label: "NEW DELHI" },
