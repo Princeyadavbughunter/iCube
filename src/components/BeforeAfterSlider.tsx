@@ -18,9 +18,9 @@ import { SectionLabel, SectionHeading, PaLine } from '@/components/editorial/Pri
  * transform, which is what makes all three work at once — the drift nudges
  * scrollLeft, and anything the visitor does moves the same value.
  *
- * The track holds the set twice. When the drift passes the halfway mark the
- * scroll position jumps back by exactly half, landing on the identical frame,
- * so the loop never shows a seam or a rewind.
+ * The track holds the set twice. Once the drift reaches the second set, the
+ * scroll position jumps back by exactly one set — landing on the identical
+ * frame — so the loop never shows a seam or a rewind.
  */
 interface BeforeAfterSliderProps {
   branch: BranchConfig;
@@ -33,8 +33,8 @@ interface BeforeAfterSliderProps {
 const FADE =
   'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 7%, #000 20%, #000 80%, rgba(0,0,0,0.35) 93%, transparent 100%)';
 
-/** Pixels per frame. Slow — the row is decoration, not a demand for attention. */
-const DRIFT = 0.45;
+/** Pixels per frame — about 33px/s, so a case takes roughly 20s to cross. */
+const DRIFT = 0.55;
 
 /** How long a hand-driven move holds the drift off before it resumes. */
 const RESUME_MS = 2600;
@@ -50,31 +50,59 @@ export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
     const track = trackRef.current;
     if (!track || reduceMotion) return;
 
+    /**
+     * Distance from the first case to its copy in the second half.
+     *
+     * Measured from layout rather than taken as scrollWidth / 2: the track
+     * carries horizontal padding, so half the scroll width is not one set and
+     * wrapping on it would walk the row a few pixels out of true every lap
+     * until the seam showed.
+     */
+    const measure = () => {
+      const items = track.querySelectorAll<HTMLElement>('figure');
+      if (items.length <= images.length) return 0;
+      return items[images.length].offsetLeft - items[0].offsetLeft;
+    };
+
+    let span = measure();
+    const remeasure = () => { span = measure(); };
+    window.addEventListener('resize', remeasure);
+
     let frame = 0;
     const tick = () => {
       frame = requestAnimationFrame(tick);
 
-      const half = track.scrollWidth / 2;
-      // Wrap first, so the jump happens whether or not the drift is running —
-      // a visitor can swipe past the halfway mark too.
-      if (half > 0 && track.scrollLeft >= half) track.scrollLeft -= half;
-      if (half > 0 && track.scrollLeft <= 0) track.scrollLeft += half;
+      // Images load after first paint, so keep trying until layout settles.
+      if (!span) { span = measure(); return; }
+
+      // Forward only. Position `span` is the start of the second set and 0 is
+      // the start of the first — identical frames, so the jump is invisible.
+      // There is deliberately no wrap at 0: a scroll container clamps there
+      // anyway, and a rule that fires at 0 also fires the instant this one
+      // lands, which pins the row in place.
+      if (track.scrollLeft >= span) track.scrollLeft -= span;
 
       if (hovering.current || performance.now() < pausedUntil.current) return;
       track.scrollLeft += DRIFT;
     };
 
     frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [reduceMotion]);
+    return () => {
+      window.removeEventListener('resize', remeasure);
+      cancelAnimationFrame(frame);
+    };
+  }, [reduceMotion, images.length]);
 
   const nudge = useCallback((direction: -1 | 1) => {
     const track = trackRef.current;
     if (!track) return;
-    // One card plus its gap, so a press lands the next case in the same place
-    // the last one occupied rather than part-way between two.
-    const card = track.querySelector('figure');
-    const step = card ? card.getBoundingClientRect().width + 20 : track.clientWidth * 0.8;
+    // One card plus its gap, so a press lands the next case where the last one
+    // sat rather than part-way between two. Taken from the distance between two
+    // cards, which is card + gap at whatever the current breakpoint is —
+    // hardcoding the gap would be wrong on one side of it.
+    const items = track.querySelectorAll<HTMLElement>('figure');
+    const step =
+      items.length > 1 ? items[1].offsetLeft - items[0].offsetLeft : track.clientWidth * 0.8;
     pausedUntil.current = performance.now() + RESUME_MS;
     track.scrollBy({ left: direction * step, behavior: 'smooth' });
   }, []);
