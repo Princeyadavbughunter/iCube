@@ -1043,31 +1043,3 @@ select:focus {
     display: none !important;
   }
 }
-/* ------------------------------------------------------------------ *
- * Results marquee
- *
- * The track holds the case images twice, so translating it exactly -50%
- * lands the second copy where the first began and the loop is seamless.
- * Transform-only, so it runs on the compositor and never triggers layout.
- * ------------------------------------------------------------------ */
-@keyframes results-marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to   { transform: translate3d(-50%, 0, 0); }
-}
-
-.results-marquee-track {
-  animation: results-marquee var(--marquee-duration, 46s) linear infinite;
-  will-change: transform;
-}
-
-/* Hovering holds the row still so a case can actually be looked at. */
-.results-marquee:hover .results-marquee-track,
-.results-marquee:focus-within .results-marquee-track {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .results-marquee-track {
-    animation: none;
-  }
-}
