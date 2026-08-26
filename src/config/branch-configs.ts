@@ -355,11 +355,14 @@ export const branches: Record<string, BranchConfig> = {
     // both cities, so it runs as iCube brand content rather than branch footage.
     heroVideo: "/icube-full-mouth-case.mp4",
     heroPoster: "/icube-full-mouth-case-poster.webp",
-    // Same brand VSL as Ludhiana — its end card carries both cities and both
-    // phone numbers, so it is shot as group content rather than branch footage.
+    // Chandigarh runs the full-mouth case film in the hero instead of the VSL,
+    // so the two branches do not open with the same video. Leaving `src` empty
+    // is what hands the slot to `heroVideo` above — the case film is a silent
+    // montage, so it belongs in the muted autoplay frame rather than behind a
+    // play button meant for a film with narration.
     vsl: {
-      src: "/vsl-icube.mp4",
-      poster: "/vsl-icube-poster.webp",
+      src: "",
+      poster: "",
       kicker: "Watch: how we plan your treatment",
     },
     card: {
