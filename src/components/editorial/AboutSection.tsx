@@ -46,7 +46,7 @@ export default function AboutSection({ branch }: { branch: BranchConfig }) {
             return (
               <article
                 key={doc.name}
-                className="group relative overflow-hidden rounded-[24px] shadow-[0_26px_60px_-30px_rgba(16,17,36,0.65)]"
+                className="group relative flex flex-col overflow-hidden rounded-[24px] shadow-[0_26px_60px_-30px_rgba(16,17,36,0.65)]"
                 style={{
                   background:
                     'linear-gradient(140deg, #2a2b47 0%, #1c1d33 55%, #121324 100%)',
@@ -63,7 +63,7 @@ export default function AboutSection({ branch }: { branch: BranchConfig }) {
                 />
 
                 <div
-                  className={`flex flex-col-reverse sm:flex-row sm:items-stretch ${
+                  className={`flex flex-1 flex-col-reverse sm:flex-row sm:items-stretch ${
                     photoRight ? '' : 'sm:flex-row-reverse'
                   }`}
                 >
