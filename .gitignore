@@ -46,4 +46,3 @@ next-env.d.ts
 /.vscode
 
 # raw source assets (clean copies live in /public/images/)
-/public/clinic
