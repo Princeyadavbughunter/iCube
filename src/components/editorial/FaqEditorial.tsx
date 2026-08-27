@@ -3,14 +3,12 @@
 import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
-import { SectionLabel, SectionHeading, PaLine, PrimaryButton } from './Primitives';
 
 interface FaqEditorialProps {
   branch: BranchConfig;
   onBookAppointment: () => void;
 }
 
-/** Heading left, accordion right — the reference's FAQ arrangement. */
 export default function FaqEditorial({ branch, onBookAppointment }: FaqEditorialProps) {
   const [open, setOpen] = useState<number | null>(0);
 
@@ -23,51 +21,70 @@ export default function FaqEditorial({ branch, onBookAppointment }: FaqEditorial
   ];
 
   return (
-    <section className="bg-white px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="faq">
-      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,380px)_1fr] lg:gap-16">
-        <div className="lg:sticky lg:top-24 lg:self-start">
-          <SectionLabel>FAQs</SectionLabel>
-          <SectionHeading>Frequently asked questions</SectionHeading>
-          <PaLine>ਆਮ ਪੁੱਛੇ ਜਾਣ ਵਾਲੇ ਸਵਾਲ</PaLine>
-          <p className="mt-5 text-[15px] leading-relaxed text-gray-500">
-            Still unsure about something? Ask us on the phone — you will speak to the clinic, not a
-            call centre.
+    <section className="bg-[var(--bg-medical-light)] px-4 py-20 sm:px-6 md:py-28 lg:px-10" id="faq">
+      <div className="mx-auto max-w-4xl">
+        <div className="text-center mb-14">
+          <div className="inline-block px-4 py-1 rounded-full bg-[var(--brand-teal)]/10 text-[var(--brand-teal)] text-sm font-bold tracking-wider mb-4">
+            FAQs
+          </div>
+          <h2 className="font-poppins text-3xl md:text-[2.5rem] font-bold leading-tight text-[var(--brand-teal-deep)]">
+            Common Questions
+          </h2>
+          <p className="mt-4 text-gray-500 max-w-xl mx-auto">
+            Still unsure about something? Book a consultation — you&apos;ll speak directly to the clinic, not a call centre.
           </p>
-          <PrimaryButton onClick={onBookAppointment} className="mt-6">
-            Book a Consultation
-          </PrimaryButton>
         </div>
 
-        <dl className="divide-y divide-gray-200 border-y border-gray-200">
+        <div className="space-y-3">
           {faqs.map((faq, i) => {
             const isOpen = open === i;
             return (
-              <div key={faq.q}>
-                <dt>
-                  <button
-                    type="button"
-                    onClick={() => setOpen(isOpen ? null : i)}
-                    aria-expanded={isOpen}
-                    className="flex w-full items-start justify-between gap-4 py-5 text-left"
-                  >
-                    <span className="font-poppins text-[16px] font-bold leading-snug text-[var(--brand-teal-deep)]">
-                      {faq.q}
-                    </span>
-                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-gray-300 text-[var(--brand-teal)]">
-                      {isOpen ? <Minus size={13} /> : <Plus size={13} />}
-                    </span>
-                  </button>
-                </dt>
+              <div
+                key={faq.q}
+                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                  isOpen
+                    ? 'border-[var(--brand-teal)]/40 bg-white shadow-[0_8px_30px_-12px_rgba(48,49,81,0.15)]'
+                    : 'border-gray-200 bg-white hover:border-[var(--brand-teal)]/30'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  className="flex w-full items-center justify-between gap-4 p-6 text-left"
+                >
+                  <span className={`font-poppins text-[15.5px] font-bold leading-snug transition-colors ${isOpen ? 'text-[var(--brand-teal)]' : 'text-[var(--brand-teal-deep)]'}`}>
+                    {faq.q}
+                  </span>
+                  <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors ${
+                    isOpen ? 'bg-[var(--brand-teal)] text-white' : 'bg-gray-100 text-gray-500'
+                  }`}>
+                    {isOpen ? <Minus size={14} /> : <Plus size={14} />}
+                  </span>
+                </button>
                 {isOpen && (
-                  <dd className="-mt-1 pb-5 pr-10 text-[14.5px] leading-relaxed text-gray-500">
-                    {faq.a}
-                  </dd>
+                  <div className="px-6 pb-6 -mt-2">
+                    <p className="text-[14.5px] leading-relaxed text-gray-500 border-t border-gray-100 pt-4">
+                      {faq.a}
+                    </p>
+                  </div>
                 )}
               </div>
             );
           })}
-        </dl>
+        </div>
+
+        <div className="mt-12 text-center">
+          <button
+            onClick={onBookAppointment}
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            Book a Free Consultation
+          </button>
+        </div>
       </div>
     </section>
   );
 }
+
+

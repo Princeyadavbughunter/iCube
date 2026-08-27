@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import { BranchConfig } from "@/config/branch-configs";
 
 import Header from "@/components/Header";
-import EditorialHero from "@/components/editorial/EditorialHero";
+import Hero from "@/components/modern/Hero";
 import AboutSection from "@/components/editorial/AboutSection";
-import ServicesList from "@/components/editorial/ServicesList";
+import TreatmentsOverview from "@/components/modern/TreatmentsOverview";
+import AdvancedTreatments from "@/components/modern/AdvancedTreatments";
 import PatientJourney from "@/components/PatientJourney";
 import TeamGrid from "@/components/editorial/TeamGrid";
-import ProcessSteps from "@/components/editorial/ProcessSteps";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import Testimonials from "@/components/editorial/Testimonials";
 import FaqEditorial from "@/components/editorial/FaqEditorial";
+
 import CtaBand from "@/components/editorial/CtaBand";
 import Footer from "@/components/Footer";
 import StickyCTA from "@/components/StickyCTA";
@@ -135,12 +136,12 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
         <Header onBookAppointment={openPopup} branch={branch} />
         {/* The hero is above the fold, so it is deliberately not wrapped in a
             Reveal — an entrance animation would only delay first paint. */}
-        <EditorialHero branch={branch} onBookAppointment={openPopup} />
+        <Hero branch={branch} onBookAppointment={openPopup} />
         <Rise><AboutSection branch={branch} /></Rise>
-        <Rise><ServicesList branch={branch} /></Rise>
+        <Rise><TreatmentsOverview branch={branch} /></Rise>
+        <Rise><AdvancedTreatments branch={branch} /></Rise>
         <Rise><PatientJourney /></Rise>
         <Rise><TeamGrid branch={branch} /></Rise>
-        <Rise><ProcessSteps branch={branch} /></Rise>
         <Rise><BeforeAfterSlider branch={branch} /></Rise>
         <Rise><Testimonials branch={branch} /></Rise>
         <Rise><FaqEditorial branch={branch} onBookAppointment={openPopup} /></Rise>
