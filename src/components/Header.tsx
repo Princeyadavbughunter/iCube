@@ -38,9 +38,10 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
   const primaryPhone = branch ? branch.contact.phones[0] : "";
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled ? 'glass-header scrolled py-2' : 'bg-transparent py-4'
-    }`}>
+    <>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled ? 'glass-header scrolled py-2' : 'bg-white/80 backdrop-blur-md py-4 border-b border-gray-100'
+      }`}>
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         <div className="flex items-center gap-4 md:gap-8">
           <div className="flex items-center">
@@ -95,5 +96,6 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
         </div>
       </div>
     </header>
+    </>
   );
 }
