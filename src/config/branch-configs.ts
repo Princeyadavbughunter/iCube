@@ -312,6 +312,20 @@ export const branches: Record<string, BranchConfig> = {
           "Separate implant surgical operatory",
         ],
         footer: "Chandigarh is a full multi-speciality centre: prosthodontist, periodontist, endodontist, orthodontist, pedodontist and oral & maxillofacial surgeon all practise under one roof, supported by a team of 7 across four designated operatories — so a complex case never has to be referred elsewhere."
+      },
+      {
+        name: "Dr. Priyanka Sharma",
+        title: "Endodontist | Root Canal Specialist — iCube Dental Chandigarh",
+        image: "/Dr.-Priyanka-Sharma.webp",
+        initials: "PS",
+        description: "Dr. Priyanka Sharma is our in-house Endodontist and Root Canal Specialist at iCube Dental Chandigarh. Known for her calm, patient-centred approach, she takes time to explain every step of the treatment — helping anxious patients feel at ease throughout the procedure. Her expertise covers routine root canal therapy, retreatment of failed root canals and complex multi-canal cases, all handled in-house with the latest rotary instrumentation.",
+        highlights: [
+          "Root canal treatment & retreatment specialist",
+          "Calm, patient-centred approach",
+          "Complex & curved-canal case expertise",
+          "Single-sitting RCT with latest rotary instruments",
+        ],
+        footer: "Patients consistently commend Dr. Priyanka for her ability to make even anxious patients feel comfortable and informed — turning what is often a dreaded procedure into a smooth, painless experience."
       }
     ],
     // ⚠️ Awaiting real clinic photography from the Chandigarh Google Drive folder.

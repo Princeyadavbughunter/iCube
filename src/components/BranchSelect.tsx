@@ -152,8 +152,9 @@ function BranchPanel({
               alt={`${lead.name} — I Cube Dental ${branch.name}`}
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              // object-top keeps the face in frame as the card gets taller.
-              className="object-cover object-top"
+              // object-top keeps face in frame for tall portraits (Ludhiana).
+              // object-center works better for square headshots (Chandigarh).
+              className={`object-cover ${index === 0 ? 'object-top' : 'object-center'}`}
               priority={index === 0}
             />
           ) : (
