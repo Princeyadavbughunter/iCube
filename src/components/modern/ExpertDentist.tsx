@@ -41,12 +41,12 @@ export default function ExpertDentist({ branch }: { branch: BranchConfig }) {
           <div className="w-full md:w-3/5">
             <div className="mb-6">
               <h3 className="text-3xl font-bold mb-2">{doctor.name}</h3>
-              <p className="text-[var(--accent-gold)] font-semibold text-lg">{doctor.qualifications}</p>
+              <p className="text-[var(--accent-gold)] font-semibold text-lg">{doctor.credentials}</p>
               <p className="text-gray-300 uppercase tracking-widest text-sm mt-1">{doctor.role}</p>
             </div>
             
             <p className="text-gray-200 mb-8 leading-relaxed">
-              {doctor.bio}
+              {doctor.pedigree}
             </p>
 
             <ul className="grid sm:grid-cols-2 gap-4">
