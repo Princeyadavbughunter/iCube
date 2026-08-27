@@ -88,8 +88,7 @@ export const team: TeamMember[] = [
       'Gum treatment, grafting & implant placement',
     ],
     branch: 'chandigarh',
-    // ⚠️ No photograph supplied yet — renders a monogram.
-    image: '',
+    image: '/Dr.-Priyanka-Sharma.webp',
     initials: 'PS',
   },
 ];
