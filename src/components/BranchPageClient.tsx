@@ -11,6 +11,7 @@ import AdvancedTreatments from "@/components/modern/AdvancedTreatments";
 import PatientJourney from "@/components/PatientJourney";
 import TeamGrid from "@/components/editorial/TeamGrid";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import VideoStories from "@/components/modern/VideoStories";
 import Testimonials from "@/components/editorial/Testimonials";
 import FaqEditorial from "@/components/editorial/FaqEditorial";
 
@@ -143,6 +144,7 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
         <Rise><PatientJourney /></Rise>
         <Rise><TeamGrid branch={branch} /></Rise>
         <Rise><BeforeAfterSlider branch={branch} /></Rise>
+        <Rise><VideoStories /></Rise>
         <Rise><Testimonials branch={branch} /></Rise>
         <Rise><FaqEditorial branch={branch} onBookAppointment={openPopup} /></Rise>
         <Rise><CtaBand branch={branch} onBookAppointment={openPopup} /></Rise>
