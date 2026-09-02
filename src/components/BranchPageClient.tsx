@@ -137,9 +137,9 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
         {/* The hero is above the fold, so it is deliberately not wrapped in a
             Reveal — an entrance animation would only delay first paint. */}
         <Hero branch={branch} onBookAppointment={openPopup} />
-        <Rise><AboutSection branch={branch} /></Rise>
-        <Rise><TreatmentsOverview branch={branch} /></Rise>
+        <Rise><TreatmentsOverview /></Rise>
         <Rise><AdvancedTreatments branch={branch} /></Rise>
+        <Rise><AboutSection branch={branch} /></Rise>
         <Rise><PatientJourney /></Rise>
         <Rise><TeamGrid branch={branch} /></Rise>
         <Rise><BeforeAfterSlider branch={branch} /></Rise>
