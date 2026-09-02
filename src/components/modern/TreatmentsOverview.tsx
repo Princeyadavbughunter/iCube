@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { CheckCircle2, Star } from 'lucide-react';
-import type { BranchConfig } from '@/config/branch-configs';
+import { CheckCircle2 } from 'lucide-react';
 
 const SERVICES = [
   { title: 'Dental Implant', pa: 'ਡੈਂਟਲ ਇੰਪਲਾਂਟ', image: '/treatment/implant.webp' },
@@ -62,8 +61,7 @@ function AutoTreatmentSlider() {
   );
 }
 
-export default function TreatmentsOverview({ branch }: { branch: BranchConfig }) {
-  const reviewCount = branch.reviews.length;
+export default function TreatmentsOverview() {
 
   return (
     <section className="py-24 px-4 md:px-8 bg-white overflow-hidden">
@@ -77,22 +75,7 @@ export default function TreatmentsOverview({ branch }: { branch: BranchConfig })
             <div className="absolute inset-0 rounded-[40px] shadow-2xl border-8 border-white bg-gray-100">
                <AutoTreatmentSlider />
             </div>
-            
-            {/* Floating Review Badge */}
-            <div className="absolute -bottom-6 -right-6 md:bottom-10 md:-right-10 bg-white rounded-2xl p-4 shadow-xl border border-gray-100 flex items-center gap-4 animate-[float-slow_8s_ease-in-out_infinite]">
-              <div className="flex -space-x-2">
-                 <div className="w-10 h-10 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center text-white text-xs font-bold">G</div>
-              </div>
-              <div>
-                <div className="flex gap-1 mb-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={14} className="fill-[var(--accent-gold-deep)] text-[var(--accent-gold-deep)]" />
-                  ))}
-                </div>
-                <p className="text-xs font-bold text-gray-800">{reviewCount}+ Google Reviews</p>
-              </div>
-            </div>
-          </div>
+                      </div>
         </div>
 
         {/* Right: Content */}
