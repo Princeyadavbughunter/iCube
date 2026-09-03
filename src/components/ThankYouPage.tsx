@@ -10,7 +10,7 @@ export default function ThankYouPage() {
   const branch = branches[slug];
 
   const doctor = branch?.doctors?.[0];
-  const primaryPhone = branch?.contact.phones[0] || '7011993633';
+  const primaryPhone = branch?.contact.phones[0] || '9077700021';
   const phoneTel = primaryPhone.replace(/\s/g, '');
   const branchName = branch?.name || "I Cube Dental";
 
