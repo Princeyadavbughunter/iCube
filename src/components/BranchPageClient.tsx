@@ -4,20 +4,25 @@ import { useEffect, useState } from "react";
 import { BranchConfig } from "@/config/branch-configs";
 
 import Header from "@/components/Header";
-import Hero from "@/components/modern/Hero";
-import AboutSection from "@/components/editorial/AboutSection";
-import TreatmentsOverview from "@/components/modern/TreatmentsOverview";
-import AdvancedTreatments from "@/components/modern/AdvancedTreatments";
-import PatientJourney from "@/components/PatientJourney";
-import TeamGrid from "@/components/editorial/TeamGrid";
+import ImplantHero from "@/components/implant/ImplantHero";
+import ImplantTrustBar from "@/components/implant/ImplantTrustBar";
+import MissingTeethProblems from "@/components/implant/MissingTeethProblems";
+import ImplantPlanning from "@/components/implant/ImplantPlanning";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import VideoStories from "@/components/modern/VideoStories";
 import Testimonials from "@/components/editorial/Testimonials";
-import FaqEditorial from "@/components/editorial/FaqEditorial";
+import WhyChooseImplants from "@/components/implant/WhyChooseImplants";
+import EvaluationVisit from "@/components/implant/EvaluationVisit";
+import ClinicInside from "@/components/implant/ClinicInside";
+import DoctorSpotlight from "@/components/implant/DoctorSpotlight";
+import TeamGrid from "@/components/editorial/TeamGrid";
+import ImplantFaq from "@/components/implant/ImplantFaq";
+import ContactBlock from "@/components/implant/ContactBlock";
+import ConsultCta from "@/components/implant/ConsultCta";
 
-import CtaBand from "@/components/editorial/CtaBand";
 import Footer from "@/components/Footer";
 import StickyCTA from "@/components/StickyCTA";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import PopupForm from "@/components/PopupForm";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import { Rise, ScrollProgress } from "@/components/motion/Motion";
@@ -135,24 +140,64 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
       {/* Main Content */}
       <div className="relative z-10">
         <Header onBookAppointment={openPopup} branch={branch} />
+
         {/* The hero is above the fold, so it is deliberately not wrapped in a
             Reveal — an entrance animation would only delay first paint. */}
-        <Hero branch={branch} onBookAppointment={openPopup} />
-        <Rise><TreatmentsOverview /></Rise>
-        <Rise><AdvancedTreatments branch={branch} /></Rise>
-        <Rise><AboutSection branch={branch} /></Rise>
-        <Rise><PatientJourney /></Rise>
-        <Rise><TeamGrid branch={branch} /></Rise>
-        <Rise><BeforeAfterSlider branch={branch} /></Rise>
-        <Rise><VideoStories /></Rise>
-        <Rise><Testimonials branch={branch} /></Rise>
-        <Rise><FaqEditorial branch={branch} onBookAppointment={openPopup} /></Rise>
-        <Rise><CtaBand branch={branch} onBookAppointment={openPopup} /></Rise>
+        <ImplantHero branch={branch} onBookAppointment={openPopup} />
+
+        {/* ---- Qualify: the credentials, then the problem ---- */}
+        <Rise><ImplantTrustBar branch={branch} /></Rise>
+        <Rise><MissingTeethProblems /></Rise>
+
+        {/* ---- Explain: the surgeon, on film ---- */}
+        <Rise><ImplantPlanning branch={branch} onBookAppointment={openPopup} /></Rise>
+
+        {/* ---- Prove: results, then patients, then strangers on Google ----
+            Deliberately in that order. The clinic's own photographs are the
+            weakest evidence and the reviews the strongest, so belief builds
+            rather than peaking on the first block. */}
+        <Rise>
+          <BeforeAfterSlider
+            branch={branch}
+            heading="Our patients regained their smiles, confidence and quality of life"
+            disclaimer="Results may vary and depend on the individual case."
+          >
+            <ConsultCta branch={branch} onBookAppointment={openPopup} />
+          </BeforeAfterSlider>
+        </Rise>
+        <Rise>
+          <VideoStories
+            kicker="PATIENT STORIES"
+            heading="Don't just take our word for it"
+            disclaimer="Results may vary and depend on the individual case."
+          >
+            <ConsultCta branch={branch} onBookAppointment={openPopup} />
+          </VideoStories>
+        </Rise>
+        <Rise>
+          <Testimonials branch={branch} heading="What our patients say on Google">
+            <ConsultCta branch={branch} onBookAppointment={openPopup} />
+          </Testimonials>
+        </Rise>
+
+        {/* ---- Answer: why here, and what the first visit costs you ---- */}
+        <Rise><WhyChooseImplants branch={branch} /></Rise>
+        <Rise><EvaluationVisit branch={branch} onBookAppointment={openPopup} /></Rise>
+
+        {/* ---- Reassure: the room, the surgeon, the team ---- */}
+        <Rise><ClinicInside branch={branch} onBookAppointment={openPopup} /></Rise>
+        <Rise><DoctorSpotlight branch={branch} onBookAppointment={openPopup} /></Rise>
+        <Rise><TeamGrid branch={branch} heading="A skilled team delivering precision and comfort" /></Rise>
+
+        {/* ---- Close: objections, then directions ---- */}
+        <Rise><ImplantFaq branch={branch} onBookAppointment={openPopup} /></Rise>
+        <Rise><ContactBlock branch={branch} onBookAppointment={openPopup} /></Rise>
         <Rise y={16}><Footer branch={branch} /></Rise>
       </div>
 
       {/* Interactive Components */}
       <StickyCTA isVisible={showStickyCta} onBookAppointment={openPopup} branch={branch} />
+      <WhatsAppButton branch={branch} />
       <PopupForm
         isOpen={showPopup}
         onClose={closePopup}

@@ -1,8 +1,19 @@
+import type { ReactNode } from 'react';
 import { Star, Quote } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 
 /** Real Google reviews for this branch, quoted verbatim (typos included). */
-export default function Testimonials({ branch }: { branch: BranchConfig }) {
+export default function Testimonials({
+  branch,
+  heading,
+  children,
+}: {
+  branch: BranchConfig;
+  /** Overrides the default heading. */
+  heading?: string;
+  /** Slot under the Google link, used for the implant page's repeating CTA. */
+  children?: ReactNode;
+}) {
   if (branch.reviews.length === 0) return null;
 
   return (
@@ -13,7 +24,7 @@ export default function Testimonials({ branch }: { branch: BranchConfig }) {
             TESTIMONIALS
           </div>
           <h2 className="font-poppins text-3xl md:text-[2.5rem] font-bold leading-tight text-[var(--brand-teal-deep)]">
-            Real Smiles, Real Transformations
+            {heading ?? 'Real Smiles, Real Transformations'}
           </h2>
           <p className="mt-4 text-gray-500">What our patients say about us</p>
         </div>
@@ -72,6 +83,7 @@ export default function Testimonials({ branch }: { branch: BranchConfig }) {
           >
             Read all reviews on Google →
           </a>
+          {children && <div className="mt-9">{children}</div>}
         </div>
       </div>
     </section>

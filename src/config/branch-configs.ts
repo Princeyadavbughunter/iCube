@@ -68,6 +68,14 @@ export type BranchConfig = {
     openingHours: string;
   };
   usps: string[];
+  /**
+   * The four credentials shown in the implant page's trust bar.
+   *
+   * Qualifications and team size only — never implants-placed or
+   * patients-treated counts. Nobody has audited those for this practice, and a
+   * number on a medical page is a claim the clinic has to be able to defend.
+   */
+  implantStats: { value: string; label: string }[];
   pricing: {
     implant: string;
   };
@@ -79,6 +87,16 @@ export type BranchConfig = {
   heroVideo: string;
   /** Still frame for `heroVideo`, shown before playback starts. */
   heroPoster: string;
+  /**
+   * Footage of the premises themselves, for the "inside the clinic" section.
+   *
+   * Deliberately separate from `heroVideo`: Chandigarh's hero runs a case
+   * film, and labelling a treatment montage as a tour of the building would be
+   * a lie about what the visitor is looking at. Empty hides the section.
+   */
+  clinicTourVideo: string;
+  /** Still frame for `clinicTourVideo`. */
+  clinicTourPoster: string;
   /**
    * Sales video (VSL) that opens the branch page. Unlike `heroVideo` this one
    * has sound and does not autoplay — the visitor presses play. Empty hides
@@ -212,12 +230,22 @@ export const branches: Record<string, BranchConfig> = {
       "CAD/CAM precision crowns & restorations",
       "Complete multi-specialty care under one roof"
     ],
+    implantStats: [
+      { value: "10+ Years", label: "Specialist implant experience" },
+      { value: "MDS · MAMC", label: "India's No. 1 dental college" },
+      { value: "WCOI Japan", label: "Diplomate in implantology" },
+      { value: "7 Specialists", label: "One roof, one treatment plan" },
+    ],
     pricing: {
       implant: "₹25,000 onwards*"
     },
     heroTitle: "Advanced Implant & Specialist Dental Care in Ludhiana",
     heroVideo: "/hero-ludhiana.mp4",
     heroPoster: "/hero-ludhiana-poster.webp",
+    // The same file is a genuine walkthrough of the Ludhiana premises, which
+    // is why it can also carry the clinic section further down the page.
+    clinicTourVideo: "/hero-ludhiana.mp4",
+    clinicTourPoster: "/hero-ludhiana-poster.webp",
     // Brand VSL — Dr. Chandan Jain to camera, with CAD/CAM and implant b-roll.
     // The end card names both cities, so the same film runs on both branches.
     vsl: {
@@ -370,6 +398,12 @@ export const branches: Record<string, BranchConfig> = {
       "Single-day crowns with digital scanners & CAD/CAM",
       "GBT machine for advanced, comfortable scaling"
     ],
+    implantStats: [
+      { value: "13+ Years", label: "Specialist implant experience" },
+      { value: "MDS Prosthodontics", label: "Implantologist & crown specialist" },
+      { value: "6 Specialities", label: "Practising under one roof" },
+      { value: "Separate Suite", label: "Used only for implant surgery" },
+    ],
     pricing: {
       implant: "₹25,000 onwards*"
     },
@@ -380,6 +414,11 @@ export const branches: Record<string, BranchConfig> = {
     // both cities, so it runs as iCube brand content rather than branch footage.
     heroVideo: "/icube-full-mouth-case.mp4",
     heroPoster: "/icube-full-mouth-case-poster.webp",
+    // No premises footage supplied for Chandigarh. The hero film above is a
+    // treatment montage, not a tour, so the clinic section stays hidden rather
+    // than passing it off as one.
+    clinicTourVideo: "",
+    clinicTourPoster: "",
     // Chandigarh runs the full-mouth case film in the hero instead of the VSL,
     // so the two branches do not open with the same video. Leaving `src` empty
     // is what hands the slot to `heroVideo` above — the case film is a silent

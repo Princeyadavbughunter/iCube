@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { teamPhotos } from '@/config/team';
 import type { BranchConfig } from '@/config/branch-configs';
@@ -14,14 +15,20 @@ import { SectionLabel, SectionHeading, PaLine } from './Primitives';
  * All four doctors appear together in the first photograph, which is why these
  * run on both branch pages rather than being scoped to one.
  */
-export default function TeamGrid({ branch }: { branch: BranchConfig }) {
+export default function TeamGrid({
+  branch,
+  heading,
+}: {
+  branch: BranchConfig;
+  heading?: ReactNode;
+}) {
   return (
     <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="team">
       <div className="mx-auto max-w-6xl">
         <div className="mb-10 flex flex-col items-center text-center">
           <SectionLabel>Our Team</SectionLabel>
           <SectionHeading className="max-w-2xl">
-            A team of {branch.copy.teamSize}, under one roof
+            {heading ?? `A team of ${branch.copy.teamSize}, under one roof`}
           </SectionHeading>
           <PaLine>ਹਰ ਇਲਾਜ MDS ਸਪੈਸ਼ਲਿਸਟ ਡਾਕਟਰ ਵੱਲੋਂ</PaLine>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-gray-500">
