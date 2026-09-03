@@ -8,7 +8,7 @@ interface WhatsAppButtonProps {
 }
 
 export default function WhatsAppButton({ branch }: WhatsAppButtonProps) {
-  const primaryPhone = branch ? branch.contact.phones[0] : "7011993633";
+  const primaryPhone = branch ? branch.contact.phones[0] : "9077700021";
   const branchName = branch ? branch.name : "Ludhiana";
 
   const phoneNumber = primaryPhone.replace(/\+/g, '').replace(/\s/g, '').replace(/-/g, '');

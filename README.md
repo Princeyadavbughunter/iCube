@@ -27,7 +27,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 | Doctor | Dr. Chandan Jain |
 | Specialty | Implantologist \| MDS Prosthodontics \| MDS Endodontics |
 | Address | 1533, New Prem Nagar, Near Las Vegas Club, Ludhiana, Punjab – 141001 (near PAU Gate No. 4 / Akaash Institute) |
-| Phone | 7011993633 · 9077700021 |
+| Phone | 9077700021 · 9077700021 |
 | Email | drcjain1@gmail.com |
 | Timings | Mon–Sun, 10:00 AM – 8:00 PM |
 | Experience | 14 years |

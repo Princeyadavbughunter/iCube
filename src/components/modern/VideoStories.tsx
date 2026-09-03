@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Play, VolumeX } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
 
@@ -55,7 +55,19 @@ const stories: Story[] = [
  * pauses the other three, so two patients never talk over each other, and the
  * native controls take over from there rather than being reinvented.
  */
-export default function VideoStories() {
+export default function VideoStories({
+  kicker = 'PATIENT VIDEOS',
+  heading = 'Hear It In Their Own Words',
+  disclaimer,
+  children,
+}: {
+  kicker?: string;
+  heading?: string;
+  /** Small print under the row — patient footage needs a results-vary line. */
+  disclaimer?: string;
+  /** Slot under the row, used for the implant page's repeating CTA. */
+  children?: ReactNode;
+} = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const reduceMotion = useReducedMotion();
@@ -139,10 +151,10 @@ export default function VideoStories() {
       <div className="mx-auto max-w-6xl">
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-block px-4 py-1 rounded-full bg-[var(--brand-teal)]/10 text-[var(--brand-teal)] text-sm font-bold tracking-wider mb-4">
-            PATIENT VIDEOS
+            {kicker}
           </div>
           <h2 className="font-poppins text-3xl md:text-[2.5rem] font-bold leading-tight text-[var(--brand-teal-deep)]">
-            Hear It In Their Own Words
+            {heading}
           </h2>
           <p className="mt-4 text-gray-500">Tap any story to play it with sound</p>
         </div>
@@ -214,6 +226,13 @@ export default function VideoStories() {
             );
           })}
         </div>
+
+        {(disclaimer || children) && (
+          <div className="mt-9 text-center">
+            {disclaimer && <p className="mb-7 text-[12px] italic text-gray-400">{disclaimer}</p>}
+            {children}
+          </div>
+        )}
       </div>
     </section>
   );

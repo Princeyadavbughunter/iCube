@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, type ReactNode } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
@@ -24,6 +24,12 @@ import { SectionLabel, SectionHeading, PaLine } from '@/components/editorial/Pri
  */
 interface BeforeAfterSliderProps {
   branch: BranchConfig;
+  /** Overrides the default heading — the implant page frames these as outcomes. */
+  heading?: string;
+  /** Small print under the row. Result photography needs a results-vary line. */
+  disclaimer?: string;
+  /** Slot under the row, used for the implant page's repeating CTA. */
+  children?: ReactNode;
 }
 
 /**
@@ -39,7 +45,12 @@ const DRIFT = 0.55;
 /** How long a hand-driven move holds the drift off before it resumes. */
 const RESUME_MS = 2600;
 
-export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
+export default function BeforeAfterSlider({
+  branch,
+  heading,
+  disclaimer,
+  children,
+}: BeforeAfterSliderProps) {
   const { aspect, images } = branch.beforeAfter;
   const trackRef = useRef<HTMLDivElement>(null);
   const pausedUntil = useRef(0);
@@ -114,7 +125,9 @@ export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
       <div className="mx-auto mb-10 max-w-6xl px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col items-center text-center">
           <SectionLabel>Patient Results</SectionLabel>
-          <SectionHeading className="max-w-2xl">Real smiles, real transformations</SectionHeading>
+          <SectionHeading className="max-w-2xl">
+            {heading ?? 'Real smiles, real transformations'}
+          </SectionHeading>
           <PaLine>ਸਾਡੇ ਮਰੀਜ਼ਾਂ ਦੇ ਅਸਲੀ ਨਤੀਜੇ</PaLine>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-gray-500">
             Actual before &amp; after results from specialist-led dentistry in {branch.city} — the
@@ -188,6 +201,15 @@ export default function BeforeAfterSlider({ branch }: BeforeAfterSliderProps) {
           </button>
         ))}
       </div>
+
+      {(disclaimer || children) && (
+        <div className="mx-auto mt-8 max-w-6xl px-4 text-center sm:px-6 lg:px-10">
+          {disclaimer && (
+            <p className="mb-7 text-[12px] italic text-gray-400">{disclaimer}</p>
+          )}
+          {children}
+        </div>
+      )}
     </section>
   );
 }

@@ -68,6 +68,14 @@ export type BranchConfig = {
     openingHours: string;
   };
   usps: string[];
+  /**
+   * The four credentials shown in the implant page's trust bar.
+   *
+   * Qualifications and team size only — never implants-placed or
+   * patients-treated counts. Nobody has audited those for this practice, and a
+   * number on a medical page is a claim the clinic has to be able to defend.
+   */
+  implantStats: { value: string; label: string }[];
   pricing: {
     implant: string;
   };
@@ -79,6 +87,15 @@ export type BranchConfig = {
   heroVideo: string;
   /** Still frame for `heroVideo`, shown before playback starts. */
   heroPoster: string;
+  /**
+   * Footage of the premises themselves, for the "inside the clinic" section.
+   *
+   * Deliberately separate from `heroVideo`: Chandigarh's hero runs a case
+   * film, and labelling a treatment montage as a tour of the building would be
+   * a lie about what the visitor is looking at. An empty list hides the
+   * section rather than filling it with something that is not the building.
+   */
+  clinicTour: { src: string; poster: string; label: string }[];
   /**
    * Sales video (VSL) that opens the branch page. Unlike `heroVideo` this one
    * has sound and does not autoplay — the visitor presses play. Empty hides
@@ -184,7 +201,7 @@ export const branches: Record<string, BranchConfig> = {
       ],
     },
     contact: {
-      phones: ["7011993633", "9077700021"],
+      phones: ["9077700021"],
       timings: "Mon–Sun: 10 AM – 8 PM",
       daysLine: "Open all 7 days",
       address: "1533, New Prem Nagar | Near Las Vegas Club · PAU Gate No. 4 · Akaash Institute | Ludhiana, Punjab – 141001",
@@ -212,12 +229,43 @@ export const branches: Record<string, BranchConfig> = {
       "CAD/CAM precision crowns & restorations",
       "Complete multi-specialty care under one roof"
     ],
+    implantStats: [
+      { value: "10+ Years", label: "Specialist implant experience" },
+      { value: "MDS · MAMC", label: "India's No. 1 dental college" },
+      { value: "WCOI Japan", label: "Diplomate in implantology" },
+      { value: "7 Specialists", label: "One roof, one treatment plan" },
+    ],
     pricing: {
       implant: "₹25,000 onwards*"
     },
     heroTitle: "Advanced Implant & Specialist Dental Care in Ludhiana",
     heroVideo: "/hero-ludhiana.mp4",
     heroPoster: "/hero-ludhiana-poster.webp",
+    // Shot at the Ludhiana premises. The camera recorded these sideways, so
+    // the web copies in public/clinic are rotated upright and re-encoded from
+    // ~270 MB of camera originals; the originals stay out of the repo.
+    clinicTour: [
+      {
+        src: "/clinic/clinic-reception.mp4",
+        poster: "/clinic/clinic-reception-poster.webp",
+        label: "Reception and waiting lounge",
+      },
+      {
+        src: "/clinic/clinic-cbct-room.mp4",
+        poster: "/clinic/clinic-cbct-room-poster.webp",
+        label: "The CBCT scan room",
+      },
+      {
+        src: "/clinic/clinic-cbct-machine.mp4",
+        poster: "/clinic/clinic-cbct-machine-poster.webp",
+        label: "Our in-house CBCT scanner",
+      },
+      {
+        src: "/clinic/clinic-treatment-room.mp4",
+        poster: "/clinic/clinic-treatment-room-poster.webp",
+        label: "A treatment operatory",
+      },
+    ],
     // Brand VSL — Dr. Chandan Jain to camera, with CAD/CAM and implant b-roll.
     // The end card names both cities, so the same film runs on both branches.
     vsl: {
@@ -260,7 +308,7 @@ export const branches: Record<string, BranchConfig> = {
       faqSpecialist: "MDS is a three-year postgraduate specialisation completed after the general BDS dental degree. Dr. Chandan Jain holds MDS qualifications in both Prosthodontics and Endodontics, and our team are MDS specialists trained at India's leading dental colleges. In practice it means your root canal is done by an endodontist and your crown by a prosthodontist — not by a generalist doing a bit of everything.",
       faqPricing: "Dental implants start from ₹25,000. The final cost depends on the implant system, the number of teeth being replaced, whether bone grafting is needed and the type of crown chosen. Every case is assessed individually on CBCT and you receive a clear, itemised quote before treatment begins — no surprises at the counter.",
       faqRootCanal: "Yes. Endodontics is one of our core specialisations — Dr. Chandan Jain is MDS in Endodontics, so root canal treatment, retreatment of failed root canals and complex or curved-canal cases are all handled in-house. If that tooth then needs a crown, the same team completes it with CAD/CAM, so nothing gets referred out or delayed.",
-      faqTimingsLocation: "We are open Monday to Sunday, 10:00 AM to 8:00 PM — all seven days. The clinic is at 1533, New Prem Nagar, Ludhiana, near Las Vegas Club, close to PAU Gate No. 4 and Akaash Institute. Call 7011993633 or 9077700021 to book a consultation.",
+      faqTimingsLocation: "We are open Monday to Sunday, 10:00 AM to 8:00 PM — all seven days. The clinic is at 1533, New Prem Nagar, Ludhiana, near Las Vegas Club, close to PAU Gate No. 4 and Akaash Institute. Call 9077700021 to book a consultation.",
     },
     // Real Google reviews from the Ludhiana GMB profile, quoted verbatim
     // (including the reviewers' own typos) — do not tidy the wording.
@@ -370,6 +418,12 @@ export const branches: Record<string, BranchConfig> = {
       "Single-day crowns with digital scanners & CAD/CAM",
       "GBT machine for advanced, comfortable scaling"
     ],
+    implantStats: [
+      { value: "13+ Years", label: "Specialist implant experience" },
+      { value: "MDS Prosthodontics", label: "Implantologist & crown specialist" },
+      { value: "6 Specialities", label: "Practising under one roof" },
+      { value: "Separate Suite", label: "Used only for implant surgery" },
+    ],
     pricing: {
       implant: "₹25,000 onwards*"
     },
@@ -380,6 +434,10 @@ export const branches: Record<string, BranchConfig> = {
     // both cities, so it runs as iCube brand content rather than branch footage.
     heroVideo: "/icube-full-mouth-case.mp4",
     heroPoster: "/icube-full-mouth-case-poster.webp",
+    // No premises footage supplied for Chandigarh. The hero film above is a
+    // treatment montage, not a tour, so the clinic section stays hidden rather
+    // than passing it off as one.
+    clinicTour: [],
     // Chandigarh runs the full-mouth case film in the hero instead of the VSL,
     // so the two branches do not open with the same video. Leaving `src` empty
     // is what hands the slot to `heroVideo` above — the case film is a silent
