@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import type { BranchConfig } from '@/config/branch-configs';
 import { doctorsFor } from '@/config/team';
@@ -17,7 +18,14 @@ import { SectionLabel, SectionHeading, PaLine } from './Primitives';
  * clinic's own wording — these are claims about a real clinician's
  * qualifications, so they are quoted, never paraphrased.
  */
-export default function AboutSection({ branch }: { branch: BranchConfig }) {
+export default function AboutSection({
+  branch,
+  children,
+}: {
+  branch: BranchConfig;
+  /** Slot under the cards, used for the implant page's repeating CTA. */
+  children?: ReactNode;
+}) {
   const doctors = doctorsFor(branch.slug);
   if (doctors.length === 0) return null;
 
@@ -141,6 +149,8 @@ export default function AboutSection({ branch }: { branch: BranchConfig }) {
         <p className="mt-8 border-l-2 border-[var(--accent-gold)] pl-4 text-[14.5px] leading-relaxed text-gray-500">
           {branch.doctors[0].footer}
         </p>
+
+        {children && <div className="mt-11 text-center">{children}</div>}
       </div>
     </section>
   );

@@ -14,7 +14,7 @@ import Testimonials from "@/components/editorial/Testimonials";
 import WhyChooseImplants from "@/components/implant/WhyChooseImplants";
 import EvaluationVisit from "@/components/implant/EvaluationVisit";
 import ClinicInside from "@/components/implant/ClinicInside";
-import DoctorSpotlight from "@/components/implant/DoctorSpotlight";
+import AboutSection from "@/components/editorial/AboutSection";
 import TeamGrid from "@/components/editorial/TeamGrid";
 import ImplantFaq from "@/components/implant/ImplantFaq";
 import ContactBlock from "@/components/implant/ContactBlock";
@@ -186,7 +186,11 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
 
         {/* ---- Reassure: the room, the surgeon, the team ---- */}
         <Rise><ClinicInside branch={branch} onBookAppointment={openPopup} /></Rise>
-        <Rise><DoctorSpotlight branch={branch} onBookAppointment={openPopup} /></Rise>
+        <Rise>
+          <AboutSection branch={branch}>
+            <ConsultCta branch={branch} onBookAppointment={openPopup} />
+          </AboutSection>
+        </Rise>
         <Rise><TeamGrid branch={branch} heading="A skilled team delivering precision and comfort" /></Rise>
 
         {/* ---- Close: objections, then directions ---- */}
