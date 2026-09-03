@@ -1,23 +1,23 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import { useReducedMotion } from 'framer-motion';
 import type { BranchConfig } from '@/config/branch-configs';
 import ConsultCta from './ConsultCta';
 
 /**
- * The premises, shown with the walkthrough rather than a repeated still.
+ * The premises, filmed.
  *
- * The obvious build here was a photo grid, but this branch has supplied one
- * interior photograph. A grid would have had to repeat it, and five copies of
- * the same room reads as a mistake rather than a tour. The clinic's own
- * walkthrough film covers the space properly, so it leads and the still sits
- * beside it.
+ * Four rooms rather than one wide photograph: someone deciding where to have
+ * surgery wants to see the room the surgery happens in, the scanner their jaw
+ * goes into, and what they will be sitting in beforehand. A still of the
+ * reception answers none of that.
  *
- * The film is silent b-roll, so it loops muted with no controls — and, at
- * ~5 MB, only starts loading once the section is close, the same gate the
- * patient videos use.
+ * These are silent b-roll, so they loop muted with no controls and no
+ * tap-for-sound affordance — there is nothing to hear, and offering sound that
+ * does not exist is worse than offering none. They only start once the section
+ * is near the viewport and pause when it leaves, so a visitor who never
+ * scrolls this far downloads none of it.
  */
 export default function ClinicInside({
   branch,
@@ -27,16 +27,15 @@ export default function ClinicInside({
   onBookAppointment: () => void;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const reduceMotion = useReducedMotion();
   const [inView, setInView] = useState(false);
 
-  const photo = branch.clinicImages[0];
-  const hasVideo = Boolean(branch.clinicTourVideo);
+  const clips = branch.clinicTour;
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || !hasVideo || reduceMotion) return;
+    if (!section || clips.length === 0 || reduceMotion) return;
 
     const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
       rootMargin: '250px 0px',
@@ -44,19 +43,20 @@ export default function ClinicInside({
     });
     observer.observe(section);
     return () => observer.disconnect();
-  }, [hasVideo, reduceMotion]);
+  }, [clips.length, reduceMotion]);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (inView) {
-      video.play().catch(() => {});
-    } else {
-      video.pause();
-    }
+    videoRefs.current.forEach((video) => {
+      if (!video) return;
+      if (inView) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
   }, [inView]);
 
-  if (!hasVideo && !photo) return null;
+  if (clips.length === 0) return null;
 
   return (
     <section
@@ -75,34 +75,29 @@ export default function ClinicInside({
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-[1.55fr_1fr]">
-          {hasVideo && (
-            <div className="relative aspect-[16/10] overflow-hidden rounded-[22px] bg-[var(--brand-teal-ink)] shadow-[0_24px_60px_-32px_rgba(16,17,36,0.6)] ring-1 ring-black/5">
-              <video
-                ref={videoRef}
-                className="h-full w-full object-cover"
-                src={branch.clinicTourVideo}
-                poster={branch.clinicTourPoster || undefined}
-                muted
-                loop
-                playsInline
-                preload="none"
-                aria-label={`Walkthrough of I Cube Dental ${branch.name}`}
-              />
-            </div>
-          )}
-
-          {photo && (
-            <div className="relative aspect-[16/10] overflow-hidden rounded-[22px] bg-gray-100 shadow-[0_24px_60px_-32px_rgba(16,17,36,0.5)] ring-1 ring-black/5 md:aspect-auto">
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 768px) 100vw, 40vw"
-                className="object-cover"
-              />
-            </div>
-          )}
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          {clips.map((clip, index) => (
+            <figure key={clip.src} className="group">
+              <div className="relative aspect-[9/16] overflow-hidden rounded-[20px] bg-[var(--brand-teal-ink)] ring-1 ring-black/5 shadow-[0_18px_45px_-22px_rgba(18,19,36,0.55)]">
+                <video
+                  ref={(el) => {
+                    videoRefs.current[index] = el;
+                  }}
+                  className="h-full w-full object-cover"
+                  src={clip.src}
+                  poster={clip.poster}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  aria-label={`${clip.label} at I Cube Dental ${branch.name}`}
+                />
+              </div>
+              <figcaption className="mt-3 text-center text-[12px] font-semibold text-[var(--brand-teal-deep)] sm:text-[12.5px]">
+                {clip.label}
+              </figcaption>
+            </figure>
+          ))}
         </div>
 
         <div className="mt-11">

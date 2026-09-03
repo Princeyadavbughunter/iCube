@@ -46,3 +46,7 @@ next-env.d.ts
 /.vscode
 
 # raw source assets (clean copies live in /public/images/)
+
+# Camera originals. Web versions live in public/ — these stay local so a
+# 270 MB clip never ends up in the repository.
+/raw-media/

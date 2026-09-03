@@ -92,11 +92,10 @@ export type BranchConfig = {
    *
    * Deliberately separate from `heroVideo`: Chandigarh's hero runs a case
    * film, and labelling a treatment montage as a tour of the building would be
-   * a lie about what the visitor is looking at. Empty hides the section.
+   * a lie about what the visitor is looking at. An empty list hides the
+   * section rather than filling it with something that is not the building.
    */
-  clinicTourVideo: string;
-  /** Still frame for `clinicTourVideo`. */
-  clinicTourPoster: string;
+  clinicTour: { src: string; poster: string; label: string }[];
   /**
    * Sales video (VSL) that opens the branch page. Unlike `heroVideo` this one
    * has sound and does not autoplay — the visitor presses play. Empty hides
@@ -242,10 +241,31 @@ export const branches: Record<string, BranchConfig> = {
     heroTitle: "Advanced Implant & Specialist Dental Care in Ludhiana",
     heroVideo: "/hero-ludhiana.mp4",
     heroPoster: "/hero-ludhiana-poster.webp",
-    // The same file is a genuine walkthrough of the Ludhiana premises, which
-    // is why it can also carry the clinic section further down the page.
-    clinicTourVideo: "/hero-ludhiana.mp4",
-    clinicTourPoster: "/hero-ludhiana-poster.webp",
+    // Shot at the Ludhiana premises. The camera recorded these sideways, so
+    // the web copies in public/clinic are rotated upright and re-encoded from
+    // ~270 MB of camera originals; the originals stay out of the repo.
+    clinicTour: [
+      {
+        src: "/clinic/clinic-reception.mp4",
+        poster: "/clinic/clinic-reception-poster.webp",
+        label: "Reception and waiting lounge",
+      },
+      {
+        src: "/clinic/clinic-cbct-room.mp4",
+        poster: "/clinic/clinic-cbct-room-poster.webp",
+        label: "The CBCT scan room",
+      },
+      {
+        src: "/clinic/clinic-cbct-machine.mp4",
+        poster: "/clinic/clinic-cbct-machine-poster.webp",
+        label: "Our in-house CBCT scanner",
+      },
+      {
+        src: "/clinic/clinic-treatment-room.mp4",
+        poster: "/clinic/clinic-treatment-room-poster.webp",
+        label: "A treatment operatory",
+      },
+    ],
     // Brand VSL — Dr. Chandan Jain to camera, with CAD/CAM and implant b-roll.
     // The end card names both cities, so the same film runs on both branches.
     vsl: {
@@ -417,8 +437,7 @@ export const branches: Record<string, BranchConfig> = {
     // No premises footage supplied for Chandigarh. The hero film above is a
     // treatment montage, not a tour, so the clinic section stays hidden rather
     // than passing it off as one.
-    clinicTourVideo: "",
-    clinicTourPoster: "",
+    clinicTour: [],
     // Chandigarh runs the full-mouth case film in the hero instead of the VSL,
     // so the two branches do not open with the same video. Leaving `src` empty
     // is what hands the slot to `heroVideo` above — the case film is a silent
