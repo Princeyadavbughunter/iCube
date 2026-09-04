@@ -1,0 +1,94 @@
+@font-face {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/poppins/regular.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 500;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/poppins/500.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Montserrat";
+            font-style: italic;
+            font-weight: 500;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/montserrat/500italic.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 700;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/poppins/700.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 600;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/poppins/600.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Raleway";
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/raleway/regular.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Poppins";
+            font-style: italic;
+            font-weight: 500;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/poppins/500italic.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Poppins";
+            font-style: italic;
+            font-weight: 400;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/poppins/italic.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 300;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/poppins/300.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/montserrat/regular.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Montserrat";
+            font-style: normal;
+            font-weight: 700;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/montserrat/700.woff2) format('woff2');
+          }
+        
+
+          @font-face {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://d3syewzhvzylbl.cloudfront.net/fonts/google-fonts/inter/regular.woff2) format('woff2');
+          }
