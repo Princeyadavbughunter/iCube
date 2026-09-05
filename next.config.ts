@@ -13,20 +13,6 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     qualities: [75, 100],
   },
-  async rewrites() {
-    return {
-      // beforeFiles runs ahead of the app router, so /ludhiana is served by the
-      // static landing page in public/lp/ludhiana instead of app/[branch]/page.tsx.
-      // The React branch page is still there and still builds - drop these two
-      // entries to switch back to it.
-      beforeFiles: [
-        { source: "/ludhiana", destination: "/lp/ludhiana/index.html" },
-        { source: "/ludhiana/", destination: "/lp/ludhiana/index.html" },
-      ],
-      afterFiles: [],
-      fallback: [],
-    };
-  },
 };
 
 export default nextConfig;
