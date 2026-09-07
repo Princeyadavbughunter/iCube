@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BranchConfig } from "@/config/branch-configs";
 
 import Header from "@/components/Header";
@@ -25,13 +25,38 @@ import StickyCTA from "@/components/StickyCTA";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import PopupForm from "@/components/PopupForm";
 import SmoothScroll from "@/components/motion/SmoothScroll";
+import { LanguageProvider, useLang } from "@/components/LanguageProvider";
+import { localizeBranch } from "@/config/branch-pa";
 import { Rise, ScrollProgress } from "@/components/motion/Motion";
 
 interface BranchPageClientProps {
   branch: BranchConfig;
 }
 
+/**
+ * The branch landing page.
+ *
+ * Wrapped in `LanguageProvider` so every section below can render in English
+ * or Punjabi from the header toggle. The provider has to sit here rather than
+ * in the root layout: this is the first client component on the route, and the
+ * language is client state.
+ */
 export default function BranchPageClient({ branch }: BranchPageClientProps) {
+  return (
+    <LanguageProvider>
+      <BranchPage branch={branch} />
+    </LanguageProvider>
+  );
+}
+
+function BranchPage({ branch: source }: BranchPageClientProps) {
+  const { lang } = useLang();
+
+  // Swapping the config once, here, is what keeps the sections below language-
+  // agnostic: every one of them already reads its prose off `branch`, so none
+  // of them needs to know a second language exists.
+  const branch = useMemo(() => localizeBranch(source, lang), [source, lang]);
+
   const [showStickyCta, setShowStickyCta] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -152,10 +177,7 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
         {/* ---- Explain: the surgeon, on film ---- */}
         <Rise><ImplantPlanning branch={branch} onBookAppointment={openPopup} /></Rise>
 
-        {/* ---- Prove: results, then patients, then strangers on Google ----
-            Deliberately in that order. The clinic's own photographs are the
-            weakest evidence and the reviews the strongest, so belief builds
-            rather than peaking on the first block. */}
+        {/* ---- Show: the clinic's own results ---- */}
         <Rise>
           <BeforeAfterSlider
             branch={branch}
@@ -165,6 +187,25 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
             <ConsultCta branch={branch} onBookAppointment={openPopup} />
           </BeforeAfterSlider>
         </Rise>
+
+        {/* ---- Reassure: the room, the surgeon, the team ---- */}
+        <Rise><ClinicInside branch={branch} onBookAppointment={openPopup} /></Rise>
+        <Rise>
+          <AboutSection branch={branch}>
+            <ConsultCta branch={branch} onBookAppointment={openPopup} />
+          </AboutSection>
+        </Rise>
+        <Rise><TeamGrid branch={branch} heading="A skilled team delivering precision and comfort" /></Rise>
+
+        {/* ---- Answer: why here, and what the first visit costs you ---- */}
+        <Rise><WhyChooseImplants branch={branch} /></Rise>
+        <Rise><EvaluationVisit branch={branch} onBookAppointment={openPopup} /></Rise>
+
+        {/* ---- Prove: patients in their own words, then strangers on Google.
+            Last on purpose — by this point the visitor has the clinic, the
+            surgeon and the price, and other people's verdicts are what settles
+            it. Google is placed after our own films because a review we cannot
+            edit carries more weight than one we filmed. */}
         <Rise>
           <VideoStories
             kicker="PATIENT STORIES"
@@ -179,19 +220,6 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
             <ConsultCta branch={branch} onBookAppointment={openPopup} />
           </Testimonials>
         </Rise>
-
-        {/* ---- Answer: why here, and what the first visit costs you ---- */}
-        <Rise><WhyChooseImplants branch={branch} /></Rise>
-        <Rise><EvaluationVisit branch={branch} onBookAppointment={openPopup} /></Rise>
-
-        {/* ---- Reassure: the room, the surgeon, the team ---- */}
-        <Rise><ClinicInside branch={branch} onBookAppointment={openPopup} /></Rise>
-        <Rise>
-          <AboutSection branch={branch}>
-            <ConsultCta branch={branch} onBookAppointment={openPopup} />
-          </AboutSection>
-        </Rise>
-        <Rise><TeamGrid branch={branch} heading="A skilled team delivering precision and comfort" /></Rise>
 
         {/* ---- Close: objections, then directions ---- */}
         <Rise><ImplantFaq branch={branch} onBookAppointment={openPopup} /></Rise>

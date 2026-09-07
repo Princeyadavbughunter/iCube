@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, MapPin, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, Sparkles, Star } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 import { team } from '@/config/team';
 import SmoothScroll from '@/components/motion/SmoothScroll';
@@ -183,12 +183,8 @@ function BranchPanel({
           transition={{ duration: 0.5, ease: EASE }}
         />
 
-        {/* ---- Top rail: branch number + speciality badge ---- */}
-        <div className="absolute inset-x-4 top-4 z-10 flex items-start justify-between gap-3 sm:inset-x-5 sm:top-5">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-[var(--brand-teal-deep)] shadow-sm backdrop-blur">
-            <MapPin size={11} className="text-[var(--accent-pink)]" />
-            Branch {index + 1}
-          </span>
+        {/* ---- Top rail: speciality badge ---- */}
+        <div className="absolute inset-x-4 top-4 z-10 flex items-start justify-end gap-3 sm:inset-x-5 sm:top-5">
           <span
             className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-white shadow-sm"
             style={{ background: index === 0 ? 'var(--brand-teal)' : 'var(--accent-pink)' }}
@@ -291,19 +287,27 @@ function TopBar({ branches }: { branches: BranchConfig[] }) {
   );
 }
 
+/** Clinics the practice runs, including those without a page of their own here. */
+const BRANCH_COUNT = 4;
+
+/** Years the practice has been running, as published. */
+const YEARS_RUNNING = '14+';
+
 /**
  * The four headline figures.
  *
- * Every one of these is checkable against the config: two branches, the lead
- * doctor's published experience, the size of the specialist team, and the
- * implant starting price. Nothing invented — an unverifiable "15K+ smiles" on
- * a medical page is a liability, not a flourish.
+ * Branch count and years running are practice-wide facts rather than anything
+ * the branch configs can derive — only the two centres with their own pages
+ * live in config — so they sit in the constants above. Team size and the
+ * implant starting price stay checkable against the config. Nothing invented —
+ * an unverifiable "15K+ smiles" on a medical page is a liability, not a
+ * flourish.
  */
 function StatsCard({ branches }: { branches: BranchConfig[] }) {
   const stats = [
-    { value: String(branches.length), label: 'Branches' },
-    { value: branches[0].copy.experience.replace(' years', ''), label: 'Years' },
-    { value: String(team.length), label: 'MDS Specialists' },
+    { value: String(BRANCH_COUNT), label: 'Branches' },
+    { value: YEARS_RUNNING, label: 'Years' },
+    { value: String(branches[0].copy.teamSize), label: 'MDS Specialists' },
     { value: '₹25K', label: 'Implants from' },
   ];
 
@@ -331,9 +335,9 @@ function StatsCard({ branches }: { branches: BranchConfig[] }) {
 /**
  * Social proof at the foot of the page.
  *
- * The avatar stack is the four specialists' own initials, and the review count
- * is the number of real Google reviews carried on the branch pages — so both
- * halves of this are things we can actually show.
+ * The avatar stack is the profiled specialists' own initials, the headline
+ * count is the full specialist team from config, and the review count is the
+ * number of real Google reviews carried on the branch pages.
  */
 function ProofPill({ branches }: { branches: BranchConfig[] }) {
   const reviewCount = branches.reduce((n, b) => n + b.reviews.length, 0);
@@ -354,7 +358,7 @@ function ProofPill({ branches }: { branches: BranchConfig[] }) {
         </div>
         <div>
           <div className="font-poppins text-[13.5px] font-bold leading-tight text-[var(--brand-teal-deep)]">
-            Treated by {team.length} MDS specialists
+            Treated by {branches[0].copy.teamSize} MDS specialists
           </div>
           <div className="mt-0.5 flex items-center gap-1.5 text-[11.5px] text-gray-500">
             <span className="flex gap-0.5">

@@ -1,8 +1,11 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { teamPhotos } from '@/config/team';
 import type { BranchConfig } from '@/config/branch-configs';
 import { SectionLabel, SectionHeading, PaLine } from './Primitives';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
  * The practice, shown through its own group photographs.
@@ -22,18 +25,19 @@ export default function TeamGrid({
   branch: BranchConfig;
   heading?: ReactNode;
 }) {
+  const { t } = useLang();
+
   return (
     <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="team">
       <div className="mx-auto max-w-6xl">
         <div className="mb-10 flex flex-col items-center text-center">
-          <SectionLabel>Our Team</SectionLabel>
+          <SectionLabel>{t.team.label}</SectionLabel>
           <SectionHeading className="max-w-2xl">
-            {heading ?? `A team of ${branch.copy.teamSize}, under one roof`}
+            {heading ?? t.team.heading}
           </SectionHeading>
           <PaLine>ਹਰ ਇਲਾਜ MDS ਸਪੈਸ਼ਲਿਸਟ ਡਾਕਟਰ ਵੱਲੋਂ</PaLine>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-gray-500">
-            Every case is diagnosed and delivered by a specialist in that field — not handed to a
-            general practitioner and not referred out of the practice.
+            {t.team.sub}
           </p>
         </div>
 

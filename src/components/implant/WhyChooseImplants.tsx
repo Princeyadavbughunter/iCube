@@ -1,5 +1,8 @@
+'use client';
+
 import { Award, ScanLine, Cpu, ShieldCheck, Users, IndianRupee } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
  * Six reasons, each tied to something the practice can actually show you.
@@ -11,37 +14,23 @@ import type { BranchConfig } from '@/config/branch-configs';
  */
 export default function WhyChooseImplants({ branch }: { branch: BranchConfig }) {
   const { copy, city, pricing } = branch;
+  const { t } = useLang();
+  const w = t.why;
 
   const reasons = [
     {
       Icon: Award,
-      title: 'Implant-Focused Expertise',
-      body: `${copy.leadDoctor} — ${copy.leadDoctorCreds} — with ${copy.experience} of clinical experience in implant and restorative dentistry.`,
+      title: w.expertise.title,
+      body: w.expertise.body(copy.leadDoctor, copy.leadDoctorCreds, copy.experience),
     },
-    {
-      Icon: ScanLine,
-      title: 'Advanced Digital Planning',
-      body: 'Your jaw is scanned on in-house CBCT, so bone height, width and the position of nerves and sinuses are known — and the implant placed in 3D on screen — before any surgery starts.',
-    },
-    {
-      Icon: Cpu,
-      title: 'In-House Technology, One-Visit Care',
-      body: 'CBCT, digital intraoral scanners and CAD/CAM restorations all sit inside the building, so your scan, diagnosis and treatment plan happen in the same appointment.',
-    },
-    {
-      Icon: ShieldCheck,
-      title: 'A Dedicated Implant Operatory',
-      body: 'Implants are placed in a room built for that one purpose — not in a general chair between routine appointments.',
-    },
-    {
-      Icon: Users,
-      title: 'Specialists, Not Generalists',
-      body: `A team of ${copy.teamSize} MDS specialists trained at India's leading dental colleges. Your root canal is done by an endodontist and your crown by a prosthodontist.`,
-    },
+    { Icon: ScanLine, title: w.planning.title, body: w.planning.body },
+    { Icon: Cpu, title: w.technology.title, body: w.technology.body },
+    { Icon: ShieldCheck, title: w.operatory.title, body: w.operatory.body },
+    { Icon: Users, title: w.specialists.title, body: w.specialists.body(copy.teamSize) },
     {
       Icon: IndianRupee,
-      title: 'A Quote Before Treatment',
-      body: `Implants from ${pricing.implant.replace(/\*$/, '')}. Every case is costed individually after CBCT, and you get a clear, itemised quote before anything begins.`,
+      title: w.quote.title,
+      body: w.quote.body(pricing.implant.replace(/\*$/, '')),
     },
   ];
 
@@ -49,7 +38,7 @@ export default function WhyChooseImplants({ branch }: { branch: BranchConfig }) 
     <section className="bg-[var(--accent-pink-soft)] px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="why-us">
       <div className="mx-auto max-w-6xl">
         <h2 className="mx-auto mb-12 max-w-2xl text-center font-poppins text-[1.6rem] font-bold leading-snug tracking-tight text-[var(--brand-teal-deep)] sm:text-[2rem]">
-          Why choose I Cube Dental {city} for your dental implants?
+          {w.heading(city)}
         </h2>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

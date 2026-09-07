@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { BranchConfig, branches } from "@/config/branch-configs";
+import { useLang } from '@/components/LanguageProvider';
 
 interface PopupFormProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ interface PopupFormProps {
 const BOOKING_SCRIPT_URL = '';
 
 export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
+  const { t } = useLang();
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   // Single-branch deployment: always use the default I Cube Dental branch if none supplied.
@@ -99,7 +101,7 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
         <button
           onClick={onClose}
           type="button"
-          aria-label="Close"
+          aria-label={t.popup.close}
           className="absolute top-3 right-3 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-900 flex items-center justify-center text-xl font-bold transition-colors z-10"
         >
           ×
@@ -108,14 +110,14 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
         {/* Header */}
         <div className="mb-4 pr-10">
           <h2 id="popup-title" className="text-xl md:text-2xl font-bold text-[var(--brand-teal-deep)]">
-            Book Your Appointment
+            {t.popup.heading}
           </h2>
         </div>
 
         {/* Single-branch deployment: just show which clinic the booking is for. */}
         {activeBranch && (
           <div className="mb-4 rounded-lg border-2 border-[var(--brand-teal-deep)] bg-[var(--brand-teal)]/10 p-3">
-            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold">📍 Clinic</p>
+            <p className="text-[10px] uppercase tracking-[0.15em] text-gray-500 font-bold">📍 {t.popup.clinic}</p>
             <p className="text-sm font-bold text-gray-900">I Cube Dental — {activeBranch.name}</p>
             <p className="text-[11px] text-gray-600 mt-0.5">{activeBranch.contact.address}</p>
           </div>
@@ -124,8 +126,8 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
         {/* Offer info */}
         <div className="bg-emerald-50 p-3 md:p-4 rounded-lg mb-4 border-l-4 border-[var(--brand-teal-deep)]">
           <p className="text-sm md:text-base text-gray-700 text-center">
-            <strong>Includes:</strong> Specialist Consultation & Digital Scan
-            <span className="text-[var(--brand-teal-deep)] font-bold"> with our MDS specialist</span>
+            <strong>{t.popup.includes}</strong> {t.popup.includesValue}
+            <span className="text-[var(--brand-teal-deep)] font-bold">{t.popup.withSpecialist}</span>
           </p>
         </div>
 
@@ -135,7 +137,7 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
           <input type="hidden" name="clinic" value={activeBranch?.name || ''} />
           <input type="hidden" name="clinicSlug" value={activeBranch?.slug || ''} />
           <div>
-            <label htmlFor="fullName" className="block text-sm font-medium mb-1">Full Name</label>
+            <label htmlFor="fullName" className="block text-sm font-medium mb-1">{t.popup.fullName}</label>
             <input
               id="fullName"
               type="text"
@@ -147,7 +149,7 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
           </div>
 
           <div>
-            <label htmlFor="phoneNumber" className="block text-sm font-medium mb-1">Phone Number</label>
+            <label htmlFor="phoneNumber" className="block text-sm font-medium mb-1">{t.popup.phone}</label>
             <input
               id="phoneNumber"
               type="tel"
@@ -159,7 +161,7 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium mb-1">{t.popup.email}</label>
             <input
               id="email"
               type="email"
@@ -171,13 +173,13 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
           </div>
 
           <div>
-            <label htmlFor="dentalConcern" className="block text-sm font-medium mb-1">Describe Your Dental Concern</label>
+            <label htmlFor="dentalConcern" className="block text-sm font-medium mb-1">{t.popup.concern}</label>
             <textarea
               id="dentalConcern"
               name="dentalConcern"
               required
               rows={2}
-              placeholder="Briefly describe your dental issue"
+              placeholder={t.popup.concernPlaceholder}
               className="w-full p-2 md:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-teal)]/40 focus:border-[var(--brand-teal)]"
             />
           </div>
@@ -187,7 +189,7 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
             disabled={isSubmitting}
             className="w-full bg-[var(--brand-teal-deep)] text-white py-3 md:py-4 rounded-lg font-bold text-lg hover:bg-[var(--brand-dark)] transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {isSubmitting ? 'Booking…' : 'Book Appointment'}
+            {isSubmitting ? t.popup.submitting : t.popup.submit}
           </button>
 
           <button
@@ -195,7 +197,7 @@ export default function PopupForm({ isOpen, onClose, branch }: PopupFormProps) {
             onClick={onClose}
             className="w-full text-sm text-gray-500 hover:text-gray-700 transition-colors py-2"
           >
-            Maybe later — let me browse first
+            {t.popup.dismiss}
           </button>
         </form>
 

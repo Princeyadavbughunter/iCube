@@ -1,15 +1,21 @@
+'use client';
+
 import type { BranchConfig } from '@/config/branch-configs';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
- * Four credentials, stated plainly.
+ * The branch's credentials, stated plainly.
  *
- * The reference page runs implants-placed and patients-treated counts here.
- * We have no audited figure for either, and a number on a medical page is a
- * claim a clinic has to be able to stand behind, so this carries what the
- * practice can actually evidence: qualifications, training and team — read
- * from `implantStats` so each branch states its own.
+ * Read from `implantStats` so each branch states its own — qualifications,
+ * training, team, and any treatment-volume figure the practice has confirmed.
+ * A number on a medical page is a claim a clinic has to be able to stand
+ * behind, so nothing is added here that the branch has not supplied.
+ *
+ * Six stats lay out three per row, four lay out four across; both fall back to
+ * two columns on mobile.
  */
 export default function ImplantTrustBar({ branch }: { branch: BranchConfig }) {
+  const { t } = useLang();
   const stats = branch.implantStats;
   if (stats.length === 0) return null;
 
@@ -17,12 +23,16 @@ export default function ImplantTrustBar({ branch }: { branch: BranchConfig }) {
     <section className="bg-white px-4 py-14 sm:px-6 md:py-20 lg:px-10">
       <div className="mx-auto max-w-5xl">
         <p className="mx-auto mb-10 max-w-2xl text-center text-[14.5px] leading-relaxed text-gray-500">
-          Backed by specialist MDS training, in-house CBCT planning and a dedicated implant
-          operatory — a single-facility approach to{' '}
-          <span className="font-bold text-[var(--brand-teal-deep)]">fixed teeth replacement</span>.
+          {t.trustBar.leadIn}
+          <span className="font-bold text-[var(--brand-teal-deep)]">{t.trustBar.emphasis}</span>
+          {t.trustBar.tail}
         </p>
 
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
+        <div
+          className={`grid grid-cols-2 gap-4 md:gap-5 ${
+            stats.length % 3 === 0 ? 'md:grid-cols-3' : 'md:grid-cols-4'
+          }`}
+        >
           {stats.map((stat) => (
             <div
               key={stat.label}

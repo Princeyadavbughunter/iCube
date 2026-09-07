@@ -1,6 +1,9 @@
+'use client';
+
 import Image from "next/image";
 import { Instagram, Facebook } from "lucide-react";
 import { BranchConfig } from "@/config/branch-configs";
+import { useLang } from '@/components/LanguageProvider';
 
 interface FooterProps {
   branch?: BranchConfig;
@@ -20,6 +23,7 @@ interface FooterProps {
  */
 export default function Footer({ branch }: FooterProps) {
   const leadDoctor = branch?.copy.leadDoctor ?? "";
+  const { t } = useLang();
   const branchName = branch ? `I Cube Dental ${branch.name}` : "I Cube Dental";
   // Empty handles render nothing rather than a dead "#" link.
   const instagram = branch?.social.instagram ?? "";
@@ -76,13 +80,26 @@ export default function Footer({ branch }: FooterProps) {
         )}
 
         <p className="mt-6 text-[12px] text-gray-400">
-          &copy; I Cube Dental {new Date().getFullYear()}. All rights reserved.
+          {t.footer.rights(new Date().getFullYear())}
+        </p>
+
+        {/* Agency credit. `rel="noopener"` because it opens in a new tab, and
+            no `nofollow`: this is a genuine attribution, not paid placement. */}
+        <p className="mt-2 text-[12px] text-gray-400">
+          {t.footer.madeBy}{' '}
+          <a
+            href="https://adveraim.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-gray-300 underline decoration-white/25 underline-offset-2 transition-colors hover:text-white hover:decoration-white/60"
+          >
+            Adveraim
+          </a>
         </p>
 
         {/* Required by Meta wherever a page is used as an ad destination. */}
         <p className="mx-auto mt-4 max-w-xl text-[10.5px] leading-relaxed text-gray-400">
-          This website is not a part of Facebook or Facebook Inc. Additionally, this site is NOT
-          endorsed by Facebook in any way. FACEBOOK is a trademark of FACEBOOK Inc.
+          {t.footer.metaDisclaimer}
         </p>
       </div>
     </footer>

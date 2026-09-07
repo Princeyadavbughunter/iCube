@@ -6,12 +6,15 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
 import { BranchConfig } from '@/config/branch-configs';
 import { SectionLabel, SectionHeading, PaLine } from '@/components/editorial/Primitives';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
  * Clinic-supplied result photos, per branch (see `beforeAfter` in
  * branch-configs). Each file is already a composed before/after pair with its
  * own labels burnt in, so this renders them whole — no split, divider or
- * overlay labels.
+ * overlay labels. A file shot at a different ratio to the rest carries its own
+ * `aspect`, since cropping one of these composites cuts off the clinic's
+ * caption along the top.
  *
  * The row drifts on its own and can also be driven by hand: arrows, a swipe,
  * or the arrow keys. It is a real scroll container rather than a CSS
@@ -51,6 +54,7 @@ export default function BeforeAfterSlider({
   disclaimer,
   children,
 }: BeforeAfterSliderProps) {
+  const { t } = useLang();
   const { aspect, images } = branch.beforeAfter;
   const trackRef = useRef<HTMLDivElement>(null);
   const pausedUntil = useRef(0);
@@ -124,14 +128,13 @@ export default function BeforeAfterSlider({
     <section className="bg-white py-16 md:py-24" id="transformations">
       <div className="mx-auto mb-10 max-w-6xl px-4 sm:px-6 lg:px-10">
         <div className="flex flex-col items-center text-center">
-          <SectionLabel>Patient Results</SectionLabel>
+          <SectionLabel>{t.results.label}</SectionLabel>
           <SectionHeading className="max-w-2xl">
-            {heading ?? 'Real smiles, real transformations'}
+            {heading ?? t.results.heading}
           </SectionHeading>
           <PaLine>ਸਾਡੇ ਮਰੀਜ਼ਾਂ ਦੇ ਅਸਲੀ ਨਤੀਜੇ</PaLine>
           <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-gray-500">
-            Actual before &amp; after results from specialist-led dentistry in {branch.city} — the
-            clinic&apos;s own cases, not stock photography.
+            {t.results.sub(branch.city)}
           </p>
         </div>
       </div>
@@ -147,7 +150,7 @@ export default function BeforeAfterSlider({
           ref={trackRef}
           tabIndex={0}
           role="region"
-          aria-label={`Before and after cases from I Cube Dental ${branch.name}`}
+          aria-label={t.results.regionLabel(branch.name)}
           onFocus={() => (hovering.current = true)}
           onBlur={() => (hovering.current = false)}
           onKeyDown={(e) => {
@@ -169,7 +172,10 @@ export default function BeforeAfterSlider({
               >
                 <div
                   className="relative h-[280px] overflow-hidden rounded-xl bg-gray-100 sm:h-[360px] md:h-[440px]"
-                  style={{ aspectRatio: aspect }}
+                  // Cards share a height and take their width from the ratio, so a
+                  // file shot squarer than the rest stays uncropped by simply
+                  // sitting narrower in the row.
+                  style={{ aspectRatio: c.aspect ?? aspect }}
                 >
                   <Image
                     src={c.src}
@@ -187,8 +193,8 @@ export default function BeforeAfterSlider({
 
         {/* Controls sit outside the masked track so the fade does not eat them. */}
         {[
-          { dir: -1 as const, Icon: ChevronLeft, side: 'left-3 md:left-6', label: 'Previous case' },
-          { dir: 1 as const, Icon: ChevronRight, side: 'right-3 md:right-6', label: 'Next case' },
+          { dir: -1 as const, Icon: ChevronLeft, side: 'left-3 md:left-6', label: t.results.previous },
+          { dir: 1 as const, Icon: ChevronRight, side: 'right-3 md:right-6', label: t.results.next },
         ].map(({ dir, Icon, side, label }) => (
           <button
             key={label}

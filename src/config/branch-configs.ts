@@ -37,8 +37,14 @@ export type BranchConfig = {
    * supplied files (they differ per branch), so nothing gets cropped.
    */
   beforeAfter: {
+    /** Default CSS aspect-ratio for the cards, matching most of the files. */
     aspect: string;
-    images: { src: string; alt: string }[];
+    /**
+     * `aspect` overrides the default for a file shot at a different ratio.
+     * The cards are cropped to fill, and these composites carry the clinic's
+     * logo and caption across the top, so a wrong ratio cuts the branding off.
+     */
+    images: { src: string; alt: string; aspect?: string }[];
   };
   contact: {
     phones: string[];
@@ -69,11 +75,14 @@ export type BranchConfig = {
   };
   usps: string[];
   /**
-   * The four credentials shown in the implant page's trust bar.
+   * The credentials shown in the implant page's trust bar. Four or six — the
+   * bar lays out three per row when there are six, four across when there are
+   * four, so any other count will leave a ragged last row.
    *
-   * Qualifications and team size only — never implants-placed or
-   * patients-treated counts. Nobody has audited those for this practice, and a
-   * number on a medical page is a claim the clinic has to be able to defend.
+   * Mostly qualifications and team size. Any treatment-volume figure here is
+   * one the practice has supplied and must be able to stand behind: a number
+   * on a medical page is a claim, so nothing goes in that the clinic has not
+   * confirmed.
    */
   implantStats: { value: string; label: string }[];
   pricing: {
@@ -106,10 +115,23 @@ export type BranchConfig = {
     poster: string;
     /** Overline above the player, e.g. "Watch: how we plan an implant". */
     kicker: string;
+    /**
+     * Credential line under the player. Falls back to the lead doctor's full
+     * title when empty — set it only where the film needs a shorter, punchier
+     * line than the doctor's profile card carries.
+     */
+    creds?: string;
+    /**
+     * One highlighted line under the credentials, for a credential that earns
+     * its own emphasis. Rendered in a gold pill with a slow sweep of light.
+     * Empty or omitted hides it — keep it to a single claim, since a second
+     * flashing line would cancel out the first.
+     */
+    flashLine?: string;
   };
   /** Card presentation on the branch chooser. */
   card: {
-    /** Corner badge, e.g. "IMPLANT LEAD". */
+    /** Corner badge, e.g. "IMPLANT & COSMETIC LEAD". */
     badge: string;
     /** Photo behind the card. Falls back to the accent gradient when empty. */
     image: string;
@@ -167,9 +189,9 @@ export const branches: Record<string, BranchConfig> = {
         title: "Implantologist | BDS, MDS Prosthodontics — I Cube Dental",
         image: "/doctors/dr-chandan-jain.webp",
         initials: "CJ",
-        description: "Dr. Chandan Jain is a specialist Implantologist and Prosthodontist — MDS from MAMC New Delhi and a Diplomate of WCOI Japan in implantology — with over 10 years of clinical experience in advanced implant and restorative dentistry. He leads I Cube Dental in New Prem Nagar, Ludhiana — a technology-driven, specialist-led dental centre equipped with in-house CBCT, CAD/CAM and digital intraoral scanners, plus a dedicated implant operatory built specifically for surgical precision and sterility.",
+        description: "Dr. Chandan Jain is a specialist Implantologist and Prosthodontist — MDS from MAMC New Delhi and a Diplomate of WCOI Japan in implantology — with over 14 years of clinical experience in advanced implant and restorative dentistry. He leads I Cube Dental in New Prem Nagar, Ludhiana — a technology-driven, specialist-led dental centre equipped with in-house CBCT, CAD/CAM and digital intraoral scanners, plus a dedicated implant operatory built specifically for surgical precision and sterility.",
         highlights: [
-          "10+ years of specialist clinical experience",
+          "14+ years of specialist clinical experience",
           "MDS Prosthodontics — MAMC New Delhi",
           "In-house CBCT + digital intraoral scanning",
           "Dedicated, purpose-built implant operatory",
@@ -189,15 +211,18 @@ export const branches: Record<string, BranchConfig> = {
       },
     ],
     beforeAfter: {
-      aspect: '558 / 382',
+      aspect: '4 / 3',
       images: [
-        { src: '/before-after/01-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 1' },
-        { src: '/before-after/03-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 2' },
-        { src: '/before-after/06-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 3' },
-        { src: '/before-after/07-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 4' },
-        { src: '/before-after/04-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 5' },
-        { src: '/before-after/05-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 6' },
-        { src: '/before-after/08-1-1.webp', alt: 'Before and after dental treatment result at I Cube Dental Ludhiana — patient 7' },
+        { src: '/before-after/ldh-01-full-mouth-implants.jpg', alt: 'Full-mouth dental implant result at I Cube Dental Ludhiana — badly worn, decayed upper and lower teeth restored to a complete smile' },
+        { src: '/before-after/ldh-02-full-mouth-implants-opg.jpg', aspect: '1 / 1', alt: 'Full-mouth implant rehabilitation at I Cube Dental Ludhiana, shown with the patient’s OPG scan of the placed implants and fixed bridges' },
+        { src: '/before-after/ldh-03-implants.jpg', alt: 'Dental implant result at I Cube Dental Ludhiana — an elderly patient with missing upper teeth restored to a full smile' },
+        { src: '/before-after/ldh-04-implants.jpg', alt: 'Dental implant result at I Cube Dental Ludhiana — missing front teeth replaced with fixed implant teeth' },
+        { src: '/before-after/ldh-05-implants.jpg', aspect: '5 / 4', alt: 'Dental implant result at I Cube Dental Ludhiana — gaps from missing teeth closed with fixed implant teeth' },
+        { src: '/before-after/ldh-06-implants.jpg', alt: 'Dental implant result at I Cube Dental Ludhiana — a patient with missing upper teeth restored to an even, natural smile' },
+        { src: '/before-after/ldh-07-implants.jpg', alt: 'Dental implant result at I Cube Dental Ludhiana — an elderly patient who could not show her teeth, restored to a full smile' },
+        { src: '/before-after/ldh-08-implants.jpg', alt: 'Dental implant result at I Cube Dental Ludhiana — worn and missing front teeth rebuilt' },
+        { src: '/before-after/ldh-09-implants.jpg', aspect: '1 / 1', alt: 'Dental implant result at I Cube Dental Ludhiana — an elderly patient with missing upper teeth restored to a confident smile' },
+        { src: '/before-after/ldh-10-smile-makeover.jpg', alt: 'Smile makeover at I Cube Dental Ludhiana — discoloured, uneven front teeth restored to an even, natural smile' },
       ],
     },
     contact: {
@@ -230,10 +255,12 @@ export const branches: Record<string, BranchConfig> = {
       "Complete multi-specialty care under one roof"
     ],
     implantStats: [
-      { value: "10+ Years", label: "Specialist implant experience" },
+      { value: "14+ Years", label: "Specialist implant experience" },
+      { value: "1000+", label: "Full-mouth implants completed" },
       { value: "MDS · MAMC", label: "India's No. 1 dental college" },
       { value: "WCOI Japan", label: "Diplomate in implantology" },
       { value: "7 Specialists", label: "One roof, one treatment plan" },
+      { value: "Award-Winning", label: "Dental chain, awarded by VOH" },
     ],
     pricing: {
       implant: "₹25,000 onwards*"
@@ -272,16 +299,18 @@ export const branches: Record<string, BranchConfig> = {
       src: "/vsl-icube.mp4",
       poster: "/vsl-icube-poster.webp",
       kicker: "Watch: how we plan an implant on CBCT",
+      creds: "Chief Implantologist | MDS | WCOI Japan",
+      flashLine: "Mentored by Padma Shri Dr. Mahesh Verma",
     },
     card: {
-      badge: "IMPLANT LEAD",
+      badge: "IMPLANT & COSMETIC LEAD",
       image: "/doctors/dr-chandan-jain.webp",
       stats: [
-        { value: "10+", label: "YEARS" },
+        { value: "14+", label: "YEARS" },
         { value: "MAMC", label: "NEW DELHI" },
         { value: "7 Days", label: "OPEN" },
       ],
-      chips: ["Implants", "Painless RCT", "Crowns", "Veneers"],
+      chips: ["Implants", "Painless RCT", "Crowns", "Veneers", "Aligners", "Full-mouth"],
       daysUpper: "MONDAY–SUNDAY",
     },
     pa: {
@@ -299,9 +328,9 @@ export const branches: Record<string, BranchConfig> = {
     copy: {
       leadDoctor: "Dr. Chandan Jain",
       leadDoctorCreds: "Implantologist · BDS, MDS Prosthodontics · MAMC New Delhi",
-      experience: "10+ years",
+      experience: "14+ years",
       teamSize: 7,
-      footerBlurb: "A specialist-led, technology-driven dental centre in Ludhiana. In-house CBCT, CAD/CAM and digital scanners, a dedicated implant operatory and a team of MDS specialists — led by Dr. Chandan Jain, Implantologist with over 10 years of experience.",
+      footerBlurb: "A specialist-led, technology-driven dental centre in Ludhiana. In-house CBCT, CAD/CAM and digital scanners, a dedicated implant operatory and a team of MDS specialists — led by Dr. Chandan Jain, Implantologist with over 14 years of experience.",
       heroChipLine: "Dedicated Implant Operatory · From ₹25,000 · Ludhiana",
       oneRoofLine: "No more being referred from clinic to clinic across Ludhiana. From routine checkups to CBCT-guided implants, full-mouth rehabilitation and root canal therapy, our implantologist, prosthodontist and endodontist work together within one advanced facility — sharing the same scans, the same records and the same treatment plan.",
       faqCbct: "A CBCT is a 3D scan of your jaw that shows exact bone height, width and the position of nerves and sinuses — detail an ordinary X-ray cannot give. Because our CBCT is in-house, your scan, diagnosis and treatment plan happen in the same visit, and Dr. Chandan Jain can plan the precise implant position in 3D before any surgery begins.",
@@ -314,25 +343,32 @@ export const branches: Record<string, BranchConfig> = {
     // (including the reviewers' own typos) — do not tidy the wording.
     reviews: [
       {
-        name: "Talim ansari",
+        name: "Tarun Bhattia",
         initials: "T",
-        title: "Second Opinion That Changed the Outcome",
-        meta: "3 reviews · 9 months ago",
-        review: "After a bad experience at another clinic, I came to iCube Dental for an implant consultation with Dr. Chandan Jain. The difference was huge - he listened carefully, explained all options, and used advanced technology during treatment. The entire process was smooth and painless. I would recommend him to everyone who wants a reliable and long-lasting implant."
+        title: "Every Procedure Painless and Hassle-Free",
+        meta: "4 reviews · 9 months ago",
+        review: "The best dental treatment experience with Dr.Chandan & Dr.Deepika was amazing ..... i got my total procedures painless and hustle free ... kudos to the team of doctors and staff . On my personal experience i highly recommend I-Cube Dental Ludhiana."
       },
       {
         name: "Ishu",
         initials: "I",
         title: "Implants for My Mother — Natural-Looking Results",
-        meta: "4 reviews · 9 months ago",
+        meta: "5 reviews · 10 months ago",
         review: "My mother got her dental implants done from Dr. Chandan Jain, and the experience was simply amazing. He was kind, patient, and explained all the do's and don'ts after surgery. The entire team at iCube Dental was supportive and caring. The results look natural we couldn't be happier!"
       },
       {
-        name: "Tarun Bhattia",
+        name: "Jyoti Jain",
+        initials: "J",
+        title: "Professional, Organised and Spotlessly Clean",
+        meta: "2 reviews · 2 weeks ago",
+        review: "I visited here from Google with my parents for regular checkup, The ambience the staff, cleanliness, everything seemed so professional and organised ...I was extremely thrilled by there experience...I would highly recommend everyone to do visit I cube dental for any dental issue .."
+      },
+      {
+        name: "Talim ansari",
         initials: "T",
-        title: "Every Procedure Painless and Hassle-Free",
-        meta: "4 reviews · 8 months ago",
-        review: "The best dental treatment experience with Dr.Chandan & Dr.Deepika was amazing ..... i got my total procedures painless and hustle free ... kudos to the team of doctors and staff . On my personal experience i highly recommend I-Cube Dental Ludhiana."
+        title: "Second Opinion That Changed the Outcome",
+        meta: "3 reviews · 10 months ago",
+        review: "After a bad experience at another clinic, I came to iCube Dental for an implant consultation with Dr. Chandan Jain. The difference was huge - he listened carefully, explained all options, and used advanced technology during treatment. The entire process was smooth and painless. I would recommend him to everyone who wants a reliable and long-lasting implant."
       }
     ]
   },
@@ -449,14 +485,14 @@ export const branches: Record<string, BranchConfig> = {
       kicker: "Watch: how we plan your treatment",
     },
     card: {
-      badge: "COSMETIC LEAD",
+      badge: "IMPLANT & COSMETIC LEAD",
       image: "/Dr.-Gaurav-Varshney.webp",
       stats: [
         { value: "13+", label: "YEARS" },
-        { value: "6", label: "SPECIALITIES" },
+        { value: "7", label: "SPECIALITIES" },
         { value: "4 Ops", label: "OPERATORIES" },
       ],
-      chips: ["Implants", "Veneers", "Aligners", "Full-mouth"],
+      chips: ["Implants", "Painless RCT", "Crowns", "Veneers", "Aligners", "Full-mouth"],
       daysUpper: "MONDAY–SATURDAY",
     },
     pa: {

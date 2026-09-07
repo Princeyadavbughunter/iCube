@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
+import { useLang } from '@/components/LanguageProvider';
 import ConsultCta from './ConsultCta';
 
 /**
@@ -27,46 +28,27 @@ export default function ImplantFaq({
 }) {
   const [open, setOpen] = useState<number | null>(0);
 
+  const { t } = useLang();
+  const f = t.faq;
+
+  // The last three answers are branch-specific — this clinic's own CBCT, price
+  // and hours — so they come from config rather than the shared copy tree.
   const faqs = [
-    {
-      q: 'What does the dental implant procedure involve?',
-      a: 'It runs in stages. First your jaw is scanned on CBCT and the implant position is planned in 3D. The implant — a titanium post that stands in for the tooth root — is then placed into the bone under local anaesthesia. It is left to integrate with the bone over the following weeks, and once it has, the crown is made and fitted onto it.',
-    },
-    {
-      q: 'Am I a suitable candidate for dental implants?',
-      a: 'That depends on how much bone is available at the site, the health of your gums and your general medical history. The CBCT scan answers the first question precisely — it shows exact bone height and width — and where bone is insufficient, grafting is often an option. Some medical conditions and heavy smoking affect healing, which is why the assessment covers your history as well as the scan.',
-    },
-    {
-      q: 'Is the implant procedure painful?',
-      a: 'The placement itself is done under local anaesthesia, so the area is numb throughout. Afterwards it is normal to have some soreness and swelling for a few days, which is managed with the medication you are sent home with. Most patients describe it as more comfortable than they expected — but you should plan for a few quiet days rather than none.',
-    },
-    {
-      q: 'Are there risks or complications with dental implants?',
-      a: 'As with any surgical procedure, yes. The main ones are infection, delayed healing, and an implant that does not integrate with the bone and has to be removed and replaced. Planning the case on CBCT reduces risk by mapping nerve and sinus positions before surgery rather than during it, and your medical history is reviewed for anything that affects healing. Your specific risks are discussed with you before you consent to treatment.',
-    },
-    {
-      q: 'What is the recovery like, and how do I care for the implant?',
-      a: 'Expect a soft diet and no smoking for the first few days, and to keep the site clean as instructed. The implant then needs an integration period before the final crown is fitted — the length depends on the site and your healing. Once restored, it is looked after like a natural tooth: brushing, cleaning between the teeth, and regular reviews so the surrounding bone and gum can be checked.',
-    },
-    {
-      q: 'What is a CBCT scan, and why does it matter?',
-      a: branch.copy.faqCbct,
-    },
-    {
-      q: 'What does a dental implant cost?',
-      a: branch.copy.faqPricing,
-    },
-    {
-      q: 'Where are you, and when are you open?',
-      a: branch.copy.faqTimingsLocation,
-    },
+    f.procedure,
+    f.candidate,
+    f.painful,
+    f.risks,
+    f.recovery,
+    { q: f.cbct.q, a: branch.copy.faqCbct },
+    { q: f.cost.q, a: branch.copy.faqPricing },
+    { q: f.where.q, a: branch.copy.faqTimingsLocation },
   ];
 
   return (
     <section className="bg-white px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="faq">
       <div className="mx-auto max-w-3xl">
         <h2 className="mb-11 text-center font-poppins text-[1.6rem] font-bold leading-snug tracking-tight text-[var(--brand-teal-deep)] sm:text-[2rem]">
-          Frequently asked questions about dental implants
+          {f.heading}
         </h2>
 
         <div className="space-y-2.5">

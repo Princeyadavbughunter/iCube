@@ -1,6 +1,7 @@
 'use client';
 
 import type { BranchConfig } from '@/config/branch-configs';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
  * The repeating ask.
@@ -24,6 +25,8 @@ export default function ConsultCta({
   /** Overrides the default hours line under the button. */
   note?: string;
 }) {
+  const { t } = useLang();
+
   return (
     <div className="flex flex-col items-center">
       <button
@@ -31,7 +34,7 @@ export default function ConsultCta({
         onClick={onBookAppointment}
         className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand-teal)] px-8 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_28px_-14px_rgba(48,49,81,0.8)] transition-all hover:bg-[var(--brand-teal-dark)] hover:-translate-y-0.5 active:scale-[0.98]"
       >
-        Book a Dental Consultation
+        {t.cta.book}
       </button>
       <p className="mt-2.5 text-[11.5px] font-medium text-gray-500">
         {note ?? `${branch.contact.daysLine} · ${branch.contact.timings}`}
