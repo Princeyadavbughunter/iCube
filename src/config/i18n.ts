@@ -45,8 +45,10 @@ const en = {
     title: 'Missing Teeth?',
     sub: (city: string) =>
       `Explore ${city}’s specialist-led dental implant centre — every case planned on in-house CBCT and placed by MDS specialists.`,
-    positioning: 'Specialist-Led Implantology · CBCT-Planned & Digitally Guided Care',
+    positioning: 'Award-Winning, Research-Driven, Specialised Digital Implant Care',
     photoPending: 'Clinic photograph awaited',
+    carouselLabel: 'Photographs of the clinic',
+    goToSlide: (n: number) => `Go to photograph ${n}`,
   },
 
   trustBar: {
@@ -265,8 +267,10 @@ const pa: Copy = {
     title: 'ਦੰਦ ਗੁਆਚ ਗਏ ਹਨ?',
     sub: (city: string) =>
       `${city} ਦਾ ਮਾਹਰ-ਅਗਵਾਈ ਵਾਲਾ ਡੈਂਟਲ ਇੰਪਲਾਂਟ ਸੈਂਟਰ — ਹਰ ਕੇਸ ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ CBCT ਉੱਤੇ ਯੋਜਨਾਬੱਧ ਹੁੰਦਾ ਹੈ ਅਤੇ MDS ਮਾਹਰਾਂ ਵੱਲੋਂ ਲਗਾਇਆ ਜਾਂਦਾ ਹੈ।`,
-    positioning: 'ਮਾਹਰ-ਅਗਵਾਈ ਵਾਲੀ ਇੰਪਲਾਂਟੋਲੋਜੀ · CBCT ਨਾਲ ਯੋਜਨਾਬੱਧ ਤੇ ਡਿਜੀਟਲ ਗਾਈਡਿਡ ਇਲਾਜ',
+    positioning: 'ਪੁਰਸਕਾਰ ਜੇਤੂ, ਖੋਜ-ਆਧਾਰਿਤ, ਵਿਸ਼ੇਸ਼ ਡਿਜੀਟਲ ਇੰਪਲਾਂਟ ਇਲਾਜ',
     photoPending: 'ਕਲੀਨਿਕ ਦੀ ਫੋਟੋ ਦੀ ਉਡੀਕ ਹੈ',
+    carouselLabel: 'ਕਲੀਨਿਕ ਦੀਆਂ ਫੋਟੋਆਂ',
+    goToSlide: (n: number) => `ਫੋਟੋ ${n} ਉੱਤੇ ਜਾਓ`,
   },
 
   trustBar: {

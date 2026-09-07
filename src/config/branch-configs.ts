@@ -29,6 +29,16 @@ export type BranchConfig = {
   /** CSS colour driving this branch's accent on the chooser. */
   accent: string;
   doctors: DoctorConfig[];
+  /**
+   * Photographs behind the hero, shown as a slider.
+   *
+   * One entry renders as a still — the slider only starts moving, and only
+   * draws its dots, when there is more than one. Leave the list empty and the
+   * hero falls back to the first `clinicImages` entry, then to the awaiting-
+   * photography placeholder, so a branch without its own shoot is never
+   * illustrated with another practice's premises.
+   */
+  heroSlides: { src: string; alt: string }[];
   clinicImages: { src: string; alt: string }[];
   /**
    * Clinic-supplied result photos for this branch. Each file is already a
@@ -204,6 +214,20 @@ export const branches: Record<string, BranchConfig> = {
     // why-us and the closing CTA.
     // ⚠️ The /images/clinic-*.jpeg files in this repo are a previous client's
     // premises (OM Sai Dental) and must never be used here.
+    heroSlides: [
+      {
+        src: '/hero/ldh-hero-01-reception.jpg',
+        alt: 'The reception and waiting lounge at I Cube Dental Ludhiana, with the treatment list on the entrance wall',
+      },
+      {
+        src: '/hero/ldh-hero-02-award.jpg',
+        alt: 'Dr. Chandan Jain accepting an award for I Cube Dental on stage',
+      },
+      {
+        src: '/hero/ldh-hero-03-front-desk.jpg',
+        alt: 'The front desk at I Cube Dental Ludhiana, seen from the waiting area',
+      },
+    ],
     clinicImages: [
       {
         src: '/clinic/consultation-room.webp',
@@ -413,6 +437,8 @@ export const branches: Record<string, BranchConfig> = {
       }
     ],
     // ⚠️ Awaiting real clinic photography from the Chandigarh Google Drive folder.
+    // ⚠️ Awaiting Chandigarh's own hero photography.
+    heroSlides: [],
     clinicImages: [],
     // Cases supplied by the Chandigarh clinic — square, already branded.
     beforeAfter: {
