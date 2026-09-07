@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import type { BranchConfig } from '@/config/branch-configs';
 import { PhotoPending } from '@/components/editorial/Primitives';
 import ConsultCta from './ConsultCta';
+import HeroCarousel from './HeroCarousel';
 import { useLang } from '@/components/LanguageProvider';
 
 /**
@@ -26,7 +26,12 @@ export default function ImplantHero({
   onBookAppointment: () => void;
 }) {
   const { t } = useLang();
-  const photo = branch.clinicImages[0];
+
+  // The branch's own hero shoot when it has one; otherwise the first clinic
+  // photograph, so a branch still gets a real picture of its own premises
+  // rather than the placeholder, and never another practice's.
+  const fallback = branch.clinicImages[0];
+  const slides = branch.heroSlides.length > 0 ? branch.heroSlides : fallback ? [fallback] : [];
 
   return (
     <section className="bg-[var(--accent-pink-soft)] px-4 pb-14 pt-28 sm:px-6 md:pb-20 md:pt-36 lg:px-10">
@@ -39,21 +44,12 @@ export default function ImplantHero({
         </p>
       </div>
 
-      <div className="mx-auto mt-10 max-w-4xl overflow-hidden rounded-[22px] shadow-[0_28px_70px_-32px_rgba(16,17,36,0.55)] ring-1 ring-black/5">
-        <div className="relative aspect-[16/9] w-full bg-gray-100">
-          {photo ? (
-            <Image
-              src={photo.src}
-              alt={photo.alt}
-              fill
-              priority
-              sizes="(max-width: 896px) 100vw, 896px"
-              className="object-cover"
-            />
-          ) : (
-            <PhotoPending label={t.hero.photoPending} ratio="aspect-[16/9]" />
-          )}
-        </div>
+      <div className="mx-auto mt-10 max-w-4xl">
+        {slides.length > 0 ? (
+          <HeroCarousel slides={slides} />
+        ) : (
+          <PhotoPending label={t.hero.photoPending} ratio="aspect-[16/9]" />
+        )}
       </div>
 
       <div className="mx-auto mt-12 max-w-3xl text-center">
