@@ -1,7 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import type { BranchConfig } from '@/config/branch-configs';
 import { PhotoPending } from '@/components/editorial/Primitives';
 import ConsultCta from './ConsultCta';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
  * Opening block: the question, the premises, the positioning line.
@@ -22,17 +25,17 @@ export default function ImplantHero({
   branch: BranchConfig;
   onBookAppointment: () => void;
 }) {
+  const { t } = useLang();
   const photo = branch.clinicImages[0];
 
   return (
     <section className="bg-[var(--accent-pink-soft)] px-4 pb-14 pt-28 sm:px-6 md:pb-20 md:pt-36 lg:px-10">
       <div className="mx-auto max-w-4xl text-center">
         <h1 className="font-poppins text-[2.1rem] font-bold leading-[1.1] tracking-tight text-[var(--brand-teal-deep)] sm:text-5xl">
-          Missing Teeth?
+          {t.hero.title}
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-[16px] leading-relaxed text-gray-600 sm:text-[17.5px]">
-          Explore {branch.city}&rsquo;s specialist-led dental implant centre — every case planned on
-          in-house CBCT and placed by MDS specialists.
+          {t.hero.sub(branch.city)}
         </p>
       </div>
 
@@ -48,14 +51,14 @@ export default function ImplantHero({
               className="object-cover"
             />
           ) : (
-            <PhotoPending label="Clinic photograph awaited" ratio="aspect-[16/9]" />
+            <PhotoPending label={t.hero.photoPending} ratio="aspect-[16/9]" />
           )}
         </div>
       </div>
 
       <div className="mx-auto mt-12 max-w-3xl text-center">
         <h2 className="font-poppins text-[1.5rem] font-bold leading-snug tracking-tight text-[var(--brand-teal)] sm:text-[1.9rem]">
-          Specialist-Led Implantology &middot; CBCT-Planned &amp; Digitally Guided Care
+          {t.hero.positioning}
         </h2>
         <div className="mt-8">
           <ConsultCta branch={branch} onBookAppointment={onBookAppointment} />

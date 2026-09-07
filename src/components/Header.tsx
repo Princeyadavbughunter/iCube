@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BranchConfig } from "@/config/branch-configs";
+import { LanguageToggle, useLang } from "@/components/LanguageProvider";
 
 interface HeaderProps {
   onBookAppointment: () => void;
@@ -12,6 +13,7 @@ interface HeaderProps {
 
 export default function Header({ onBookAppointment, branch }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const { t } = useLang();
 
   useEffect(() => {
     let ticking = false;
@@ -65,7 +67,7 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
             rel="noopener noreferrer"
             className="hidden lg:block group/loc hover:opacity-80 transition-opacity"
           >
-            <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 mb-0.5 group-hover/loc:text-[var(--brand-teal)] transition-colors">Location</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 mb-0.5 group-hover/loc:text-[var(--brand-teal)] transition-colors">{t.header.location}</p>
             <p className="text-xs font-semibold text-gray-700 flex items-center gap-1">
               {locationName}
               <span className="text-[10px] opacity-0 group-hover/loc:opacity-100 transition-opacity">↗</span>
@@ -76,13 +78,16 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
             href="/"
             className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-gray-200 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-gray-500 transition-colors hover:border-[var(--brand-teal)] hover:text-[var(--brand-teal)]"
           >
-            ⇄ Both branches
+            ⇄ {t.header.bothBranches}
           </Link>
         </div>
 
-        <div className="flex items-center gap-4 md:gap-8">
+        <div className="flex items-center gap-3 md:gap-6">
+          {/* Language switch. Kept left of the phone number so the two things a
+              Punjabi-speaking visitor reaches for sit next to each other. */}
+          <LanguageToggle />
           <div className="hidden sm:block text-right">
-            <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 mb-0.5">Call Specialist</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-gray-400 mb-0.5">{t.header.callSpecialist}</p>
             <a href={`tel:${primaryPhone.replace(/\s/g, '')}`} className="text-sm font-bold text-[var(--brand-teal-deep)] hover:text-[var(--brand-teal)] transition-colors">
               {primaryPhone}
             </a>
@@ -91,7 +96,7 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
             onClick={onBookAppointment}
             className="bg-[var(--brand-teal)] text-white px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider hover:bg-[var(--brand-teal-dark)] hover:-translate-y-0.5 transition-all btn-3d gradient-sheen"
           >
-            Book Appointment
+            {t.header.book}
           </button>
         </div>
       </div>

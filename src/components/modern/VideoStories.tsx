@@ -3,10 +3,13 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Play, VolumeX } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
+import { useLang } from '@/components/LanguageProvider';
 
 interface Story {
   src: string;
-  poster: string;
+  /** First frame to show before playback. Omit and the frame stays dark until
+   *  the observer starts the film. */
+  poster?: string;
   /** Runtime, shown as a pill so a visitor knows what they are committing to. */
   length: string;
   /** Only set where the patient is named on screen — used for the label a
@@ -14,28 +17,14 @@ interface Story {
   name?: string;
 }
 
+// ⚠️ No posters yet for this set — the clinic supplied the films alone, so the
+// first frame of each is dark until it starts. Add `-poster.webp` stills and
+// wire them up here when they arrive.
 const stories: Story[] = [
-  {
-    src: '/testimonal/Video-26644.mp4',
-    poster: '/testimonal/Video-26644-poster.webp',
-    length: '0:57',
-    name: 'Tajinder Singh',
-  },
-  {
-    src: '/testimonal/Video-30229.mp4',
-    poster: '/testimonal/Video-30229-poster.webp',
-    length: '0:34',
-  },
-  {
-    src: '/testimonal/Video-49993.mp4',
-    poster: '/testimonal/Video-49993-poster.webp',
-    length: '1:07',
-  },
-  {
-    src: '/testimonal/Video-67544.mp4',
-    poster: '/testimonal/Video-67544-poster.webp',
-    length: '1:41',
-  },
+  { src: '/testimonal/testimonial-01.mp4', length: '0:35' },
+  { src: '/testimonal/testimonial-02.mp4', length: '0:51' },
+  { src: '/testimonal/testimonial-03.mp4', length: '0:57' },
+  { src: '/testimonal/testimonial-04.mp4', length: '0:59' },
 ];
 
 /**
@@ -47,17 +36,22 @@ const stories: Story[] = [
  * be unbearable.
  *
  * They only start once the section is near the viewport, and pause the moment
- * it leaves. Four files come to roughly 16 MB; `preload="none"` plus that
- * gate means a visitor who never scrolls this far downloads none of it, and
- * nothing keeps decoding off-screen.
+ * it leaves. `preload="none"` plus that gate means a visitor who never scrolls
+ * this far downloads none of it, and nothing keeps decoding off-screen.
+ *
+ * ⚠️ That gate is doing a lot of work right now: the current four files are
+ * straight camera exports totalling ~363 MB at 13–19 Mbps, one of them 4K.
+ * Anyone who does scroll here starts four of those at once. They need
+ * re-encoding to 720x1280 at ~2 Mbps (roughly 10 MB each) before this goes
+ * anywhere near a phone on mobile data.
  *
  * Sound is one tap away. Taking it restarts that film from the beginning and
  * pauses the other three, so two patients never talk over each other, and the
  * native controls take over from there rather than being reinvented.
  */
 export default function VideoStories({
-  kicker = 'PATIENT VIDEOS',
-  heading = 'Hear It In Their Own Words',
+  kicker,
+  heading,
   disclaimer,
   children,
 }: {
@@ -68,6 +62,7 @@ export default function VideoStories({
   /** Slot under the row, used for the implant page's repeating CTA. */
   children?: ReactNode;
 } = {}) {
+  const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const reduceMotion = useReducedMotion();
@@ -151,12 +146,12 @@ export default function VideoStories({
       <div className="mx-auto max-w-6xl">
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-block px-4 py-1 rounded-full bg-[var(--brand-teal)]/10 text-[var(--brand-teal)] text-sm font-bold tracking-wider mb-4">
-            {kicker}
+            {kicker ?? t.videos.kicker}
           </div>
           <h2 className="font-poppins text-3xl md:text-[2.5rem] font-bold leading-tight text-[var(--brand-teal-deep)]">
-            {heading}
+            {heading ?? t.videos.heading}
           </h2>
-          <p className="mt-4 text-gray-500">Tap any story to play it with sound</p>
+          <p className="mt-4 text-gray-500">{t.videos.sub}</p>
         </div>
 
         <div className="grid grid-cols-2 gap-5 sm:gap-7 md:grid-cols-4 md:gap-8 lg:gap-10">
@@ -174,7 +169,7 @@ export default function VideoStories({
                   }}
                   className="h-full w-full object-cover"
                   src={story.src}
-                  poster={story.poster}
+                  poster={story.poster || undefined}
                   playsInline
                   muted={!isActive}
                   loop={!isActive}
@@ -184,8 +179,8 @@ export default function VideoStories({
                   onEnded={() => reset(index)}
                   aria-label={
                     story.name
-                      ? `${story.name} — patient testimonial`
-                      : `Patient testimonial ${index + 1}`
+                      ? t.videos.namedLabel(story.name)
+                      : t.videos.testimonialLabel(index + 1)
                   }
                 >
                   Your browser does not support the video tag.
@@ -198,8 +193,8 @@ export default function VideoStories({
                     className="absolute inset-0 flex items-center justify-center transition-colors hover:bg-[#121324]/10"
                     aria-label={
                       story.name
-                        ? `Play ${story.name}'s testimonial with sound`
-                        : `Play patient testimonial ${index + 1} with sound`
+                        ? t.videos.namedPlayLabel(story.name)
+                        : t.videos.playLabel(index + 1)
                     }
                   >
                     {/* While the loop runs, the affordance is about sound, not

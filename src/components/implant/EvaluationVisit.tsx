@@ -1,6 +1,9 @@
+'use client';
+
 import { Check } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 import ConsultCta from './ConsultCta';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
  * What the first appointment actually contains.
@@ -13,15 +16,6 @@ import ConsultCta from './ConsultCta';
  * Every line here is a step the practice already documents — the CBCT scan,
  * the 3D read of bone and nerve position, the itemised quote before treatment.
  */
-const included = [
-  'Personal consultation with the implantologist',
-  'In-house CBCT 3D scan of your jaw — taken and read in the same visit',
-  'Assessment of bone height, width, and nerve and sinus position',
-  'Check of your gums and remaining teeth',
-  'Your implant options, and the phases the treatment runs in',
-  'A clear, itemised written quote before any treatment begins',
-];
-
 export default function EvaluationVisit({
   branch,
   onBookAppointment,
@@ -29,11 +23,14 @@ export default function EvaluationVisit({
   branch: BranchConfig;
   onBookAppointment: () => void;
 }) {
+  const { t } = useLang();
+  const included = t.evaluation.items;
+
   return (
     <section className="bg-white px-4 py-16 sm:px-6 md:py-24 lg:px-10">
       <div className="mx-auto max-w-3xl">
         <h2 className="mb-10 text-center font-poppins text-[1.6rem] font-bold leading-snug tracking-tight text-[var(--brand-teal-deep)] sm:text-[2rem]">
-          What&rsquo;s included in your implant evaluation visit
+          {t.evaluation.heading}
         </h2>
 
         <ul className="rounded-[22px] border border-gray-200 bg-[var(--bg-surface-soft)] p-6 sm:p-9">

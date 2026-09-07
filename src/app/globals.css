@@ -733,6 +733,58 @@
   }
 }
 
+/* ---- Mentor credit under the sales film ----------------------------------
+   It has to catch the eye without turning into a blinking banner, so this is
+   a slow sweep of light across a gold pill plus a gentle glow — emphasis, not
+   an advert. Both ends of each cycle sit at the resting state, so when the
+   global prefers-reduced-motion rule freezes the animation on its last frame
+   the pill still lands fully legible. */
+@keyframes flash-credit-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 164, 104, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 22px 2px rgba(201, 164, 104, 0.5);
+  }
+}
+
+@keyframes flash-credit-sweep {
+  0% {
+    transform: translateX(-130%);
+  }
+
+  55%,
+  100% {
+    transform: translateX(230%);
+  }
+}
+
+.flash-credit {
+  position: relative;
+  overflow: hidden;
+  animation: flash-credit-glow 2.6s ease-in-out infinite;
+}
+
+/* The travelling highlight. A transform-only sweep, so it composites on the
+   GPU and stays cheap even where the glow above is switched off. */
+.flash-credit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.55) 50%,
+    transparent 80%
+  );
+  transform: translateX(-130%);
+  animation: flash-credit-sweep 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+
 /* Utility classes */
 .floating {
   animation: floating 3s ease-in-out infinite;
@@ -856,6 +908,7 @@ section.visible {
   .float-3d,
   .soft-float,
   .floating,
+  .flash-credit,
   .shimmer,
   .animate-gradient,
   .animate-pulse,

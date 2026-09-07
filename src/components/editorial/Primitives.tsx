@@ -1,4 +1,7 @@
+'use client';
+
 import type { ReactNode } from 'react';
+import { useLang } from '@/components/LanguageProvider';
 import { Parallax } from '@/components/motion/Motion';
 
 /**
@@ -37,6 +40,12 @@ export function SectionHeading({
 
 /** Punjabi line that sits under a heading. Same promise, not decoration. */
 export function PaLine({ children }: { children: ReactNode }) {
+  const { lang } = useLang();
+
+  // In Punjabi the heading above is already Punjabi — repeating it underneath
+  // reads as a stutter, so the accent line only earns its place in English.
+  if (lang === 'pa') return null;
+
   return (
     <p lang="pa" className="mt-2.5 text-[17px] font-medium leading-snug text-[var(--brand-teal)] sm:text-lg">
       {children}

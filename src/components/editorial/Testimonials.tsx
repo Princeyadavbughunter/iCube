@@ -1,6 +1,9 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import { Star, Quote } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
+import { useLang } from '@/components/LanguageProvider';
 
 /** Real Google reviews for this branch, quoted verbatim (typos included). */
 export default function Testimonials({
@@ -14,6 +17,8 @@ export default function Testimonials({
   /** Slot under the Google link, used for the implant page's repeating CTA. */
   children?: ReactNode;
 }) {
+  const { t } = useLang();
+
   if (branch.reviews.length === 0) return null;
 
   return (
@@ -24,9 +29,9 @@ export default function Testimonials({
             TESTIMONIALS
           </div>
           <h2 className="font-poppins text-3xl md:text-[2.5rem] font-bold leading-tight text-[var(--brand-teal-deep)]">
-            {heading ?? 'Real Smiles, Real Transformations'}
+            {heading ?? t.reviews.heading}
           </h2>
-          <p className="mt-4 text-gray-500">What our patients say about us</p>
+          <p className="mt-4 text-gray-500">{t.reviews.sub}</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">

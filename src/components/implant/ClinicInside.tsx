@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import type { BranchConfig } from '@/config/branch-configs';
 import ConsultCta from './ConsultCta';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
  * The premises, filmed.
@@ -31,6 +32,7 @@ export default function ClinicInside({
   const reduceMotion = useReducedMotion();
   const [inView, setInView] = useState(false);
 
+  const { t } = useLang();
   const clips = branch.clinicTour;
 
   useEffect(() => {
@@ -67,11 +69,10 @@ export default function ClinicInside({
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-11 max-w-2xl text-center">
           <h2 className="font-poppins text-[1.6rem] font-bold leading-snug tracking-tight text-[var(--brand-teal-deep)] sm:text-[2rem]">
-            Inside I Cube Dental {branch.city}
+            {t.clinic.heading(branch.city)}
           </h2>
           <p className="mt-4 text-[14.5px] leading-relaxed text-gray-500">
-            The rooms your treatment actually happens in — in-house CBCT and digital scanning, and
-            an operatory kept for implant surgery.
+            {t.clinic.sub}
           </p>
         </div>
 

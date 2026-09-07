@@ -24,6 +24,13 @@ export type TeamMember = {
   branch: 'ludhiana' | 'chandigarh';
   image: string;
   initials: string;
+  /**
+   * Punjabi for the two fields the About cards show. Everything else on a
+   * member — the photograph, the initials — is language-neutral, and the
+   * qualifications keep their published Latin abbreviations (BDS, MDS) because
+   * that is how the degrees are awarded and how patients recognise them.
+   */
+  pa: { name: string; credits: string[] };
 };
 
 export const team: TeamMember[] = [
@@ -36,10 +43,21 @@ export const team: TeamMember[] = [
       'BDS, MDS (Prosthodontics)',
       'MDS from India’s No. 1 college — MAMC New Delhi',
       'Diplomate from the prestigious WCOI Japan (Implants)',
-      '10 years’ experience in full-mouth implants',
+      '14+ years’ experience in full-mouth implants',
       'Digital smile makeover specialist (CAD/CAM)',
       'Ex: Medical Officer, PCMS-1',
     ],
+    pa: {
+      name: 'ਡਾ. ਚੰਦਨ ਜੈਨ',
+      credits: [
+        'BDS, MDS (ਪ੍ਰੌਸਥੋਡੌਂਟਿਕਸ)',
+        'ਭਾਰਤ ਦੇ ਨੰਬਰ 1 ਕਾਲਜ — MAMC ਨਵੀਂ ਦਿੱਲੀ ਤੋਂ MDS',
+        'ਨਾਮਵਰ WCOI ਜਪਾਨ ਤੋਂ ਡਿਪਲੋਮੇਟ (ਇੰਪਲਾਂਟ)',
+        'ਫੁੱਲ-ਮਾਊਥ ਇੰਪਲਾਂਟ ਵਿੱਚ 14+ ਸਾਲ ਦਾ ਤਜਰਬਾ',
+        'ਡਿਜੀਟਲ ਸਮਾਈਲ ਮੇਕਓਵਰ ਮਾਹਰ (CAD/CAM)',
+        'ਸਾਬਕਾ: ਮੈਡੀਕਲ ਅਫਸਰ, PCMS-1',
+      ],
+    },
     branch: 'ludhiana',
     image: '/doctors/dr-chandan-jain.webp',
     initials: 'CJ',
@@ -48,13 +66,26 @@ export const team: TeamMember[] = [
     name: 'Dr. Deepika Jain',
     credentials: 'BDS, MDS (Endodontics)',
     role: 'Single-sitting painless RCT & microendodontics',
-    pedigree: 'Laser specialist · 10+ years in practice',
+    pedigree: 'Laser specialist · 14+ years in practice',
     credits: [
       'BDS, MDS (Endodontics)',
       'Ex: SGRD Amritsar',
       'Laser specialist',
-      '10+ years’ experience in single-sitting RCT & microendodontics',
+      '14+ years’ experience in single-sitting RCT & microendodontics',
+      'Veneer specialist',
+      'Pre-bridal buildups & makeovers',
     ],
+    pa: {
+      name: 'ਡਾ. ਦੀਪਿਕਾ ਜੈਨ',
+      credits: [
+        'BDS, MDS (ਐਂਡੋਡੌਂਟਿਕਸ)',
+        'ਸਾਬਕਾ: SGRD ਅੰਮਿਰਤਸਰ',
+        'ਲੇਜ਼ਰ ਮਾਹਰ',
+        'ਇੱਕੋ ਬੈਠਕ ਵਿੱਚ ਰੂਟ ਕੈਨਾਲ ਤੇ ਮਾਈਕ੍ਰੋਐਂਡੋਡੌਂਟਿਕਸ ਵਿੱਚ 14+ ਸਾਲ ਦਾ ਤਜਰਬਾ',
+        'ਵਿਨੀਅਰ ਮਾਹਰ',
+        'ਵਿਆਹ ਤੋਂ ਪਹਿਲਾਂ ਦੰਦਾਂ ਦਾ ਬਿਲਡਅੱਪ ਤੇ ਮੇਕਓਵਰ',
+      ],
+    },
     branch: 'ludhiana',
     image: '/doctors/dr-deepika-jain.webp',
     initials: 'DJ',
@@ -71,6 +102,16 @@ export const team: TeamMember[] = [
       'Implants, crowns & full-mouth rehabilitation',
       'In-house CAD/CAM same-visit crowns',
     ],
+    pa: {
+      name: 'ਡਾ. ਗੌਰਵ ਵਰਸ਼ਨੇ',
+      credits: [
+        'MDS (ਪ੍ਰੌਸਥੋਡੌਂਟਿਕਸ) — ਇੰਪਲਾਂਟੋਲੋਜਿਸਟ ਤੇ ਕੋਸਮੈਟਿਕ ਡੈਂਟਿਸਟ',
+        'ਸਾਬਕਾ: PU ਚੰਡੀਗੜ੍ਹ',
+        'ਸਾਬਕਾ: PGI ਰੋਹਤਕ',
+        'ਇੰਪਲਾਂਟ, ਕਰਾਊਨ ਤੇ ਫੁੱਲ-ਮਾਊਥ ਰਿਹੈਬਿਲਿਟੇਸ਼ਨ',
+        'ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ CAD/CAM ਉਸੇ ਦਿਨ ਕਰਾਊਨ',
+      ],
+    },
     branch: 'chandigarh',
     image: '/Dr.-Gaurav-Varshney.webp',
     initials: 'GV',
@@ -87,6 +128,16 @@ export const team: TeamMember[] = [
       'Ex: GDC Amritsar',
       'Gum treatment, grafting & implant placement',
     ],
+    pa: {
+      name: 'ਡਾ. ਪ੍ਰਿਯੰਕਾ ਸ਼ਰਮਾ',
+      credits: [
+        'MDS (ਪੀਰੀਓਡੌਂਟਿਕਸ) — ਪੀਰੀਓਡੌਂਟਿਸਟ ਤੇ ਇੰਪਲਾਂਟੋਲੋਜਿਸਟ',
+        'ਸਾਬਕਾ: PGI ਚੰਡੀਗੜ੍ਹ',
+        'ਸਾਬਕਾ: PU ਚੰਡੀਗੜ੍ਹ',
+        'ਸਾਬਕਾ: GDC ਅੰਮਿਰਤਸਰ',
+        'ਮਸੂੜਿਆਂ ਦਾ ਇਲਾਜ, ਗ੍ਰਾਫਟਿੰਗ ਤੇ ਇੰਪਲਾਂਟ ਲਗਾਉਣਾ',
+      ],
+    },
     branch: 'chandigarh',
     image: '/Dr.-Priyanka-Sharma.webp',
     initials: 'PS',

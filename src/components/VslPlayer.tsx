@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Play, Volume2, VolumeX } from 'lucide-react';
 import { useReducedMotion } from 'framer-motion';
 import type { BranchConfig } from '@/config/branch-configs';
+import { useLang } from '@/components/LanguageProvider';
 
 interface VslPlayerProps {
   branch: BranchConfig;
@@ -30,6 +31,7 @@ export default function VslPlayer({ branch }: VslPlayerProps) {
   const { vsl } = branch;
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
+  const { t } = useLang();
 
   const [muted, setMuted] = useState(true);
   const [needsTap, setNeedsTap] = useState(false);
@@ -93,7 +95,7 @@ export default function VslPlayer({ branch }: VslPlayerProps) {
             playsInline
             preload="metadata"
             controls={!muted}
-            aria-label={`I Cube Dental ${branch.name} film`}
+            aria-label={t.vsl.filmLabel(branch.name)}
           />
 
           {/* Autoplay refused, or motion turned down — offer the film directly. */}
@@ -102,7 +104,7 @@ export default function VslPlayer({ branch }: VslPlayerProps) {
               type="button"
               onClick={startMuted}
               className="group absolute inset-0 flex items-center justify-center bg-[#0d0e1c]/30 transition-colors hover:bg-[#0d0e1c]/20"
-              aria-label={`Play the I Cube Dental ${branch.name} film`}
+              aria-label={t.vsl.play(branch.name)}
             >
               <span className="flex h-[68px] w-[68px] items-center justify-center rounded-full bg-white/95 shadow-2xl transition-transform group-hover:scale-110">
                 <Play size={26} className="ml-1 fill-[var(--brand-teal)] text-[var(--brand-teal)]" />
@@ -119,15 +121,14 @@ export default function VslPlayer({ branch }: VslPlayerProps) {
               className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-black/55 px-3.5 py-2 text-[12px] font-semibold text-white backdrop-blur-sm transition-colors hover:bg-black/70"
             >
               <VolumeX size={14} />
-              Tap for sound
-              <span lang="pa" className="font-normal opacity-75">· ਆਵਾਜ਼</span>
+              {t.vsl.tapForSound}
             </button>
           )}
 
           {!muted && (
             <span className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/45 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-sm">
               <Volume2 size={11} />
-              Sound on
+              {t.vsl.soundOn}
             </span>
           )}
         </div>

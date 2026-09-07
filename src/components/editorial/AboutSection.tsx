@@ -1,8 +1,11 @@
+'use client';
+
 import type { ReactNode } from 'react';
 import Image from 'next/image';
 import type { BranchConfig } from '@/config/branch-configs';
 import { doctorsFor } from '@/config/team';
 import { SectionLabel, SectionHeading, PaLine } from './Primitives';
+import { useLang } from '@/components/LanguageProvider';
 
 /**
  * The specialists who actually practise at this branch.
@@ -26,21 +29,24 @@ export default function AboutSection({
   /** Slot under the cards, used for the implant page's repeating CTA. */
   children?: ReactNode;
 }) {
-  const doctors = doctorsFor(branch.slug);
+  const { lang, t } = useLang();
+  // The card shows the doctor's name and credential bullets; in Punjabi both
+  // come off the member's own `pa` block rather than being transliterated here.
+  const doctors = doctorsFor(branch.slug).map((doc) =>
+    lang === 'pa' ? { ...doc, name: doc.pa.name, credits: doc.pa.credits } : doc,
+  );
+
   if (doctors.length === 0) return null;
 
   return (
     <section className="px-4 py-16 sm:px-6 md:py-24 lg:px-10" id="about">
       <div className="mx-auto max-w-6xl">
         <div className="mb-11 flex flex-col items-center text-center">
-          <SectionLabel>About Us</SectionLabel>
-          <SectionHeading className="max-w-2xl">
-            Caring for your smile at every stage of life
-          </SectionHeading>
+          <SectionLabel>{t.about.label}</SectionLabel>
+          <SectionHeading className="max-w-2xl">{t.about.heading}</SectionHeading>
           <PaLine>ਹਰ ਉਮਰ ਵਿੱਚ ਤੁਹਾਡੇ ਦੰਦਾਂ ਦੀ ਪੂਰੀ ਸੰਭਾਲ</PaLine>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-gray-500">
-            {branch.name} is led by {doctors.length} MDS specialists working in one practice, so a
-            case that needs more than one discipline never leaves the building.
+            {t.about.sub(branch.name, doctors.length)}
           </p>
         </div>
 
@@ -79,7 +85,7 @@ export default function AboutSection({
                   <div className="flex-1 p-6 sm:p-7">
                     {isLead && (
                       <span className="mb-3 inline-block rounded-full bg-[var(--accent-gold)] px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.14em] text-[var(--brand-teal-ink)]">
-                        {branch.name} Lead
+                        {t.about.leadBadge(branch.name)}
                       </span>
                     )}
 
