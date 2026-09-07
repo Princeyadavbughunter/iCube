@@ -17,14 +17,27 @@ interface Story {
   name?: string;
 }
 
-// ⚠️ No posters yet for this set — the clinic supplied the films alone, so the
-// first frame of each is dark until it starts. Add `-poster.webp` stills and
-// wire them up here when they arrive.
 const stories: Story[] = [
-  { src: '/testimonal/testimonial-01.mp4', length: '0:35' },
-  { src: '/testimonal/testimonial-02.mp4', length: '0:51' },
-  { src: '/testimonal/testimonial-03.mp4', length: '0:57' },
-  { src: '/testimonal/testimonial-04.mp4', length: '0:59' },
+  {
+    src: '/testimonal/testimonial-01.mp4',
+    poster: '/testimonal/testimonial-01-poster.webp',
+    length: '0:35',
+  },
+  {
+    src: '/testimonal/testimonial-02.mp4',
+    poster: '/testimonal/testimonial-02-poster.webp',
+    length: '0:51',
+  },
+  {
+    src: '/testimonal/testimonial-03.mp4',
+    poster: '/testimonal/testimonial-03-poster.webp',
+    length: '0:57',
+  },
+  {
+    src: '/testimonal/testimonial-04.mp4',
+    poster: '/testimonal/testimonial-04-poster.webp',
+    length: '0:59',
+  },
 ];
 
 /**
@@ -36,14 +49,16 @@ const stories: Story[] = [
  * be unbearable.
  *
  * They only start once the section is near the viewport, and pause the moment
- * it leaves. `preload="none"` plus that gate means a visitor who never scrolls
- * this far downloads none of it, and nothing keeps decoding off-screen.
+ * it leaves. Four files come to roughly 24 MB; `preload="none"` plus that gate
+ * means a visitor who never scrolls this far downloads none of it, and nothing
+ * keeps decoding off-screen.
  *
- * ⚠️ That gate is doing a lot of work right now: the current four files are
- * straight camera exports totalling ~363 MB at 13–19 Mbps, one of them 4K.
- * Anyone who does scroll here starts four of those at once. They need
- * re-encoding to 720x1280 at ~2 Mbps (roughly 10 MB each) before this goes
- * anywhere near a phone on mobile data.
+ * The files are re-encodes at 720x1280 — the clinic supplies straight camera
+ * exports, which run 1080p or 4K at 13–19 Mbps and are far too heavy to start
+ * four of at once on mobile data. Cards are at most ~300px wide, so 720px
+ * still leaves headroom. Replacements need the same treatment; the recipe is
+ * H.264 CRF 26 with `-movflags +faststart`, so playback can begin before the
+ * file has finished arriving.
  *
  * Sound is one tap away. Taking it restarts that film from the beginning and
  * pauses the other three, so two patients never talk over each other, and the
