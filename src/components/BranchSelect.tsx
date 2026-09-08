@@ -4,9 +4,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Sparkles, Star } from 'lucide-react';
+import { ArrowRight, MapPin, Sparkles, Star } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 import { team } from '@/config/team';
+import { locations } from '@/config/locations';
 import SmoothScroll from '@/components/motion/SmoothScroll';
 
 interface BranchSelectProps {
@@ -378,6 +379,48 @@ function ProofPill({ branches }: { branches: BranchConfig[] }) {
   );
 }
 
+/**
+ * All four clinics, at a glance.
+ *
+ * The panels above sell one clinic per city — the one each landing page is
+ * built around. This is the one place on the whole site that lists every
+ * address the practice actually runs, including the two branches that have
+ * no page of their own. Deliberately small: a name, a city tag and a tel:
+ * link, not a repeat of the panels above it.
+ */
+function ClinicsStrip() {
+  return (
+    <div className="relative z-10 mx-auto mt-14 max-w-4xl px-4 sm:px-6 md:mt-20 lg:px-10">
+      <div className="mb-6 flex items-center justify-center gap-3">
+        <span className="h-px w-8 bg-gray-300" />
+        <span className="text-[10.5px] font-bold uppercase tracking-[0.25em] text-gray-400">
+          All our clinics
+        </span>
+        <span className="h-px w-8 bg-gray-300" />
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        {locations.map((clinic) => (
+          <a
+            key={clinic.label}
+            href={`tel:${clinic.phone}`}
+            className="rounded-2xl bg-white/85 p-4 shadow-sm ring-1 ring-white/70 backdrop-blur-md transition-colors hover:ring-[var(--brand-teal)]/40"
+          >
+            <div className="flex items-center gap-1.5 text-[9.5px] font-bold uppercase tracking-[0.14em] text-[var(--brand-teal)]">
+              <MapPin size={10} />
+              {clinic.branch === 'ludhiana' ? 'Ludhiana' : 'Chandigarh'}
+            </div>
+            <p className="mt-1.5 truncate font-poppins text-[13px] font-bold text-[var(--brand-teal-deep)]">
+              {clinic.label}
+            </p>
+            <p className="mt-0.5 text-[11.5px] font-semibold text-gray-500">{clinic.phone}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ------------------------------------------------------------------ *
  * Page
  * ------------------------------------------------------------------ */
@@ -494,6 +537,8 @@ export default function BranchSelect({ branches }: BranchSelectProps) {
       </div>
 
       <ProofPill branches={branches} />
+
+      <ClinicsStrip />
 
       <p className="relative z-10 mt-12 text-center text-[10px] font-bold uppercase tracking-[0.28em] text-gray-400 md:text-[11px]">
         Punjab&apos;s specialist-led implant centres
