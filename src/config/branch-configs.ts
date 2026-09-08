@@ -216,8 +216,12 @@ export const branches: Record<string, BranchConfig> = {
     // premises (OM Sai Dental) and must never be used here.
     heroSlides: [
       {
-        src: '/hero/ldh-hero-01-reception.jpg',
-        alt: 'The reception and waiting lounge at I Cube Dental Ludhiana, with the treatment list on the entrance wall',
+        // The consultation room — this practice's original hero image, kept
+        // on as slide one. `ldh-hero-01-reception.jpg` was dropped: it and
+        // `ldh-hero-03-front-desk.jpg` were the same reception seconds apart,
+        // and a carousel showing the same room twice reads as a mistake.
+        src: '/clinic/consultation-room.webp',
+        alt: 'Consultation room at I Cube Dental Ludhiana, beside the treatments wall — implants, Invisalign, in-house CBCT, CAD/CAM and single-sitting RCT',
       },
       {
         src: '/hero/ldh-hero-02-award.jpg',
