@@ -397,6 +397,20 @@ export const branches: Record<string, BranchConfig> = {
         title: "Second Opinion That Changed the Outcome",
         meta: "3 reviews · 10 months ago",
         review: "After a bad experience at another clinic, I came to iCube Dental for an implant consultation with Dr. Chandan Jain. The difference was huge - he listened carefully, explained all options, and used advanced technology during treatment. The entire process was smooth and painless. I would recommend him to everyone who wants a reliable and long-lasting implant."
+      },
+      {
+        name: "Prabhudayal Prabhudayal",
+        initials: "P",
+        title: "Economical, and So Beautifully Made",
+        meta: "1 review · 6 months ago",
+        review: "I had great experience here,what an amazing clinic and so beautifully made 👍😍🤩\nI would highly recommend and they are quite economical as par their standards, 👌😍🤩\nHats off dr chandan and dr deepika for building such an amazing dental clinic,I took many pics here it's hard not click this beauty,👍😍\nAttaching one of them 😍👍😍🥰🤩"
+      },
+      {
+        name: "Abhinav Parasher",
+        initials: "A",
+        title: "3 Implants for My Doctor Father — Flawless From Start to End",
+        meta: "Local Guide · 25 reviews · 3 weeks ago",
+        review: "My dad, a doctor himself, needed 3 implants. After consulting a few very well known names in the field in Ludhiana he took a consultation at ICube dental. I was accompanying him during this time.\n\nThe experience at iCube was fabulous from start to the end. Xrays were taken, in-house CBCT was a blessing and finally a treatment plan was finalised. Things progressed according to the flow and 3 xray's were taken, one before, one during and one after the procedure which were shown to us once the first part (implanting) of the procedure was done. The implants were flawlessly placed by Dr. Jain. My dad also needed bone grafting and that too was done during the implant process.\n\nLuckily and ofcourse due to the skill of the doctor, there was no abscess, infection or drainage post procedure which sometimes does happen due to the bone grafting process.\n\nIn the end, the various types of dental crowns were very patiently explained to us, the materials, pros and cons of each and the cost which was very important in the decision making process on our end. A 3D scan of the interiors of the mouth was taken to ensure that the crowns fir perfectly.\n\nIn the end, all went smoothly, the clinic was nice, the staff were decent and Dr. Jain himself was extremely courteous, friendly and professional. His way of dealing went a very long way in ensuring our trust in him. A comparatively young doctor, but one that easily matches and even outshines much older peers in his field.\n\nWish you the best, Dr. Jain."
       }
     ]
   },
