@@ -166,8 +166,12 @@ const en = {
   },
 
   reviews: {
+    kicker: 'TESTIMONIALS',
     heading: 'What our patients say on Google',
     sub: 'What our patients say about us',
+    googleCta: 'Read all reviews on Google',
+    more: 'Read more',
+    less: 'Show less',
   },
 
   faq: {
@@ -206,6 +210,8 @@ const en = {
   },
 
   footer: {
+    ourClinics: (city: string) => `Our Clinics in ${city}`,
+    directions: 'Directions',
     rights: (year: number) => `© I Cube Dental ${year}. All rights reserved.`,
     madeBy: 'Proudly made by',
     metaDisclaimer:
@@ -387,8 +393,12 @@ const pa: Copy = {
   },
 
   reviews: {
+    kicker: 'ਪ੍ਰਸੰਸਾ ਪੱਤਰ',
     heading: 'ਸਾਡੇ ਮਰੀਜ਼ Google ’ਤੇ ਕੀ ਕਹਿੰਦੇ ਹਨ',
     sub: 'ਸਾਡੇ ਮਰੀਜ਼ ਸਾਡੇ ਬਾਰੇ ਕੀ ਕਹਿੰਦੇ ਹਨ',
+    googleCta: 'Google ’ਤੇ ਸਾਰੀਆਂ ਸਮੀਖਿਆਵਾਂ ਪੜ੍ਹੋ',
+    more: 'ਹੋਰ ਪੜ੍ਹੋ',
+    less: 'ਘੱਟ ਕਰੋ',
   },
 
   faq: {
@@ -427,6 +437,8 @@ const pa: Copy = {
   },
 
   footer: {
+    ourClinics: (city: string) => `${city} ਵਿੱਚ ਸਾਡੇ ਕਲੀਨਿਕ`,
+    directions: 'ਰਸਤਾ ਵੇਖੋ',
     rights: (year: number) => `© I Cube Dental ${year}. ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।`,
     madeBy: 'ਬੜੇ ਮਾਣ ਨਾਲ ਬਣਾਇਆ',
     metaDisclaimer:

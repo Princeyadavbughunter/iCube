@@ -1,9 +1,44 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Star, Quote } from 'lucide-react';
 import type { BranchConfig } from '@/config/branch-configs';
 import { useLang } from '@/components/LanguageProvider';
+
+/**
+ * A review body, clamped when it runs long.
+ *
+ * Google reviews range from one line to five paragraphs, and a card holding
+ * the longest one at full height would stretch every card sharing its grid
+ * row. Short reviews (this practice's usual length) render in full, exactly
+ * as before; only a review past the threshold gets the clamp and the toggle,
+ * so the common case carries no extra UI.
+ */
+function ReviewBody({ text, more, less }: { text: string; more: string; less: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = text.length > 480;
+
+  return (
+    <div className="mb-6 flex-1">
+      <blockquote
+        className={`whitespace-pre-line text-[14.5px] leading-relaxed text-gray-600 ${
+          isLong && !expanded ? 'line-clamp-6' : ''
+        }`}
+      >
+        &ldquo;{text}&rdquo;
+      </blockquote>
+      {isLong && (
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          className="mt-2 text-[13px] font-bold text-[var(--brand-teal)] hover:underline"
+        >
+          {expanded ? less : more}
+        </button>
+      )}
+    </div>
+  );
+}
 
 /** Real Google reviews for this branch, quoted verbatim (typos included). */
 export default function Testimonials({
@@ -26,7 +61,7 @@ export default function Testimonials({
       <div className="mx-auto max-w-6xl">
         <div className="text-center mb-14">
           <div className="inline-block px-4 py-1 rounded-full bg-[var(--brand-teal)]/10 text-[var(--brand-teal)] text-sm font-bold tracking-wider mb-4">
-            TESTIMONIALS
+            {t.reviews.kicker}
           </div>
           <h2 className="font-poppins text-3xl md:text-[2.5rem] font-bold leading-tight text-[var(--brand-teal-deep)]">
             {heading ?? t.reviews.heading}
@@ -38,15 +73,15 @@ export default function Testimonials({
           {branch.reviews.map((review, i) => (
             <div
               key={review.name}
-              className="relative flex flex-col rounded-3xl border border-gray-100 bg-[var(--bg-medical-light)] p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+              // self-start: a card expanded past the clamp grows on its own
+              // rather than stretching the shorter cards sharing its row.
+              className="relative flex flex-col self-start rounded-3xl border border-gray-100 bg-[var(--bg-medical-light)] p-7 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               style={{ animationDelay: `${i * 100}ms` }}
             >
               {/* Quote icon */}
               <Quote size={32} className="mb-5 text-[var(--brand-teal)]/20" />
 
-              <blockquote className="flex-1 text-[14.5px] leading-relaxed text-gray-600 mb-6">
-                &ldquo;{review.review}&rdquo;
-              </blockquote>
+              <ReviewBody text={review.review} more={t.reviews.more} less={t.reviews.less} />
 
               <div className="border-t border-gray-200 pt-5">
                 <div className="flex gap-0.5 mb-3">
@@ -86,7 +121,7 @@ export default function Testimonials({
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border-2 border-[var(--brand-teal)] text-[var(--brand-teal)] font-bold text-sm hover:bg-[var(--brand-teal)] hover:text-white transition-colors"
           >
-            Read all reviews on Google →
+            {t.reviews.googleCta} →
           </a>
           {children && <div className="mt-9">{children}</div>}
         </div>
