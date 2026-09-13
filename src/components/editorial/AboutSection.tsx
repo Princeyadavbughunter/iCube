@@ -46,7 +46,7 @@ export default function AboutSection({
           <SectionHeading className="max-w-2xl">{t.about.heading}</SectionHeading>
           <PaLine>ਹਰ ਉਮਰ ਵਿੱਚ ਤੁਹਾਡੇ ਦੰਦਾਂ ਦੀ ਪੂਰੀ ਸੰਭਾਲ</PaLine>
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-gray-500">
-            {t.about.sub(branch.name, doctors.length)}
+            {t.about.sub(branch.name)}
           </p>
         </div>
 

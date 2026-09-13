@@ -216,20 +216,32 @@ export const branches: Record<string, BranchConfig> = {
     // premises (OM Sai Dental) and must never be used here.
     heroSlides: [
       {
-        // The consultation room — this practice's original hero image, kept
-        // on as slide one. `ldh-hero-01-reception.jpg` was dropped: it and
-        // `ldh-hero-03-front-desk.jpg` were the same reception seconds apart,
-        // and a carousel showing the same room twice reads as a mistake.
-        src: '/clinic/consultation-room.webp',
-        alt: 'Consultation room at I Cube Dental Ludhiana, beside the treatments wall — implants, Invisalign, in-house CBCT, CAD/CAM and single-sitting RCT',
+        src: '/hero/ldh-hero-01-reception.jpg',
+        alt: 'The reception desk at I Cube Dental Ludhiana, beneath the illuminated iC logo',
       },
       {
-        src: '/hero/ldh-hero-02-award.jpg',
+        src: '/hero/ldh-hero-02-reception-team.jpg',
+        alt: 'Dr. Chandan Jain with a patient at the reception area of I Cube Dental Ludhiana',
+      },
+      {
+        src: '/hero/ldh-hero-03-clinic-entrance.jpg',
+        alt: 'The clinic entrance at I Cube Dental Ludhiana, beside the treatments wall — implants, Invisalign, in-house CBCT, CAD/CAM and single-sitting RCT',
+      },
+      {
+        src: '/hero/ldh-hero-04-consultation.jpg',
+        alt: 'Dr. Chandan Jain with a patient in the consultation room at I Cube Dental Ludhiana',
+      },
+      {
+        src: '/hero/ldh-hero-05-treatment-chair.jpg',
+        alt: 'Dr. Chandan Jain with a patient in the treatment chair at I Cube Dental Ludhiana',
+      },
+      {
+        src: '/hero/ldh-hero-06-patient-care.jpg',
+        alt: 'Dr. Chandan Jain with a patient at I Cube Dental Ludhiana',
+      },
+      {
+        src: '/hero/ldh-hero-07-award.jpg',
         alt: 'Dr. Chandan Jain accepting an award for I Cube Dental on stage',
-      },
-      {
-        src: '/hero/ldh-hero-03-front-desk.jpg',
-        alt: 'The front desk at I Cube Dental Ludhiana, seen from the waiting area',
       },
     ],
     clinicImages: [
@@ -251,6 +263,12 @@ export const branches: Record<string, BranchConfig> = {
         { src: '/before-after/ldh-08-implants.jpg', alt: 'Dental implant result at I Cube Dental Ludhiana — worn and missing front teeth rebuilt' },
         { src: '/before-after/ldh-09-implants.jpg', aspect: '1 / 1', alt: 'Dental implant result at I Cube Dental Ludhiana — an elderly patient with missing upper teeth restored to a confident smile' },
         { src: '/before-after/ldh-10-smile-makeover.jpg', alt: 'Smile makeover at I Cube Dental Ludhiana — discoloured, uneven front teeth restored to an even, natural smile' },
+        { src: '/before-after/ldh-11-smile-makeover.jpg', aspect: '1 / 1', alt: 'Smile makeover at I Cube Dental Ludhiana — a patient’s smile restored to a natural, even set of teeth' },
+        { src: '/before-after/ldh-12-full-mouth-rehab.jpg', alt: 'Full-mouth rehabilitation at I Cube Dental Ludhiana — an elderly patient with missing and worn teeth restored to a complete smile' },
+        { src: '/before-after/ldh-13-implants-opg.jpg', alt: 'Dental implant result at I Cube Dental Ludhiana, shown with the patient’s OPG scan of the placed implants' },
+        { src: '/before-after/ldh-14-full-mouth-implants.jpg', alt: 'Full-mouth dental implant result at I Cube Dental Ludhiana — badly worn and missing teeth restored to a complete smile' },
+        { src: '/before-after/ldh-15-implants-opg-2.jpg', alt: 'Full-mouth dental implant result at I Cube Dental Ludhiana, shown with the patient’s OPG scan of the placed implants' },
+        { src: '/before-after/ldh-16-smile-makeover.png', aspect: '4 / 5', alt: 'Smile makeover at I Cube Dental Ludhiana — an elderly patient’s missing and worn front teeth restored to a full, confident smile' },
       ],
     },
     contact: {

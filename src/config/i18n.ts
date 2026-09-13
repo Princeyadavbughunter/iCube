@@ -101,8 +101,8 @@ const en = {
   about: {
     label: 'About Us',
     heading: 'Caring for your smile at every stage of life',
-    sub: (branchName: string, count: number) =>
-      `${branchName} is led by ${count} MDS specialists working in one practice, so a case that needs more than one discipline never leaves the building.`,
+    sub: (branchName: string) =>
+      `${branchName} is led by MDS specialists working in one practice, so a case that needs more than one discipline never leaves the building.`,
     leadBadge: (branchName: string) => `${branchName} Lead`,
   },
 
@@ -328,8 +328,8 @@ const pa: Copy = {
   about: {
     label: 'ਸਾਡੇ ਬਾਰੇ',
     heading: 'ਜ਼ਿੰਦਗੀ ਦੇ ਹਰ ਪੜਾਅ ’ਤੇ ਤੁਹਾਡੀ ਮੁਸਕਾਨ ਦੀ ਸੰਭਾਲ',
-    sub: (branchName: string, count: number) =>
-      `${branchName} ਦੀ ਅਗਵਾਈ ${count} MDS ਮਾਹਰ ਕਰਦੇ ਹਨ ਜੋ ਇੱਕੋ ਕਲੀਨਿਕ ਵਿੱਚ ਕੰਮ ਕਰਦੇ ਹਨ, ਇਸ ਲਈ ਜਿਸ ਕੇਸ ਵਿੱਚ ਇੱਕ ਤੋਂ ਵੱਧ ਮਾਹਰ ਦੀ ਲੋੜ ਹੋਵੇ, ਉਹ ਵੀ ਇੱਥੋਂ ਬਾਹਰ ਨਹੀਂ ਜਾਂਦਾ।`,
+    sub: (branchName: string) =>
+      `${branchName} ਦੀ ਅਗਵਾਈ MDS ਮਾਹਰ ਕਰਦੇ ਹਨ ਜੋ ਇੱਕੋ ਕਲੀਨਿਕ ਵਿੱਚ ਕੰਮ ਕਰਦੇ ਹਨ, ਇਸ ਲਈ ਜਿਸ ਕੇਸ ਵਿੱਚ ਇੱਕ ਤੋਂ ਵੱਧ ਮਾਹਰ ਦੀ ਲੋੜ ਹੋਵੇ, ਉਹ ਵੀ ਇੱਥੋਂ ਬਾਹਰ ਨਹੀਂ ਜਾਂਦਾ।`,
     leadBadge: (branchName: string) => `${branchName} ਲੀਡ`,
   },
 
