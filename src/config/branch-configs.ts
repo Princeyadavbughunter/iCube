@@ -243,6 +243,10 @@ export const branches: Record<string, BranchConfig> = {
         src: '/hero/ldh-hero-07-award.jpg',
         alt: 'Dr. Chandan Jain accepting an award for I Cube Dental on stage',
       },
+      {
+        src: '/hero/ldh-hero-08-invisalign.jpg',
+        alt: 'Dr. Chandan Jain and team with an Invisalign patient at I Cube Dental Ludhiana',
+      },
     ],
     clinicImages: [
       {

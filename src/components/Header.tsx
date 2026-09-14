@@ -78,7 +78,7 @@ export default function Header({ onBookAppointment, branch }: HeaderProps) {
             href="/"
             className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-gray-200 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-gray-500 transition-colors hover:border-[var(--brand-teal)] hover:text-[var(--brand-teal)]"
           >
-            ⇄ {t.header.bothBranches}
+            ⇄ {t.header.allBranches}
           </Link>
         </div>
 
