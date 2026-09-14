@@ -37,7 +37,7 @@ const en = {
     location: 'Location',
     callSpecialist: 'Call Specialist',
     book: 'Book Appointment',
-    bothBranches: 'Both branches',
+    allBranches: 'All branches',
     languageLabel: 'Language',
   },
 
@@ -265,15 +265,15 @@ const pa: Copy = {
     location: 'ਟਿਕਾਣਾ',
     callSpecialist: 'ਮਾਹਰ ਨੂੰ ਕਾਲ ਕਰੋ',
     book: 'ਅਪਾਇੰਟਮੈਂਟ ਬੁੱਕ ਕਰੋ',
-    bothBranches: 'ਦੋਵੇਂ ਬ੍ਰਾਂਚਾਂ',
+    allBranches: 'ਸਾਰੀਆਂ ਬ੍ਰਾਂਚਾਂ',
     languageLabel: 'ਭਾਸ਼ਾ',
   },
 
   hero: {
-    title: 'ਦੰਦ ਗੁਆਚ ਗਏ ਹਨ?',
+    title: 'ਕੀ ਤੁਸੀਂ ਬਿਨਾ ਦੰਦਾਂ ਤੋਂ ਪਰੇਸ਼ਾਨ ਹੋ ?',
     sub: (city: string) =>
-      `${city} ਦਾ ਮਾਹਰ-ਅਗਵਾਈ ਵਾਲਾ ਡੈਂਟਲ ਇੰਪਲਾਂਟ ਸੈਂਟਰ — ਹਰ ਕੇਸ ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ CBCT ਉੱਤੇ ਯੋਜਨਾਬੱਧ ਹੁੰਦਾ ਹੈ ਅਤੇ MDS ਮਾਹਰਾਂ ਵੱਲੋਂ ਲਗਾਇਆ ਜਾਂਦਾ ਹੈ।`,
-    positioning: 'ਪੁਰਸਕਾਰ ਜੇਤੂ, ਖੋਜ-ਆਧਾਰਿਤ, ਵਿਸ਼ੇਸ਼ ਡਿਜੀਟਲ ਇੰਪਲਾਂਟ ਇਲਾਜ',
+      `${city} ਦਾ ਸਬ ਤੋ Advanced ਅਤੇ MDS ਮਾਹਰਾ ਨਾਲ ਲੈਸ Implant Centre`,
+    positioning: 'Award-Winning, Research-Driven, Specialised Digital Implant Care',
     photoPending: 'ਕਲੀਨਿਕ ਦੀ ਫੋਟੋ ਦੀ ਉਡੀਕ ਹੈ',
     carouselLabel: 'ਕਲੀਨਿਕ ਦੀਆਂ ਫੋਟੋਆਂ',
     goToSlide: (n: number) => `ਫੋਟੋ ${n} ਉੱਤੇ ਜਾਓ`,
@@ -281,13 +281,13 @@ const pa: Copy = {
 
   trustBar: {
     leadIn:
-      'ਮਾਹਰ MDS ਸਿਖਲਾਈ, ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ CBCT ਯੋਜਨਾਬੰਦੀ ਅਤੇ ਇੰਪਲਾਂਟ ਲਈ ਵੱਖਰੇ ਓਪਰੇਟਰੀ ਦਾ ਆਧਾਰ — ',
+      'ਮਾਹਰ MDS ਡਾਕਟਰ, ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ CBCT ਸਕੈਨ ਅਤੇ ਇਮਪਲਾਂਟ ਲਈ ਵੱਖਰੀ operatory- ',
     emphasis: 'ਫਿਕਸਡ ਦੰਦ ਲਗਵਾਉਣ',
     tail: ' ਲਈ ਇੱਕੋ ਛੱਤ ਹੇਠ ਪੂਰਾ ਇਲਾਜ।',
   },
 
   problems: {
-    heading: 'ਕੀ ਦੰਦ ਗੁਆਚਣ ਕਾਰਨ ਤੁਹਾਨੂੰ ਇਹਨਾਂ ਵਿੱਚੋਂ ਕੋਈ ਸਮੱਸਿਆ ਆ ਰਹੀ ਹੈ?',
+    heading: 'ਕੀ ਦੰਦ ਨਿਕਲਣ ਕਾਰਨ ਤੁਹਾਨੂੰ ਇਹਨਾਂ ਵਿੱਚੋਂ ਕੋਈ ਸਮੱਸਿਆ ਆ ਰਹੀ ਹੈ?',
     items: [
       'ਦਿੱਖ ਦੀ ਚਿੰਤਾ',
       'ਚਬਾਉਣ ਵਿੱਚ ਮੁਸ਼ਕਲ',
@@ -377,7 +377,7 @@ const pa: Copy = {
       'ਕਲੀਨਿਕ ਵਿੱਚ ਹੀ ਜਬਾੜੇ ਦਾ CBCT 3D ਸਕੈਨ — ਉਸੇ ਵਿਜ਼ਿਟ ਵਿੱਚ ਲਿਆ ਤੇ ਪੜ੍ਹਿਆ ਜਾਂਦਾ ਹੈ',
       'ਹੱਡੀ ਦੀ ਉਚਾਈ, ਚੌੜਾਈ ਅਤੇ ਨਸਾਂ ਤੇ ਸਾਈਨਸ ਦੀ ਥਾਂ ਦੀ ਜਾਂਚ',
       'ਤੁਹਾਡੇ ਮਸੂੜਿਆਂ ਅਤੇ ਬਾਕੀ ਦੰਦਾਂ ਦੀ ਜਾਂਚ',
-      'ਤੁਹਾਡੇ ਇੰਪਲਾਂਟ ਦੇ ਬਦਲ, ਅਤੇ ਇਲਾਜ ਕਿਹੜੇ-ਕਿਹੜੇ ਪੜਾਵਾਂ ਵਿੱਚ ਚੱਲੇਗਾ',
+      'ਤੁਹਾਡੇ ਇੰਪਲਾਂਟ ਦੇ Options ਅਤੇ ਇਲਾਜ ਕਿਹੜੇ-ਕਿਹੜੇ ਪੜਾਵਾਂ ਵਿੱਚ ਚੱਲੇਗਾ',
       'ਕੋਈ ਵੀ ਇਲਾਜ ਸ਼ੁਰੂ ਹੋਣ ਤੋਂ ਪਹਿਲਾਂ ਸਾਫ਼, ਇੱਕ-ਇੱਕ ਚੀਜ਼ ਲਿਖੀ ਹੋਈ ਕੀਮਤ',
     ],
   },
