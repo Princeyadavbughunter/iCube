@@ -75,7 +75,7 @@ export default function HeroCarousel({
       aria-roledescription="carousel"
       aria-label={t.hero.carouselLabel}
     >
-      <div className="relative aspect-[16/9] w-full bg-gray-100">
+      <div className="relative aspect-[4/3] w-full bg-gray-100">
         {/* One rail, moved by transform. A rail of absolutely-positioned frames
             would need each one hidden from assistive tech as it left the
             viewport; sliding the whole strip keeps the DOM order honest. */}
@@ -99,7 +99,11 @@ export default function HeroCarousel({
                 // Only the opening frame is worth blocking first paint for.
                 priority={i === 0}
                 sizes="(max-width: 896px) 100vw, 896px"
-                className="object-cover"
+                // Contain, not cover — the slides mix landscape room shots and
+                // portrait patient photos, and a fixed frame with object-cover
+                // was cropping heads off one and the treatments-wall text off
+                // the other. Letterboxing loses less than cropping does.
+                className="object-contain"
               />
             </div>
           ))}
