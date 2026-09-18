@@ -48,7 +48,7 @@ export default function ImplantHero({
         {slides.length > 0 ? (
           <HeroCarousel slides={slides} />
         ) : (
-          <PhotoPending label={t.hero.photoPending} ratio="aspect-[16/9]" />
+          <PhotoPending label={t.hero.photoPending} ratio="aspect-[4/3]" />
         )}
       </div>
 
