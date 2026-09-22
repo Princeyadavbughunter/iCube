@@ -116,6 +116,33 @@ export type BranchConfig = {
    */
   clinicTour: { src: string; poster: string; label: string }[];
   /**
+   * Filmed patient testimonials for the "Patient Stories" section. Muted,
+   * looping cards that play with sound on tap — see VideoStories for the
+   * playback behaviour. `country` is an ISO 3166-1 alpha-2 code (e.g. "AU"),
+   * shown as a flag badge; omit it for a patient whose home country was not
+   * supplied. `name` is only set where the patient is named on screen.
+   */
+  videoTestimonials: { src: string; poster: string; length: string; name?: string; country?: string }[];
+  /**
+   * Full-mouth transformation films — its own row because these cases are the
+   * headline result, not just one testimonial among several. Same shape and
+   * playback behaviour as `videoTestimonials`. Empty hides the section, so
+   * this can be wired up ahead of the footage arriving.
+   */
+  fullMouthCaseVideos: { src: string; poster: string; length: string; name?: string; country?: string }[];
+  /**
+   * Long-term follow-up films — patients treated years ago, back on camera,
+   * proving the work held up rather than just looking good on day one. Same
+   * shape as `videoTestimonials`. Empty hides the section.
+   */
+  followUpVideos: { src: string; poster: string; length: string; name?: string; country?: string }[];
+  /**
+   * Reasons an out-of-town or international patient would choose this branch
+   * specifically, for the dental-tourism section. Empty hides the section —
+   * a branch with nothing to say here should say nothing rather than filler.
+   */
+  dentalTourism: { title: string; body: string }[];
+  /**
    * Sales video (VSL) that opens the branch page. Unlike `heroVideo` this one
    * has sound and does not autoplay — the visitor presses play. Empty hides
    * the whole block, so the page stays correct until the film is supplied.
@@ -343,6 +370,31 @@ export const branches: Record<string, BranchConfig> = {
         label: "A treatment operatory",
       },
     ],
+    videoTestimonials: [
+      {
+        src: '/testimonal/testimonial-01.mp4',
+        poster: '/testimonal/testimonial-01-poster.webp',
+        length: '0:35',
+      },
+      {
+        src: '/testimonal/testimonial-02.mp4',
+        poster: '/testimonal/testimonial-02-poster.webp',
+        length: '0:51',
+      },
+      {
+        src: '/testimonal/testimonial-03.mp4',
+        poster: '/testimonal/testimonial-03-poster.webp',
+        length: '0:57',
+      },
+      {
+        src: '/testimonal/testimonial-04.mp4',
+        poster: '/testimonal/testimonial-04-poster.webp',
+        length: '0:59',
+      },
+    ],
+    fullMouthCaseVideos: [],
+    followUpVideos: [],
+    dentalTourism: [],
     // Brand VSL — Dr. Chandan Jain to camera, with CAD/CAM and implant b-roll.
     // The end card names both cities, so the same film runs on both branches.
     vsl: {
@@ -448,20 +500,6 @@ export const branches: Record<string, BranchConfig> = {
     accent: '#8f6b2c',
     doctors: [
       {
-        name: "Dr. Gaurav Varshney",
-        title: "Implantologist | MDS Prosthodontics | Crown & Cosmetic Specialist — iCube Dental",
-        image: "/Dr.-Gaurav-Varshney.webp",
-        initials: "GV",
-        description: "Dr. Gaurav Varshney is an MDS Prosthodontist, Implantologist and Cosmetic Dentist with over 13 years of clinical experience in implant, crown and full-mouth rehabilitation. He leads iCube Dental in Sector 35-C, Chandigarh — a premium, technology-driven multi-speciality centre built around in-house CBCT, digital intraoral scanners, four designated operatories and a separate surgical operatory used only for implant placement.",
-        highlights: [
-          "13+ years of specialist clinical experience",
-          "MDS Prosthodontics · Implantologist · Crown specialist",
-          "In-house CBCT + digital intraoral scanning",
-          "Separate implant surgical operatory",
-        ],
-        footer: "Chandigarh is a full multi-speciality centre: prosthodontist, periodontist, endodontist, orthodontist, pedodontist and oral & maxillofacial surgeon all practise under one roof, supported by a team of 7 across four designated operatories — so a complex case never has to be referred elsewhere."
-      },
-      {
         name: "Dr. Priyanka Sharma",
         title: "Endodontist | Root Canal Specialist — iCube Dental Chandigarh",
         image: "/Dr.-Priyanka-Sharma.webp",
@@ -474,20 +512,59 @@ export const branches: Record<string, BranchConfig> = {
           "Single-sitting RCT with latest rotary instruments",
         ],
         footer: "Patients consistently commend Dr. Priyanka for her ability to make even anxious patients feel comfortable and informed — turning what is often a dreaded procedure into a smooth, painless experience."
+      },
+      {
+        name: "Dr. Gaurav Varshney",
+        title: "Implantologist | MDS Prosthodontics | Crown & Cosmetic Specialist — iCube Dental",
+        image: "/Dr.-Gaurav-Varshney.webp",
+        initials: "GV",
+        description: "Dr. Gaurav Varshney is an MDS Prosthodontist, Implantologist and Cosmetic Dentist with over 13 years of clinical experience in implant, crown and full-mouth rehabilitation. He leads iCube Dental in Sector 35-C, Chandigarh — a premium, technology-driven multi-speciality centre built around in-house CBCT, digital intraoral scanners, four designated operatories and a separate surgical operatory used only for implant placement.",
+        highlights: [
+          "13+ years of specialist clinical experience",
+          "MDS Prosthodontics · Implantologist · Crown specialist",
+          "In-house CBCT + digital intraoral scanning",
+          "Separate implant surgical operatory",
+        ],
+        footer: "Chandigarh is a full multi-speciality centre: prosthodontist, periodontist, endodontist, orthodontist, pedodontist and oral & maxillofacial surgeon all practise under one roof, supported by a team of 7 across four designated operatories — so a complex case never has to be referred elsewhere."
       }
     ],
     // ⚠️ Awaiting real clinic photography from the Chandigarh Google Drive folder.
-    // ⚠️ Awaiting Chandigarh's own hero photography.
-    heroSlides: [],
+    heroSlides: [
+      {
+        src: '/chdHero/chd-hero-01-reception.jpg',
+        alt: 'Dr. Gaurav Varshney with a patient at the reception desk of iCube Dental Chandigarh',
+      },
+      {
+        src: '/chdHero/chd-hero-02-entrance.jpg',
+        alt: 'Dr. Priyanka Sharma with a patient’s family at the entrance of iCube Dental Chandigarh',
+      },
+      {
+        src: '/chdHero/chd-hero-03-team.jpg',
+        alt: 'The team at iCube Dental Chandigarh, beneath the illuminated iC logo',
+      },
+      {
+        src: '/chdHero/chd-hero-04-doctors-patient.jpg',
+        alt: 'Dr. Gaurav Varshney and Dr. Priyanka Sharma with a patient at iCube Dental Chandigarh',
+      },
+      {
+        src: '/chdHero/chd-hero-05-procedure.jpg',
+        alt: 'The clinical team performing a procedure at iCube Dental Chandigarh',
+      },
+      {
+        src: '/chdHero/chd-hero-06-team-treatment.jpg',
+        alt: 'Dr. Gaurav Varshney and the clinical team with a patient in the treatment room at iCube Dental Chandigarh',
+      },
+    ],
     clinicImages: [],
-    // Cases supplied by the Chandigarh clinic — square, already branded.
+    // Cases supplied by the Chandigarh clinic, composed into before/after pairs.
     beforeAfter: {
-      aspect: '1 / 1',
+      aspect: '3 / 2',
       images: [
-        { src: '/before-afterchd/chd-01-veneers.jpg', alt: 'Veneers case at iCube Dental Chandigarh — smile before and after treatment' },
-        { src: '/before-afterchd/chd-02-veneers-full-mouth.jpg', alt: 'Full upper veneers case at iCube Dental Chandigarh — worn, discoloured teeth restored' },
-        { src: '/before-afterchd/chd-03-crowns.jpg', alt: 'Crown and cosmetic rehabilitation at iCube Dental Chandigarh — before and after' },
-        { src: '/before-afterchd/chd-04-implants.jpg', alt: 'Full mouth dental implant rehabilitation at iCube Dental Chandigarh — before and after with OPG scan' },
+        { src: '/before-afterchd/chd-01-veneers.jpg', alt: 'Crown restoration at iCube Dental Chandigarh — decayed, blackened teeth restored to a clean, even smile' },
+        { src: '/before-afterchd/chd-02-full-mouth-rehab.jpg', alt: 'Full-mouth rehabilitation at iCube Dental Chandigarh — an elderly patient with missing teeth restored to a complete smile' },
+        { src: '/before-afterchd/chd-03-smile-makeover.jpg', alt: 'Smile makeover at iCube Dental Chandigarh — crowded, discoloured teeth restored to an even, natural smile' },
+        { src: '/before-afterchd/chd-04-full-mouth-restoration.jpg', alt: 'Full-mouth restoration at iCube Dental Chandigarh — badly worn and damaged teeth restored to a complete smile' },
+        { src: '/before-afterchd/chd-05-implants.jpg', alt: 'Dental implant result at iCube Dental Chandigarh — missing upper front teeth restored to a full, confident smile' },
       ],
     },
     contact: {
@@ -540,6 +617,97 @@ export const branches: Record<string, BranchConfig> = {
     // treatment montage, not a tour, so the clinic section stays hidden rather
     // than passing it off as one.
     clinicTour: [],
+    // Filmed by patients abroad who flew in for treatment, so these lean on
+    // where they travelled from rather than a premises shoot.
+    videoTestimonials: [
+      {
+        src: '/testimonialchd/chd-testimonial-01-australia-hitesh.mp4',
+        poster: '/testimonialchd/chd-testimonial-01-australia-hitesh-poster.webp',
+        length: '0:55',
+        name: 'Hitesh',
+        country: 'AU',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-02-australia-inderjeet.mp4',
+        poster: '/testimonialchd/chd-testimonial-02-australia-inderjeet-poster.webp',
+        length: '0:29',
+        name: 'Inderjeet',
+        country: 'AU',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-03-canada-kawal.mp4',
+        poster: '/testimonialchd/chd-testimonial-03-canada-kawal-poster.webp',
+        length: '0:42',
+        name: 'Kawal',
+        country: 'CA',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-04-canada-ontario-michela.mp4',
+        poster: '/testimonialchd/chd-testimonial-04-canada-ontario-michela-poster.webp',
+        length: '1:09',
+        name: 'Michela',
+        country: 'CA',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-05-canada-toronto-pankaj.mp4',
+        poster: '/testimonialchd/chd-testimonial-05-canada-toronto-pankaj-poster.webp',
+        length: '1:17',
+        name: 'Pankaj',
+        country: 'CA',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-06-usa-maryland.mp4',
+        poster: '/testimonialchd/chd-testimonial-06-usa-maryland-poster.webp',
+        length: '0:21',
+        country: 'US',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-07-usa-avneet.mp4',
+        poster: '/testimonialchd/chd-testimonial-07-usa-avneet-poster.webp',
+        length: '0:18',
+        name: 'Avneet',
+        country: 'US',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-08-usa-california.mp4',
+        poster: '/testimonialchd/chd-testimonial-08-usa-california-poster.webp',
+        length: '0:37',
+        country: 'US',
+      },
+    ],
+    // Pending: California (Satwinder) and USA (Aneesh) full-mouth case films —
+    // not yet on the drive. Add each as { src, poster, length, name, country }
+    // once encoded (see videoTestimonials above for the re-encode recipe).
+    fullMouthCaseVideos: [],
+    // Pending: 4 long-term follow-up patients, treated 8–10 years ago — not
+    // yet on the drive. Same shape as fullMouthCaseVideos above.
+    followUpVideos: [],
+    dentalTourism: [
+      {
+        title: 'Six Specialities, One Visit',
+        body: 'Prosthodontics, periodontics, endodontics, orthodontics, pedodontics and oral & maxillofacial surgery all practise in the same centre, with a team of 7 — so a case needing more than one specialist never means a second clinic.',
+      },
+      {
+        title: 'Diagnosis and Plan, Same Day',
+        body: 'Your CBCT scan is taken and read in-house, and the implant position planned in 3D on screen, all in one appointment — built for a patient whose trip has a fixed number of days.',
+      },
+      {
+        title: 'Single-Day Crowns',
+        body: 'Digital intraoral scanning and CAD/CAM restorations are done on-site, so a crown does not sit waiting on an outside lab while your visit runs out.',
+      },
+      {
+        title: 'A Separate Implant Surgical Suite',
+        body: 'Implant surgery happens in an operatory built for that one purpose, across 4 designated operatories in total — not a general chair between routine appointments.',
+      },
+      {
+        title: 'A Clear Quote, in Rupees',
+        body: 'Implants from ₹25,000, with an itemised written quote after CBCT before anything begins — and an 80/20 part-payment plan for treatment booked in advance.',
+      },
+      {
+        title: 'Patients Have Already Made the Trip',
+        body: 'Patients from Australia, Canada and the USA have flown in for treatment here — their own accounts are in the patient stories below.',
+      },
+    ],
     // Chandigarh runs the full-mouth case film in the hero instead of the VSL,
     // so the two branches do not open with the same video. Leaving `src` empty
     // is what hands the slot to `heroVideo` above — the case film is a silent
@@ -552,7 +720,7 @@ export const branches: Record<string, BranchConfig> = {
     },
     card: {
       badge: "IMPLANT & COSMETIC LEAD",
-      image: "/Dr.-Gaurav-Varshney.webp",
+      image: "/Dr.-Priyanka-Sharma.webp",
       stats: [
         { value: "13+", label: "YEARS" },
         { value: "7", label: "SPECIALITIES" },

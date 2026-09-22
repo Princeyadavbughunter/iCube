@@ -165,6 +165,22 @@ const en = {
     namedPlayLabel: (name: string) => `Play ${name}’s testimonial with sound`,
   },
 
+  fullMouthCases: {
+    kicker: 'FULL-MOUTH CASES',
+    heading: 'Complete smile transformations',
+    sub: 'Tap any story to play it with sound',
+  },
+
+  followUp: {
+    kicker: 'LONG-TERM RESULTS',
+    heading: 'Patients we treated 8–10 years ago',
+    sub: 'Tap any story to play it with sound',
+  },
+
+  tourism: {
+    heading: (city: string) => `Why international patients choose ${city} for dental treatment`,
+  },
+
   reviews: {
     kicker: 'TESTIMONIALS',
     heading: 'What our patients say on Google',
@@ -390,6 +406,22 @@ const pa: Copy = {
     playLabel: (n: number) => `ਮਰੀਜ਼ ਦੀ ਗਵਾਹੀ ${n} ਆਵਾਜ਼ ਨਾਲ ਚਲਾਓ`,
     namedLabel: (name: string) => `${name} — ਮਰੀਜ਼ ਦੀ ਗਵਾਹੀ`,
     namedPlayLabel: (name: string) => `${name} ਦੀ ਗਵਾਹੀ ਆਵਾਜ਼ ਨਾਲ ਚਲਾਓ`,
+  },
+
+  fullMouthCases: {
+    kicker: 'ਪੂਰੇ ਮੂੰਹ ਦੇ ਕੇਸ',
+    heading: 'ਪੂਰੀ ਮੁਸਕਾਨ ਦੀ ਤਬਦੀਲੀ',
+    sub: 'ਆਵਾਜ਼ ਨਾਲ ਸੁਣਨ ਲਈ ਕਿਸੇ ਵੀ ਕਹਾਣੀ ’ਤੇ ਟੈਪ ਕਰੋ',
+  },
+
+  followUp: {
+    kicker: 'ਲੰਬੇ ਸਮੇਂ ਦੇ ਨਤੀਜੇ',
+    heading: 'ਮਰੀਜ਼ ਜਿਨ੍ਹਾਂ ਦਾ ਇਲਾਜ ਅਸੀਂ 8–10 ਸਾਲ ਪਹਿਲਾਂ ਕੀਤਾ ਸੀ',
+    sub: 'ਆਵਾਜ਼ ਨਾਲ ਸੁਣਨ ਲਈ ਕਿਸੇ ਵੀ ਕਹਾਣੀ ’ਤੇ ਟੈਪ ਕਰੋ',
+  },
+
+  tourism: {
+    heading: (city: string) => `ਅੰਤਰਰਾਸ਼ਟਰੀ ਮਰੀਜ਼ ਦੰਦਾਂ ਦੇ ਇਲਾਜ ਲਈ ${city} ਨੂੰ ਕਿਉਂ ਚੁਣਦੇ ਹਨ`,
   },
 
   reviews: {
