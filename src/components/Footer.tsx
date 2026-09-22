@@ -23,7 +23,9 @@ interface FooterProps {
  * So the footer does the one job left — say whose site this is, and close it.
  */
 export default function Footer({ branch }: FooterProps) {
-  const leadDoctor = branch?.copy.leadDoctor ?? "";
+  // Every doctor practising at this branch, not just the lead — Chandigarh
+  // runs two, and both earned the credit line.
+  const doctorNames = branch?.doctors.map((d) => d.name) ?? [];
   const { t, lang } = useLang();
   const branchName = branch ? `I Cube Dental ${branch.name}` : "I Cube Dental";
   // Empty handles render nothing rather than a dead "#" link.
@@ -50,9 +52,9 @@ export default function Footer({ branch }: FooterProps) {
           className="mx-auto h-10 w-auto"
         />
 
-        {leadDoctor && (
+        {doctorNames.length > 0 && (
           <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--accent-gold)]">
-            {leadDoctor}
+            {doctorNames.join(' · ')}
           </p>
         )}
 

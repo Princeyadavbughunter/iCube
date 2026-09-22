@@ -12,6 +12,7 @@ import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import VideoStories from "@/components/modern/VideoStories";
 import Testimonials from "@/components/editorial/Testimonials";
 import WhyChooseImplants from "@/components/implant/WhyChooseImplants";
+import DentalTourism from "@/components/implant/DentalTourism";
 import EvaluationVisit from "@/components/implant/EvaluationVisit";
 import ClinicInside from "@/components/implant/ClinicInside";
 import AboutSection from "@/components/editorial/AboutSection";
@@ -50,7 +51,7 @@ export default function BranchPageClient({ branch }: BranchPageClientProps) {
 }
 
 function BranchPage({ branch: source }: BranchPageClientProps) {
-  const { lang } = useLang();
+  const { lang, t } = useLang();
 
   // Swapping the config once, here, is what keeps the sections below language-
   // agnostic: every one of them already reads its prose off `branch`, so none
@@ -199,15 +200,42 @@ function BranchPage({ branch: source }: BranchPageClientProps) {
 
         {/* ---- Answer: why here, and what the first visit costs you ---- */}
         <Rise><WhyChooseImplants branch={branch} /></Rise>
+        {/* Empty for branches with nothing to say to a travelling patient — see
+            DentalTourism's own doc comment. */}
+        <Rise><DentalTourism branch={branch} /></Rise>
         <Rise><EvaluationVisit branch={branch} onBookAppointment={openPopup} /></Rise>
 
-        {/* ---- Prove: patients in their own words, then strangers on Google.
-            Last on purpose — by this point the visitor has the clinic, the
-            surgeon and the price, and other people's verdicts are what settles
-            it. Google is placed after our own films because a review we cannot
-            edit carries more weight than one we filmed. */}
+        {/* ---- Prove: the headline transformations, then long-term proof, then
+            patients in their own words, then strangers on Google. Last on
+            purpose — by this point the visitor has the clinic, the surgeon and
+            the price, and other people's verdicts are what settles it. Google
+            is placed after our own films because a review we cannot edit
+            carries more weight than one we filmed. */}
         <Rise>
           <VideoStories
+            stories={branch.fullMouthCaseVideos}
+            id="full-mouth-cases"
+            kicker={t.fullMouthCases.kicker}
+            heading={t.fullMouthCases.heading}
+            disclaimer="Results may vary and depend on the individual case."
+          >
+            <ConsultCta branch={branch} onBookAppointment={openPopup} />
+          </VideoStories>
+        </Rise>
+        <Rise>
+          <VideoStories
+            stories={branch.followUpVideos}
+            id="long-term-results"
+            kicker={t.followUp.kicker}
+            heading={t.followUp.heading}
+            disclaimer="Results may vary and depend on the individual case."
+          >
+            <ConsultCta branch={branch} onBookAppointment={openPopup} />
+          </VideoStories>
+        </Rise>
+        <Rise>
+          <VideoStories
+            stories={branch.videoTestimonials}
             kicker="PATIENT STORIES"
             heading="Don't just take our word for it"
             disclaimer="Results may vary and depend on the individual case."
