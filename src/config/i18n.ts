@@ -163,18 +163,20 @@ const en = {
     playLabel: (n: number) => `Play patient testimonial ${n} with sound`,
     namedLabel: (name: string) => `${name} — patient testimonial`,
     namedPlayLabel: (name: string) => `Play ${name}’s testimonial with sound`,
+    /** The gold badge on a long-term follow-up film, e.g. "8 years with us". */
+    yearsLabel: (years: number) => `${years} years with us`,
   },
 
   fullMouthCases: {
     kicker: 'FULL-MOUTH CASES',
-    heading: 'Complete smile transformations',
-    sub: 'Tap any story to play it with sound',
+    heading: 'Real Cases, Comprehensive Full-Mouth Care.',
+    sub: 'See selected full-mouth treatment journeys through patient stories, clinical images, and treatment planning.',
   },
 
   followUp: {
     kicker: 'LONG-TERM RESULTS',
-    heading: 'Patients we treated 8–10 years ago',
-    sub: 'Tap any story to play it with sound',
+    heading: 'Trusted for Years. Caring Beyond Treatment.',
+    sub: 'Meet patients who have continued their dental care with us for 9–10+ years.',
   },
 
   tourism: {
@@ -406,18 +408,19 @@ const pa: Copy = {
     playLabel: (n: number) => `ਮਰੀਜ਼ ਦੀ ਗਵਾਹੀ ${n} ਆਵਾਜ਼ ਨਾਲ ਚਲਾਓ`,
     namedLabel: (name: string) => `${name} — ਮਰੀਜ਼ ਦੀ ਗਵਾਹੀ`,
     namedPlayLabel: (name: string) => `${name} ਦੀ ਗਵਾਹੀ ਆਵਾਜ਼ ਨਾਲ ਚਲਾਓ`,
+    yearsLabel: (years: number) => `${years} ਸਾਲਾਂ ਤੋਂ ਸਾਡੇ ਨਾਲ`,
   },
 
   fullMouthCases: {
     kicker: 'ਪੂਰੇ ਮੂੰਹ ਦੇ ਕੇਸ',
-    heading: 'ਪੂਰੀ ਮੁਸਕਾਨ ਦੀ ਤਬਦੀਲੀ',
-    sub: 'ਆਵਾਜ਼ ਨਾਲ ਸੁਣਨ ਲਈ ਕਿਸੇ ਵੀ ਕਹਾਣੀ ’ਤੇ ਟੈਪ ਕਰੋ',
+    heading: 'ਅਸਲੀ ਕੇਸ, ਪੂਰੇ ਮੂੰਹ ਦੀ ਸੰਪੂਰਨ ਦੇਖਭਾਲ।',
+    sub: 'ਮਰੀਜ਼ਾਂ ਦੀਆਂ ਕਹਾਣੀਆਂ, ਕਲੀਨਿਕਲ ਤਸਵੀਰਾਂ ਅਤੇ ਇਲਾਜ ਦੀ ਯੋਜਨਾ ਰਾਹੀਂ ਪੂਰੇ ਮੂੰਹ ਦੇ ਇਲਾਜ ਦੇ ਚੁਣੇ ਹੋਏ ਸਫ਼ਰ ਵੇਖੋ।',
   },
 
   followUp: {
     kicker: 'ਲੰਬੇ ਸਮੇਂ ਦੇ ਨਤੀਜੇ',
-    heading: 'ਮਰੀਜ਼ ਜਿਨ੍ਹਾਂ ਦਾ ਇਲਾਜ ਅਸੀਂ 8–10 ਸਾਲ ਪਹਿਲਾਂ ਕੀਤਾ ਸੀ',
-    sub: 'ਆਵਾਜ਼ ਨਾਲ ਸੁਣਨ ਲਈ ਕਿਸੇ ਵੀ ਕਹਾਣੀ ’ਤੇ ਟੈਪ ਕਰੋ',
+    heading: 'ਸਾਲਾਂ ਤੋਂ ਭਰੋਸਾ। ਇਲਾਜ ਤੋਂ ਵੀ ਅੱਗੇ ਦੇਖਭਾਲ।',
+    sub: 'ਉਹਨਾਂ ਮਰੀਜ਼ਾਂ ਨੂੰ ਮਿਲੋ ਜੋ 9–10+ ਸਾਲਾਂ ਤੋਂ ਆਪਣੇ ਦੰਦਾਂ ਦੀ ਦੇਖਭਾਲ ਸਾਡੇ ਨਾਲ ਜਾਰੀ ਰੱਖ ਰਹੇ ਹਨ।',
   },
 
   tourism: {
