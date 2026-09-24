@@ -217,6 +217,7 @@ function BranchPage({ branch: source }: BranchPageClientProps) {
             id="full-mouth-cases"
             kicker={t.fullMouthCases.kicker}
             heading={t.fullMouthCases.heading}
+            sub={t.fullMouthCases.sub}
             disclaimer="Results may vary and depend on the individual case."
           >
             <ConsultCta branch={branch} onBookAppointment={openPopup} />
@@ -228,6 +229,7 @@ function BranchPage({ branch: source }: BranchPageClientProps) {
             id="long-term-results"
             kicker={t.followUp.kicker}
             heading={t.followUp.heading}
+            sub={t.followUp.sub}
             disclaimer="Results may vary and depend on the individual case."
           >
             <ConsultCta branch={branch} onBookAppointment={openPopup} />

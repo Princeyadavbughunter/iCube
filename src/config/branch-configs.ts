@@ -133,9 +133,11 @@ export type BranchConfig = {
   /**
    * Long-term follow-up films — patients treated years ago, back on camera,
    * proving the work held up rather than just looking good on day one. Same
-   * shape as `videoTestimonials`. Empty hides the section.
+   * shape as `videoTestimonials`, plus `years`: how long the patient has been
+   * with the practice, shown as a gold badge. Only set where the clinic
+   * stated it — leave it off rather than guess. Empty hides the section.
    */
-  followUpVideos: { src: string; poster: string; length: string; name?: string; country?: string }[];
+  followUpVideos: { src: string; poster: string; length: string; name?: string; country?: string; years?: number }[];
   /**
    * Reasons an out-of-town or international patient would choose this branch
    * specifically, for the dental-tourism section. Empty hides the section —
@@ -500,20 +502,6 @@ export const branches: Record<string, BranchConfig> = {
     accent: '#8f6b2c',
     doctors: [
       {
-        name: "Dr. Priyanka Sharma",
-        title: "Endodontist | Root Canal Specialist — iCube Dental Chandigarh",
-        image: "/Dr.-Priyanka-Sharma.webp",
-        initials: "PS",
-        description: "Dr. Priyanka Sharma is our in-house Endodontist and Root Canal Specialist at iCube Dental Chandigarh. Known for her calm, patient-centred approach, she takes time to explain every step of the treatment — helping anxious patients feel at ease throughout the procedure. Her expertise covers routine root canal therapy, retreatment of failed root canals and complex multi-canal cases, all handled in-house with the latest rotary instrumentation.",
-        highlights: [
-          "Root canal treatment & retreatment specialist",
-          "Calm, patient-centred approach",
-          "Complex & curved-canal case expertise",
-          "Single-sitting RCT with latest rotary instruments",
-        ],
-        footer: "Patients consistently commend Dr. Priyanka for her ability to make even anxious patients feel comfortable and informed — turning what is often a dreaded procedure into a smooth, painless experience."
-      },
-      {
         name: "Dr. Gaurav Varshney",
         title: "Implantologist | MDS Prosthodontics | Crown & Cosmetic Specialist — iCube Dental",
         image: "/Dr.-Gaurav-Varshney.webp",
@@ -526,13 +514,27 @@ export const branches: Record<string, BranchConfig> = {
           "Separate implant surgical operatory",
         ],
         footer: "Chandigarh is a full multi-speciality centre: prosthodontist, periodontist, endodontist, orthodontist, pedodontist and oral & maxillofacial surgeon all practise under one roof, supported by a team of 7 across four designated operatories — so a complex case never has to be referred elsewhere."
+      },
+      {
+        name: "Dr. Priyanka Sharma",
+        title: "Endodontist | Root Canal Specialist — iCube Dental Chandigarh",
+        image: "/Dr.-Priyanka-Sharma.webp",
+        initials: "PS",
+        description: "Dr. Priyanka Sharma is our in-house Endodontist and Root Canal Specialist at iCube Dental Chandigarh. Known for her calm, patient-centred approach, she takes time to explain every step of the treatment — helping anxious patients feel at ease throughout the procedure. Her expertise covers routine root canal therapy, retreatment of failed root canals and complex multi-canal cases, all handled in-house with the latest rotary instrumentation.",
+        highlights: [
+          "Root canal treatment & retreatment specialist",
+          "Calm, patient-centred approach",
+          "Complex & curved-canal case expertise",
+          "Single-sitting RCT with latest rotary instruments",
+        ],
+        footer: "Patients consistently commend Dr. Priyanka for her ability to make even anxious patients feel comfortable and informed — turning what is often a dreaded procedure into a smooth, painless experience."
       }
     ],
     // ⚠️ Awaiting real clinic photography from the Chandigarh Google Drive folder.
     heroSlides: [
       {
-        src: '/chdHero/chd-hero-01-reception.jpg',
-        alt: 'Dr. Gaurav Varshney with a patient at the reception desk of iCube Dental Chandigarh',
+        src: '/chdHero/chd-hero-01-invisalign.webp',
+        alt: 'Dr. Priyanka Sharma and Dr. Gaurav Varshney with an Invisalign patient at iCube Dental Chandigarh',
       },
       {
         src: '/chdHero/chd-hero-02-entrance.jpg',
@@ -679,9 +681,37 @@ export const branches: Record<string, BranchConfig> = {
     // not yet on the drive. Add each as { src, poster, length, name, country }
     // once encoded (see videoTestimonials above for the re-encode recipe).
     fullMouthCaseVideos: [],
-    // Pending: 4 long-term follow-up patients, treated 8–10 years ago — not
-    // yet on the drive. Same shape as fullMouthCaseVideos above.
-    followUpVideos: [],
+    // Years are as the clinic stated them for each film.
+    followUpVideos: [
+      {
+        src: '/chdOldPatent/chd-followup-02-rama-thukral-10yr.mp4',
+        poster: '/chdOldPatent/chd-followup-02-rama-thukral-10yr-poster.webp',
+        length: '0:47',
+        name: 'Rama Thukral',
+        years: 10,
+      },
+      {
+        src: '/chdOldPatent/chd-followup-01-ravneet-kakria-8yr.mp4',
+        poster: '/chdOldPatent/chd-followup-01-ravneet-kakria-8yr-poster.webp',
+        length: '0:40',
+        name: 'Ravneet Kakria',
+        years: 8,
+      },
+      {
+        src: '/chdOldPatent/chd-followup-03-raminder-bassi-6yr.mp4',
+        poster: '/chdOldPatent/chd-followup-03-raminder-bassi-6yr-poster.webp',
+        length: '0:31',
+        name: 'Raminder Bassi',
+        years: 6,
+      },
+      {
+        src: '/chdOldPatent/chd-followup-04-brar-ji.mp4',
+        poster: '/chdOldPatent/chd-followup-04-brar-ji-poster.webp',
+        length: '0:21',
+        name: 'Brar ji',
+        years: 5,
+      },
+    ],
     dentalTourism: [
       {
         title: 'Six Specialities, One Visit',
@@ -720,7 +750,7 @@ export const branches: Record<string, BranchConfig> = {
     },
     card: {
       badge: "IMPLANT & COSMETIC LEAD",
-      image: "/Dr.-Priyanka-Sharma.webp",
+      image: "/Dr.-Gaurav-Varshney.webp",
       stats: [
         { value: "13+", label: "YEARS" },
         { value: "7", label: "SPECIALITIES" },
