@@ -556,6 +556,18 @@ export const branches: Record<string, BranchConfig> = {
         src: '/chdHero/chd-hero-06-team-treatment.jpg',
         alt: 'Dr. Gaurav Varshney and the clinical team with a patient in the treatment room at iCube Dental Chandigarh',
       },
+      {
+        src: '/chdHero/image00002.jpeg',
+        alt: 'Clinical team at iCube Dental Chandigarh',
+      },
+      {
+        src: '/chdHero/image00016.jpeg',
+        alt: 'Dental care at iCube Dental Chandigarh',
+      },
+      {
+        src: '/chdHero/image00107.jpeg',
+        alt: 'Patient experience at iCube Dental Chandigarh',
+      },
     ],
     clinicImages: [],
     // Cases supplied by the Chandigarh clinic, composed into before/after pairs.
@@ -622,6 +634,14 @@ export const branches: Record<string, BranchConfig> = {
     // Filmed by patients abroad who flew in for treatment, so these lean on
     // where they travelled from rather than a premises shoot.
     videoTestimonials: [
+      // Order: CA → AU → IN → GB (first four), then remaining US films.
+      {
+        src: '/testimonialchd/chd-testimonial-03-canada-kawal.mp4',
+        poster: '/testimonialchd/chd-testimonial-03-canada-kawal-poster.webp',
+        length: '0:42',
+        name: 'Kawal',
+        country: 'CA',
+      },
       {
         src: '/testimonialchd/chd-testimonial-01-australia-hitesh.mp4',
         poster: '/testimonialchd/chd-testimonial-01-australia-hitesh-poster.webp',
@@ -630,18 +650,17 @@ export const branches: Record<string, BranchConfig> = {
         country: 'AU',
       },
       {
+        src: '/testimonialchd/chd-testimonial-09-india.mp4',
+        poster: '/testimonialchd/chd-testimonial-09-india-poster.webp',
+        length: '0:47',
+        country: 'IN',
+      },
+      {
         src: '/testimonialchd/chd-testimonial-02-australia-inderjeet.mp4',
         poster: '/testimonialchd/chd-testimonial-02-australia-inderjeet-poster.webp',
         length: '0:29',
         name: 'Inderjeet',
-        country: 'AU',
-      },
-      {
-        src: '/testimonialchd/chd-testimonial-03-canada-kawal.mp4',
-        poster: '/testimonialchd/chd-testimonial-03-canada-kawal-poster.webp',
-        length: '0:42',
-        name: 'Kawal',
-        country: 'CA',
+        country: 'GB',
       },
       {
         src: '/testimonialchd/chd-testimonial-04-canada-ontario-michela.mp4',

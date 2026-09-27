@@ -265,7 +265,7 @@ export default function VideoStories({
               if (e.key === 'ArrowLeft') { e.preventDefault(); nudge(-1); }
             }}
             onPointerDown={() => (pausedUntil.current = performance.now() + RESUME_MS)}
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-1 py-3 [scrollbar-width:none] focus:outline-none md:gap-6 [&::-webkit-scrollbar]:hidden"
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-1 pt-3 pb-10 [scrollbar-width:none] focus:outline-none md:gap-6 [&::-webkit-scrollbar]:hidden"
           >
             {stories.map((story, index) => {
               const isActive = activeIndex === index;
@@ -274,73 +274,74 @@ export default function VideoStories({
                 <div
                   key={story.src}
                   data-card
-                  className="group relative aspect-[9/16] w-[200px] shrink-0 snap-center overflow-hidden rounded-[20px] bg-[var(--brand-teal-ink)] ring-1 ring-black/5 shadow-[0_18px_45px_-22px_rgba(18,19,36,0.55)] transition-transform duration-300 hover:-translate-y-1 sm:w-[230px] md:w-[250px] lg:w-[260px]"
+                  className="group relative aspect-[9/16] w-[200px] shrink-0 snap-center rounded-[20px] bg-[var(--brand-teal-ink)] ring-1 ring-black/5 shadow-[0_18px_45px_-22px_rgba(18,19,36,0.55)] transition-transform duration-300 hover:-translate-y-1 sm:w-[230px] md:w-[250px] lg:w-[260px]"
                 >
-                  <video
-                    ref={(el) => {
-                      videoRefs.current[index] = el;
-                    }}
-                    className="h-full w-full object-cover"
-                    src={story.src}
-                    poster={story.poster || undefined}
-                    playsInline
-                    muted={!isActive}
-                    loop={!isActive}
-                    // Nothing is fetched until the observer asks for play().
-                    preload="none"
-                    controls={isActive}
-                    onEnded={() => reset(index)}
-                    aria-label={
-                      story.name
-                        ? t.videos.namedLabel(story.name)
-                        : t.videos.testimonialLabel(index + 1)
-                    }
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-
-                  {!isActive && (
-                    <button
-                      type="button"
-                      onClick={() => start(index)}
-                      className="absolute inset-0 flex items-center justify-center transition-colors hover:bg-[#121324]/10"
+                  {/* Inner clip — video + overlays stay within the rounded corners */}
+                  <div className="absolute inset-0 overflow-hidden rounded-[20px]">
+                    <video
+                      ref={(el) => {
+                        videoRefs.current[index] = el;
+                      }}
+                      className="h-full w-full object-cover"
+                      src={story.src}
+                      poster={story.poster || undefined}
+                      playsInline
+                      muted={!isActive}
+                      loop={!isActive}
+                      // Nothing is fetched until the observer asks for play().\
+                      preload="none"
+                      controls={isActive}
+                      onEnded={() => reset(index)}
                       aria-label={
                         story.name
-                          ? t.videos.namedPlayLabel(story.name)
-                          : t.videos.playLabel(index + 1)
+                          ? t.videos.namedLabel(story.name)
+                          : t.videos.testimonialLabel(index + 1)
                       }
                     >
-                      {/* While the loop runs, the affordance is about sound, not
-                          play — a play disc over moving footage reads as broken. */}
-                      {needsTap && (
-                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 shadow-xl transition-transform duration-300 group-hover:scale-110 md:h-[58px] md:w-[58px]">
-                          <Play
-                            size={20}
-                            className="ml-0.5 fill-[var(--brand-teal)] text-[var(--brand-teal)] md:size-6"
-                          />
+                      Your browser does not support the video tag.
+                    </video>
+
+                    {!isActive && (
+                      <button
+                        type="button"
+                        onClick={() => start(index)}
+                        className="absolute inset-0 flex items-center justify-center transition-colors hover:bg-[#121324]/10"
+                        aria-label={
+                          story.name
+                            ? t.videos.namedPlayLabel(story.name)
+                            : t.videos.playLabel(index + 1)
+                        }
+                      >
+                        {/* While the loop runs, the affordance is about sound, not
+                            play — a play disc over moving footage reads as broken. */}
+                        {needsTap && (
+                          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white/95 shadow-xl transition-transform duration-300 group-hover:scale-110 md:h-[58px] md:w-[58px]">
+                            <Play
+                              size={20}
+                              className="ml-0.5 fill-[var(--brand-teal)] text-[var(--brand-teal)] md:size-6"
+                            />
+                          </span>
+                        )}
+
+                        {/* Muted-speaker + runtime, tucked in the top-right so the
+                            flag below has the bottom edge to itself. */}
+                        <span className="absolute right-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2 py-1 text-[10px] font-semibold text-white backdrop-blur-sm transition-colors group-hover:bg-black/75 md:right-3 md:top-3 md:text-[11px]">
+                          <VolumeX size={11} />
+                          {story.length}
                         </span>
-                      )}
+                      </button>
+                    )}
+                  </div>
 
-                      {/* Muted-speaker + runtime, tucked in the top-right so the
-                          flag below has the bottom edge to itself. */}
-                      <span className="absolute right-2.5 top-2.5 inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2 py-1 text-[10px] font-semibold text-white backdrop-blur-sm transition-colors group-hover:bg-black/75 md:right-3 md:top-3 md:text-[11px]">
-                        <VolumeX size={11} />
-                        {story.length}
-                      </span>
-                    </button>
-                  )}
-
-                  {/* Badges sit centred on the bottom edge and stay put while
-                      the film plays with sound: the years pill (same gold
-                      sweep as the mentor credit under the VSL) above the
-                      framed flag, whichever of the two the film has. */}
+                  {/* Flag badge — lives outside the inner clip so it can hang
+                      half below the card edge (bottom-[-25px] = half of 50px height). */}
                   {(story.years || story.country) && (
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute bottom-3 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 md:bottom-4"
+                      className="pointer-events-none absolute bottom-[-25px] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1.5"
                     >
                       {story.years && (
-                        <span className="flash-credit inline-block whitespace-nowrap rounded-full bg-gradient-to-r from-[var(--accent-gold)] via-[var(--accent-gold-deep)] to-[var(--accent-gold)] px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.14em] text-[var(--brand-teal-deep)] shadow-[0_6px_18px_rgba(0,0,0,0.35)] md:text-[11px]">
+                        <span className="flash-credit inline-block whitespace-nowrap rounded-full bg-gradient-to-r from-[var(--accent-gold)] via-[var(--accent-gold-deep)] to-[var(--accent-gold)] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[var(--brand-teal-deep)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] md:text-[10px]">
                           {t.videos.yearsLabel(story.years)}
                         </span>
                       )}
@@ -349,10 +350,10 @@ export default function VideoStories({
                           <Image
                             src={`/flags/${story.country.toLowerCase()}.svg`}
                             alt=""
-                            width={64}
-                            height={48}
+                            width={100}
+                            height={50}
                             unoptimized
-                            className="block h-[42px] w-14 object-cover md:h-12 md:w-16"
+                            className="block h-[50px] w-[100px] object-cover"
                           />
                         </span>
                       )}
