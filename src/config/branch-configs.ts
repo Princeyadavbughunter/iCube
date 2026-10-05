@@ -400,7 +400,7 @@ export const branches: Record<string, BranchConfig> = {
     // Brand VSL — Dr. Chandan Jain to camera, with CAD/CAM and implant b-roll.
     // The end card names both cities, so the same film runs on both branches.
     vsl: {
-      src: "/vsl-icube.mp4",
+      src: "/IMG_1465_compressed.mp4",
       poster: "/vsl-icube-poster.webp",
       kicker: "Watch: how we plan an implant on CBCT",
       creds: "Chief Implantologist | MDS | WCOI Japan",
@@ -533,7 +533,7 @@ export const branches: Record<string, BranchConfig> = {
     // ⚠️ Awaiting real clinic photography from the Chandigarh Google Drive folder.
     heroSlides: [
       {
-        src: '/chdHero/chd-hero-01-invisalign.webp',
+        src: '/chdHero/chd-hero-01-invisalign.JPG',
         alt: 'Dr. Priyanka Sharma and Dr. Gaurav Varshney with an Invisalign patient at iCube Dental Chandigarh',
       },
       {
@@ -561,7 +561,7 @@ export const branches: Record<string, BranchConfig> = {
         alt: 'Clinical team at iCube Dental Chandigarh',
       },
       {
-        src: '/chdHero/image00016.jpeg',
+        src: '/chdHero/IMG_6021.jpg',
         alt: 'Dental care at iCube Dental Chandigarh',
       },
       {
@@ -594,8 +594,8 @@ export const branches: Record<string, BranchConfig> = {
     // Kept separate from Ludhiana's @icube_dental, whose bio reads
     // "iCube Dental | Ludhiana" — the two branches run different accounts.
     social: {
-      instagram: "https://www.instagram.com/icubedentalchd/",
-      facebook: "https://www.facebook.com/icubedentalchd",
+      instagram: "https://www.instagram.com/icubedental.chandigarh/",
+      facebook: "https://www.facebook.com/icubedentalchd/",
     },
     schema: {
       streetAddress: "SCO 103, First Floor, Sector 35-C",

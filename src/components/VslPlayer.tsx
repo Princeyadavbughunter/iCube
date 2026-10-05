@@ -82,10 +82,10 @@ export default function VslPlayer({ branch }: VslPlayerProps) {
       </div>
 
       <div className="relative overflow-hidden rounded-[22px] bg-[var(--brand-teal-ink)] shadow-[0_28px_70px_-28px_rgba(16,17,36,0.6)] ring-1 ring-black/5">
-        <div className="relative aspect-video w-full">
+        <div className="relative aspect-video w-full bg-black">
           <video
             ref={videoRef}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
             src={vsl.src}
             poster={vsl.poster || undefined}
             // Muted + inline is what makes autoplay permitted at all.
