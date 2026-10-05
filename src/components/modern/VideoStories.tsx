@@ -338,10 +338,10 @@ export default function VideoStories({
                   {(story.years || story.country) && (
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute bottom-[-25px] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1.5"
+                      className="pointer-events-none absolute bottom-0 left-1/2 z-10 flex -translate-x-1/2 translate-y-1/2 flex-col items-center gap-1.5"
                     >
                       {story.years && (
-                        <span className="flash-credit inline-block whitespace-nowrap rounded-full bg-gradient-to-r from-[var(--accent-gold)] via-[var(--accent-gold-deep)] to-[var(--accent-gold)] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-[var(--brand-teal-deep)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] md:text-[10px]">
+                        <span className="flash-credit inline-block whitespace-nowrap rounded-full bg-gradient-to-r from-[var(--accent-gold)] via-[var(--accent-gold-deep)] to-[var(--accent-gold)] px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.14em] text-[var(--brand-teal-deep)] shadow-[0_4px_12px_rgba(0,0,0,0.35)] md:text-[13px] md:px-4 md:py-2">
                           {t.videos.yearsLabel(story.years)}
                         </span>
                       )}
