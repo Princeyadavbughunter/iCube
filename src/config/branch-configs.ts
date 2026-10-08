@@ -377,21 +377,31 @@ export const branches: Record<string, BranchConfig> = {
         src: '/testimonal/testimonial-01.mp4',
         poster: '/testimonal/testimonial-01-poster.webp',
         length: '0:35',
+        country: 'AU',
       },
       {
         src: '/testimonal/testimonial-02.mp4',
         poster: '/testimonal/testimonial-02-poster.webp',
         length: '0:51',
+        country: 'CA',
       },
       {
         src: '/testimonal/testimonial-03.mp4',
         poster: '/testimonal/testimonial-03-poster.webp',
         length: '0:57',
+        country: 'US',
       },
       {
         src: '/testimonal/testimonial-04.mp4',
         poster: '/testimonal/testimonial-04-poster.webp',
         length: '0:59',
+        country: 'CA',
+      },
+      {
+        src: '/testimonal/testimonial-05.mp4',
+        poster: '/testimonal/testimonial-05-poster.webp',
+        length: '0:45',
+        country: 'CA',
       },
     ],
     fullMouthCaseVideos: [],
@@ -561,7 +571,7 @@ export const branches: Record<string, BranchConfig> = {
         alt: 'Clinical team at iCube Dental Chandigarh',
       },
       {
-        src: '/chdHero/IMG_6021.jpg',
+        src: '/chdHero/img_6021.jpg',
         alt: 'Dental care at iCube Dental Chandigarh',
       },
       {
@@ -634,13 +644,20 @@ export const branches: Record<string, BranchConfig> = {
     // Filmed by patients abroad who flew in for treatment, so these lean on
     // where they travelled from rather than a premises shoot.
     videoTestimonials: [
-      // Order: CA → AU → IN → GB (first four), then remaining US films.
+      // Mixed so no two same-country flags sit adjacent.
       {
         src: '/testimonialchd/chd-testimonial-03-canada-kawal.mp4',
         poster: '/testimonialchd/chd-testimonial-03-canada-kawal-poster.webp',
         length: '0:42',
         name: 'Kawal',
         country: 'CA',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-10-uk-harkamal.mp4',
+        poster: '/testimonialchd/chd-testimonial-10-uk-harkamal-poster.webp',
+        length: '0:32',
+        name: 'Harkamal',
+        country: 'GB',
       },
       {
         src: '/testimonialchd/chd-testimonial-01-australia-hitesh.mp4',
@@ -650,17 +667,10 @@ export const branches: Record<string, BranchConfig> = {
         country: 'AU',
       },
       {
-        src: '/testimonialchd/chd-testimonial-09-india.mp4',
-        poster: '/testimonialchd/chd-testimonial-09-india-poster.webp',
-        length: '0:47',
-        country: 'IN',
-      },
-      {
-        src: '/testimonialchd/chd-testimonial-02-australia-inderjeet.mp4',
-        poster: '/testimonialchd/chd-testimonial-02-australia-inderjeet-poster.webp',
-        length: '0:29',
-        name: 'Inderjeet',
-        country: 'GB',
+        src: '/testimonialchd/chd-testimonial-06-usa-maryland.mp4',
+        poster: '/testimonialchd/chd-testimonial-06-usa-maryland-poster.webp',
+        length: '0:21',
+        country: 'US',
       },
       {
         src: '/testimonialchd/chd-testimonial-04-canada-ontario-michela.mp4',
@@ -670,17 +680,18 @@ export const branches: Record<string, BranchConfig> = {
         country: 'CA',
       },
       {
-        src: '/testimonialchd/chd-testimonial-05-canada-toronto-pankaj.mp4',
-        poster: '/testimonialchd/chd-testimonial-05-canada-toronto-pankaj-poster.webp',
-        length: '1:17',
-        name: 'Pankaj',
-        country: 'CA',
+        src: '/testimonialchd/chd-testimonial-02-australia-inderjeet.mp4',
+        poster: '/testimonialchd/chd-testimonial-02-australia-inderjeet-poster.webp',
+        length: '0:29',
+        name: 'Inderjeet',
+        country: 'GB',
       },
       {
-        src: '/testimonialchd/chd-testimonial-06-usa-maryland.mp4',
-        poster: '/testimonialchd/chd-testimonial-06-usa-maryland-poster.webp',
-        length: '0:21',
-        country: 'US',
+        src: '/testimonialchd/chd-testimonial-12-thailand-sahil.mp4',
+        poster: '/testimonialchd/chd-testimonial-12-thailand-sahil-poster.webp',
+        length: '0:43',
+        name: 'Sahil',
+        country: 'TH',
       },
       {
         src: '/testimonialchd/chd-testimonial-07-usa-avneet.mp4',
@@ -688,6 +699,26 @@ export const branches: Record<string, BranchConfig> = {
         length: '0:18',
         name: 'Avneet',
         country: 'US',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-09-india.mp4',
+        poster: '/testimonialchd/chd-testimonial-09-india-poster.webp',
+        length: '0:47',
+        country: 'IN',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-05-canada-toronto-pankaj.mp4',
+        poster: '/testimonialchd/chd-testimonial-05-canada-toronto-pankaj-poster.webp',
+        length: '1:17',
+        name: 'Pankaj',
+        country: 'CA',
+      },
+      {
+        src: '/testimonialchd/chd-testimonial-11-uk-jaswinder.mp4',
+        poster: '/testimonialchd/chd-testimonial-11-uk-jaswinder-poster.webp',
+        length: '1:02',
+        name: 'Jaswinder',
+        country: 'GB',
       },
       {
         src: '/testimonialchd/chd-testimonial-08-usa-california.mp4',
