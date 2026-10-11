@@ -8,6 +8,7 @@ import { useLang } from '@/components/LanguageProvider';
 
 interface VslPlayerProps {
   branch: BranchConfig;
+  className?: string;
 }
 
 /**
@@ -27,7 +28,7 @@ interface VslPlayerProps {
  * outright (some still do, even muted). Either way the poster is showing, so
  * the frame is never empty.
  */
-export default function VslPlayer({ branch }: VslPlayerProps) {
+export default function VslPlayer({ branch, className = '' }: VslPlayerProps) {
   const { vsl } = branch;
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduceMotion = useReducedMotion();
@@ -72,7 +73,7 @@ export default function VslPlayer({ branch }: VslPlayerProps) {
   };
 
   return (
-    <div className="w-full">
+    <div className={`w-full max-w-[360px] sm:max-w-[400px] mx-auto ${className}`.trim()}>
       <div className="mb-3 flex items-center justify-center gap-2">
         <span className="h-px w-8 bg-gradient-to-r from-transparent to-[var(--accent-gold)]" />
         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--brand-teal)]">
@@ -81,11 +82,11 @@ export default function VslPlayer({ branch }: VslPlayerProps) {
         <span className="h-px w-8 bg-gradient-to-l from-transparent to-[var(--accent-gold)]" />
       </div>
 
-      <div className="relative overflow-hidden rounded-[22px] bg-[var(--brand-teal-ink)] shadow-[0_28px_70px_-28px_rgba(16,17,36,0.6)] ring-1 ring-black/5">
-        <div className="relative aspect-video w-full bg-black">
+      <div className="relative overflow-hidden rounded-[24px] bg-[var(--brand-teal-ink)] shadow-[0_28px_70px_-28px_rgba(16,17,36,0.6)] ring-1 ring-black/5">
+        <div className="relative aspect-[9/16] w-full bg-black">
           <video
             ref={videoRef}
-            className="h-full w-full object-contain"
+            className="h-full w-full object-cover"
             src={vsl.src}
             poster={vsl.poster || undefined}
             // Muted + inline is what makes autoplay permitted at all.

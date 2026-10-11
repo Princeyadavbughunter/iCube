@@ -50,3 +50,5 @@ next-env.d.ts
 # Camera originals. Web versions live in public/ — these stay local so a
 # 270 MB clip never ends up in the repository.
 /raw-media/
+*.mov
+*.MOV
