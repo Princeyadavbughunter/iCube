@@ -129,7 +129,7 @@ export type BranchConfig = {
    * playback behaviour as `videoTestimonials`. Empty hides the section, so
    * this can be wired up ahead of the footage arriving.
    */
-  fullMouthCaseVideos: { src: string; poster: string; length: string; name?: string; country?: string }[];
+  fullMouthCaseVideos: { src: string; poster?: string; length: string; name?: string; country?: string }[];
   /**
    * Long-term follow-up films — patients treated years ago, back on camera,
    * proving the work held up rather than just looking good on day one. Same
@@ -727,10 +727,23 @@ export const branches: Record<string, BranchConfig> = {
         country: 'US',
       },
     ],
-    // Pending: California (Satwinder) and USA (Aneesh) full-mouth case films —
-    // not yet on the drive. Add each as { src, poster, length, name, country }
-    // once encoded (see videoTestimonials above for the re-encode recipe).
-    fullMouthCaseVideos: [],
+    fullMouthCaseVideos: [
+      {
+        src: '/fullmouthCases/IMG_0207.MOV',
+        length: 'Full Rehab',
+        name: 'Full-Mouth Case 1',
+      },
+      {
+        src: '/fullmouthCases/IMG_1532.MOV',
+        length: 'Full Rehab',
+        name: 'Full-Mouth Case 2',
+      },
+      {
+        src: '/fullmouthCases/Project [4AF405E].mp4',
+        length: 'Full Rehab',
+        name: 'Full-Mouth Case 3',
+      },
+    ],
     // Years are as the clinic stated them for each film.
     followUpVideos: [
       {

@@ -52,3 +52,5 @@ next-env.d.ts
 /raw-media/
 *.mov
 *.MOV
+!public/fullmouthCases/*.mov
+!public/fullmouthCases/*.MOV

@@ -219,8 +219,9 @@ function BranchPage({ branch: source }: BranchPageClientProps) {
             heading={t.fullMouthCases.heading}
             sub={t.fullMouthCases.sub}
             disclaimer="Results may vary and depend on the individual case."
+            dark={true}
           >
-            <ConsultCta branch={branch} onBookAppointment={openPopup} />
+            <ConsultCta branch={branch} onBookAppointment={openPopup} dark={true} />
           </VideoStories>
         </Rise>
         <Rise>

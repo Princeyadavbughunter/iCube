@@ -168,9 +168,9 @@ const en = {
   },
 
   fullMouthCases: {
-    kicker: 'FULL-MOUTH CASES',
-    heading: 'Real Cases, Comprehensive Full-Mouth Care.',
-    sub: 'See selected full-mouth treatment journeys through patient stories, clinical images, and treatment planning.',
+    kicker: 'REAL CASES • REAL TRANSFORMATIONS',
+    heading: 'Complex Full-Mouth Cases. Real Results.',
+    sub: 'Explore selected full-mouth rehabilitation cases treated by our team, showcasing the planning and expertise involved in restoring smiles.',
   },
 
   followUp: {
@@ -412,9 +412,9 @@ const pa: Copy = {
   },
 
   fullMouthCases: {
-    kicker: 'ਪੂਰੇ ਮੂੰਹ ਦੇ ਕੇਸ',
-    heading: 'ਅਸਲੀ ਕੇਸ, ਪੂਰੇ ਮੂੰਹ ਦੀ ਸੰਪੂਰਨ ਦੇਖਭਾਲ।',
-    sub: 'ਮਰੀਜ਼ਾਂ ਦੀਆਂ ਕਹਾਣੀਆਂ, ਕਲੀਨਿਕਲ ਤਸਵੀਰਾਂ ਅਤੇ ਇਲਾਜ ਦੀ ਯੋਜਨਾ ਰਾਹੀਂ ਪੂਰੇ ਮੂੰਹ ਦੇ ਇਲਾਜ ਦੇ ਚੁਣੇ ਹੋਏ ਸਫ਼ਰ ਵੇਖੋ।',
+    kicker: 'ਅਸਲੀ ਕੇਸ • ਅਸਲੀ ਬਦਲਾਅ',
+    heading: 'ਕੰਪਲੈਕਸ ਫੁੱਲ-ਮਾਊਥ ਕੇਸ। ਅਸਲੀ ਨਤੀਜੇ।',
+    sub: 'ਸਾਡੀ ਟੀਮ ਦੁਆਰਾ ਕੀਤੇ ਗਏ ਪੂਰੇ ਮੂੰਹ ਦੇ ਚੁਣੇ ਹੋਏ ਇਲਾਜ ਵੇਖੋ, ਜੋ ਮੁਸਕਾਨ ਬਹਾਲ ਕਰਨ ਵਿੱਚ ਯੋਜਨਾਬੰਦੀ ਅਤੇ ਮੁਹਾਰਤ ਨੂੰ ਦਰਸਾਉਂਦੇ ਹਨ।',
   },
 
   followUp: {

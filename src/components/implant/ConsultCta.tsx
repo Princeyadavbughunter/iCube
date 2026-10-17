@@ -19,11 +19,13 @@ export default function ConsultCta({
   branch,
   onBookAppointment,
   note,
+  dark = false,
 }: {
   branch: BranchConfig;
   onBookAppointment: () => void;
   /** Overrides the default hours line under the button. */
   note?: string;
+  dark?: boolean;
 }) {
   const { t } = useLang();
 
@@ -32,11 +34,15 @@ export default function ConsultCta({
       <button
         type="button"
         onClick={onBookAppointment}
-        className="inline-flex items-center justify-center gap-2 rounded-lg bg-[var(--brand-teal)] px-8 py-3.5 text-[14px] font-bold text-white shadow-[0_10px_28px_-14px_rgba(48,49,81,0.8)] transition-all hover:bg-[var(--brand-teal-dark)] hover:-translate-y-0.5 active:scale-[0.98]"
+        className={`inline-flex items-center justify-center gap-2 rounded-lg ${
+          dark
+            ? 'bg-gradient-to-r from-[var(--accent-gold)] via-[var(--accent-gold-deep)] to-[var(--accent-gold)] text-[var(--brand-teal-deep)] shadow-[0_10px_28px_-10px_rgba(220,190,141,0.5)] hover:brightness-105'
+            : 'bg-[var(--brand-teal)] text-white shadow-[0_10px_28px_-14px_rgba(48,49,81,0.8)] hover:bg-[var(--brand-teal-dark)]'
+        } px-8 py-3.5 text-[14px] font-bold transition-all hover:-translate-y-0.5 active:scale-[0.98]`}
       >
         {t.cta.book}
       </button>
-      <p className="mt-2.5 text-[11.5px] font-medium text-gray-500">
+      <p className={`mt-2.5 text-[11.5px] font-medium ${dark ? 'text-gray-400' : 'text-gray-500'}`}>
         {note ?? `${branch.contact.daysLine} · ${branch.contact.timings}`}
       </p>
     </div>
