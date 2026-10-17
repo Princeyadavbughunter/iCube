@@ -80,6 +80,7 @@ export default function VideoStories({
   sub,
   disclaimer,
   children,
+  dark = false,
 }: {
   /** This branch's films — see `videoTestimonials` in branch-configs. */
   stories: Story[];
@@ -95,6 +96,8 @@ export default function VideoStories({
   disclaimer?: string;
   /** Slot under the row, used for the implant page's repeating CTA. */
   children?: ReactNode;
+  /** Whether to render in luxury dark mode (for headline case showcases). */
+  dark?: boolean;
 }) {
   const { t } = useLang();
   const sectionRef = useRef<HTMLElement>(null);
@@ -110,7 +113,7 @@ export default function VideoStories({
   /** Autoplay was refused (some browsers still do, even muted) — offer taps. */
   const [needsTap, setNeedsTap] = useState(false);
   /** The row overflows its container, so arrows and the drift have somewhere to go. */
-  const [canScroll, setCanScroll] = useState(false);
+  const [canScroll, setCanScroll] = useState(stories.length > 3);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -234,18 +237,52 @@ export default function VideoStories({
   return (
     <section
       ref={sectionRef}
-      className="px-4 py-20 sm:px-6 md:py-28 lg:px-10 bg-[var(--accent-pink-soft)]"
+      className={
+        dark
+          ? "relative px-4 py-20 sm:px-6 md:py-28 lg:px-10 bg-[#0B0C10] text-white overflow-hidden"
+          : "px-4 py-20 sm:px-6 md:py-28 lg:px-10 bg-[var(--accent-pink-soft)]"
+      }
       id={id}
     >
-      <div className="mx-auto max-w-6xl">
+      {dark && (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 45% at 50% 0%, rgba(220, 190, 141, 0.16) 0%, transparent 70%)',
+          }}
+        />
+      )}
+
+      <div className="relative mx-auto max-w-6xl">
         <div className="text-center mb-12 md:mb-16">
-          <div className="inline-block px-4 py-1 rounded-full bg-[var(--brand-teal)]/10 text-[var(--brand-teal)] text-sm font-bold tracking-wider mb-4">
-            {rowLabel}
-          </div>
-          <h2 className="font-poppins text-3xl md:text-[2.5rem] font-bold leading-tight text-[var(--brand-teal-deep)]">
+          {dark ? (
+            <p className="text-[#c5a059] text-[11px] sm:text-xs md:text-sm font-semibold tracking-[0.22em] uppercase mb-3.5">
+              {rowLabel}
+            </p>
+          ) : (
+            <div className="inline-block px-4 py-1 rounded-full bg-[var(--brand-teal)]/10 text-[var(--brand-teal)] text-sm font-bold tracking-wider mb-4">
+              {rowLabel}
+            </div>
+          )}
+          <h2
+            className={
+              dark
+                ? "font-poppins text-3xl sm:text-4xl md:text-[2.65rem] font-bold leading-tight text-white tracking-tight"
+                : "font-poppins text-3xl md:text-[2.5rem] font-bold leading-tight text-[var(--brand-teal-deep)]"
+            }
+          >
             {heading ?? t.videos.heading}
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-gray-500">{sub ?? t.videos.sub}</p>
+          <p
+            className={
+              dark
+                ? "mx-auto mt-4 max-w-2xl text-gray-300/90 text-sm sm:text-base md:text-lg font-light leading-relaxed"
+                : "mx-auto mt-4 max-w-2xl text-gray-500"
+            }
+          >
+            {sub ?? t.videos.sub}
+          </p>
         </div>
 
         <div
@@ -265,7 +302,9 @@ export default function VideoStories({
               if (e.key === 'ArrowLeft') { e.preventDefault(); nudge(-1); }
             }}
             onPointerDown={() => (pausedUntil.current = performance.now() + RESUME_MS)}
-            className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-1 pt-3 pb-10 [scrollbar-width:none] focus:outline-none md:gap-6 [&::-webkit-scrollbar]:hidden"
+            className={`flex snap-x snap-mandatory gap-6 overflow-x-auto overscroll-x-contain px-4 pt-3 pb-12 [scrollbar-width:none] focus:outline-none sm:gap-8 md:gap-10 lg:gap-12 [&::-webkit-scrollbar]:hidden ${
+              canScroll ? 'justify-start' : 'justify-center'
+            }`}
           >
             {stories.map((story, index) => {
               const isActive = activeIndex === index;
@@ -274,7 +313,11 @@ export default function VideoStories({
                 <div
                   key={story.src}
                   data-card
-                  className="group relative aspect-[9/16] w-[200px] shrink-0 snap-center rounded-[20px] bg-[var(--brand-teal-ink)] ring-1 ring-black/5 shadow-[0_18px_45px_-22px_rgba(18,19,36,0.55)] transition-transform duration-300 hover:-translate-y-1 sm:w-[230px] md:w-[250px] lg:w-[260px]"
+                  className={`group relative aspect-[9/16] w-[210px] shrink-0 snap-center rounded-[20px] bg-[var(--brand-teal-ink)] ${
+                    dark
+                      ? 'border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.7)] hover:border-[#c5a059]/40'
+                      : 'ring-1 ring-black/5 shadow-[0_18px_45px_-22px_rgba(18,19,36,0.55)]'
+                  } transition-transform duration-300 hover:-translate-y-1 sm:w-[230px] md:w-[260px] lg:w-[275px]`}
                 >
                   {/* Inner clip — video + overlays stay within the rounded corners */}
                   <div className="absolute inset-0 overflow-hidden rounded-[20px]">
@@ -288,8 +331,7 @@ export default function VideoStories({
                       playsInline
                       muted={!isActive}
                       loop={!isActive}
-                      // Nothing is fetched until the observer asks for play().\
-                      preload="none"
+                      preload={story.poster ? "none" : "metadata"}
                       controls={isActive}
                       onEnded={() => reset(index)}
                       aria-label={
@@ -374,7 +416,11 @@ export default function VideoStories({
                 type="button"
                 onClick={() => nudge(dir)}
                 aria-label={label}
-                className={`absolute ${side} top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-gray-200 bg-white/90 text-[var(--brand-teal-deep)] shadow-[0_8px_24px_-10px_rgba(16,17,36,0.45)] backdrop-blur-sm transition-colors hover:bg-[var(--brand-teal)] hover:text-white md:h-12 md:w-12`}
+                className={`absolute ${side} top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border ${
+                  dark
+                    ? 'border-white/15 bg-[#181926]/90 text-white shadow-2xl hover:bg-[#c5a059] hover:text-[#121324]'
+                    : 'border-gray-200 bg-white/90 text-[var(--brand-teal-deep)] shadow-[0_8px_24px_-10px_rgba(16,17,36,0.45)] hover:bg-[var(--brand-teal)] hover:text-white'
+                } backdrop-blur-sm transition-colors md:h-12 md:w-12`}
               >
                 <Icon size={20} strokeWidth={2.4} />
               </button>
@@ -383,7 +429,11 @@ export default function VideoStories({
 
         {(disclaimer || children) && (
           <div className="mt-9 text-center">
-            {disclaimer && <p className="mb-7 text-[12px] italic text-gray-400">{disclaimer}</p>}
+            {disclaimer && (
+              <p className={`mb-7 text-[12px] italic ${dark ? 'text-gray-400' : 'text-gray-400'}`}>
+                {disclaimer}
+              </p>
+            )}
             {children}
           </div>
         )}
